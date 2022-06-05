@@ -5,17 +5,14 @@ import { SessionProvider } from "next-auth/react";
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
 
-const MyApp = ({
-  Component,
-  pageProps: { session, ...pageProps }
-}: AppProps) => {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />
       <ReactQueryDevtools />
     </SessionProvider>
   );
-};
+}
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {

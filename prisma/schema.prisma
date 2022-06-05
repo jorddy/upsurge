@@ -6,26 +6,61 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DEV_DATABASE_URL")
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
 
-  email        String
-  passwordHash String
-  tokenVersion Int    @default(0)
-  bodyWeight   Int?
-
+  accounts  Account[]
+  sessions  Session[]
   exercises Exercise[]
   workouts  Workout[]
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model Workout {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -33,11 +68,11 @@ model Workout {
 
   exercise Exercise[]
   user     User       @relation(fields: [userId], references: [id])
-  userId   String     @db.ObjectId
+  userId   String
 }
 
 model Exercise {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -48,13 +83,13 @@ model Exercise {
 
   entries   Entry[]
   user      User     @relation(fields: [userId], references: [id])
-  userId    String   @db.ObjectId
+  userId    String
   workout   Workout? @relation(fields: [workoutId], references: [id])
-  workoutId String?  @db.ObjectId
+  workoutId String?
 }
 
 model Entry {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -62,11 +97,11 @@ model Entry {
 
   sets       Set[]
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId String   @db.ObjectId
+  exerciseId String
 }
 
 model Set {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
 
   reps      Int
@@ -78,5 +113,5 @@ model Set {
   isCurrent Boolean @default(false)
 
   entry   Entry  @relation(fields: [entryId], references: [id])
-  entryId String @db.ObjectId
+  entryId String
 }
