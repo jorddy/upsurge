@@ -1,7 +1,7 @@
 import { signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <header>
@@ -32,4 +32,6 @@ export default function Home() {
       </main>
     </>
   );
-}
+};
+
+export default Home;
