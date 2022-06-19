@@ -1,6 +1,5 @@
 import Header from "@/components/header";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -8,6 +7,8 @@ const Dashboard = () => {
   return (
     <>
       <Header app />
+
+      <main className='container mx-auto p-4'></main>
     </>
   );
 };
