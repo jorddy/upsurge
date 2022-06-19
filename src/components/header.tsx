@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import Button from "@/components/button";
 import Image from "next/image";
+import Loader from "./loader";
 
 const Header: FC<{ app?: boolean }> = ({ app }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
