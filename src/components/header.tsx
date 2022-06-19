@@ -43,14 +43,15 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       <button
         onClick={() => setIsMenuOpen(true)}
         aria-label='Open navigation menu'
+        className='md:hidden'
       >
-        <HiMenu className='w-8 h-8 cursor-pointer hover:opacity-80 md:hidden' />
+        <HiMenu className='w-8 h-8 cursor-pointer hover:opacity-80' />
       </button>
 
       {isMenuOpen && (
         <nav
-          className='absolute top-4 left-0 w-full p-4 rounded-md bg-slate-900 border 
-          border-slate-500 animate-scale'
+          className='absolute top-4 left-0 w-full p-4 space-y-4 rounded-md bg-slate-900 
+          border border-slate-500 animate-scale'
           aria-hidden={isMenuOpen}
         >
           <div className='flex justify-between items-center'>
@@ -64,6 +65,21 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
             >
               <HiX className='w-8 h-8 cursor-pointer hover:opacity-80' />
             </button>
+          </div>
+
+          <div className='flex justify-between items-center gap-4'>
+            <ul className='flex gap-4'>
+              <Link href='/'>
+                <a className='hover:opacity-80 hover:underline'>Home</a>
+              </Link>
+              <Link href='/'>
+                <a className='hover:opacity-80 hover:underline'>Features</a>
+              </Link>
+            </ul>
+
+            <Link href='/api/auth/signin'>
+              <a className='hover:opacity-80 hover:underline'>Sign In</a>
+            </Link>
           </div>
         </nav>
       )}
