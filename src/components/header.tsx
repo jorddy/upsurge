@@ -43,18 +43,23 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       </nav>
 
       {session && (
-        <button
-          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-          className='relative w-10 h-10'
-        >
-          <Image
-            className='rounded-full'
-            src={session.user?.image as string}
-            alt={session.user?.name as string}
-            layout='fill'
-            objectFit='contain'
-          />
-        </button>
+        <div className='flex items-center gap-4'>
+          <p>{session.user?.name}</p>
+          {session.user?.image && (
+            <button
+              onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+              className='relative w-10 h-10'
+            >
+              <Image
+                className='rounded-full'
+                src={session.user?.image as string}
+                alt={session.user?.name as string}
+                layout='fill'
+                objectFit='contain'
+              />
+            </button>
+          )}
+        </div>
       )}
 
       {isOptionsOpen && (
