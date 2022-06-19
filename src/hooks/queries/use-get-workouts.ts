@@ -10,4 +10,4 @@ export const getWorkouts = async () => {
 };
 
 export const useGetWorkouts = () =>
-  useQuery<GetWorkouts, ZodError>(["get-workouts", getWorkouts]);
+  useQuery<GetWorkouts>(["get-workouts", getWorkouts]);

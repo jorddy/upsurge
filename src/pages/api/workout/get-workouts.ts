@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     res.status(200).json(getWorkouts);
   } catch (error) {
-    if (error instanceof ZodError) res.status(500).json(error);
+    if (error instanceof ZodError) res.status(500).json(error.flatten());
   }
 };
 
