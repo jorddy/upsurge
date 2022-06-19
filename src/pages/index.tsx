@@ -8,7 +8,7 @@ const Home = () => {
       <Header />
 
       <main className='container mx-auto p-4'>
-        <section className='py-16 space-y-8 max-w-3xl mx-auto sm:text-center'>
+        <section className='py-8 space-y-8 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
             The simpiler way to log your gym workouts.
           </h1>
@@ -21,6 +21,8 @@ const Home = () => {
             Get Started
           </Button>
         </section>
+
+        <section></section>
       </main>
     </>
   );
