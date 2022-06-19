@@ -13,7 +13,12 @@ const MyApp = ({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        <div
+          className='min-h-screen bg-slate-800 text-white 
+          [background-image:url("/Background.png")] bg-cover'
+        >
+          <Component {...pageProps} />
+        </div>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </SessionProvider>
