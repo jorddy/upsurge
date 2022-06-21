@@ -3,11 +3,11 @@ import { ZodError } from "zod";
 import { GetWorkouts } from "@/pages/api/workout/get-workouts";
 
 export const getWorkouts = async () => {
-  const res = await fetch("/api/workout/get");
+  const res = await fetch("/api/workout/get-workouts");
 
   if (!res.ok) throw new ZodError(await res.json());
   return res.json();
 };
 
 export const useGetWorkouts = () =>
-  useQuery<GetWorkouts>(["get-workouts", getWorkouts]);
+  useQuery<GetWorkouts, ZodError>(["get-workouts"], getWorkouts);

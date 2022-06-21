@@ -20,6 +20,8 @@ model Workout {
   exercise Exercise[]
   user     User       @relation(fields: [userId], references: [id])
   userId   String
+
+  @@index([userId])
 }
 
 model Exercise {
@@ -37,6 +39,8 @@ model Exercise {
   userId    String
   workout   Workout? @relation(fields: [workoutId], references: [id])
   workoutId String?
+
+  @@index([userId, workoutId])
 }
 
 model Entry {
@@ -49,6 +53,8 @@ model Entry {
   sets       Set[]
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   exerciseId String
+
+  @@index([exerciseId])
 }
 
 model Set {
@@ -65,6 +71,8 @@ model Set {
 
   entry   Entry  @relation(fields: [entryId], references: [id])
   entryId String
+
+  @@index([entryId])
 }
 
 // NEXT AUTH TABLES
@@ -86,6 +94,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -95,6 +104,8 @@ model Session {
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
