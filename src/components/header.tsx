@@ -96,7 +96,12 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <Button onClick={signIn} className='hidden md:inline'>
+          <Button
+            onClick={() =>
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
+            }
+            className='hidden md:inline'
+          >
             Get Started
           </Button>
 

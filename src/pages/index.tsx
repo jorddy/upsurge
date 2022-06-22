@@ -1,22 +1,10 @@
 import { FaDumbbell } from "react-icons/fa";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Button from "@/components/button";
-import Loader from "@/components/loader";
-import { useEffect } from "react";
 
 const Home = () => {
-  const { push } = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (session) push("/");
-  }, [push, session]);
-
-  if (status === "loading") return <Loader />;
-
   return (
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
@@ -31,7 +19,12 @@ const Home = () => {
             is the app that gets out of your way and lets you focus on what
             really matters.
           </p>
-          <Button onClick={signIn} className='sm:mx-auto'>
+          <Button
+            onClick={() =>
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
+            }
+            className='sm:mx-auto'
+          >
             Get Started
           </Button>
         </section>
