@@ -1,16 +1,17 @@
+import { z } from "zod";
 import { useQuery } from "react-query";
-import { ZodError } from "zod";
-import { GetLatestWorkouts } from "@/pages/api/workout/get-latest-workouts";
 
-export const getLatestWorkouts = async () => {
-  const res = await fetch("/api/workout/get-latest-workouts");
-
-  if (!res.ok) throw new ZodError(await res.json());
-  return res.json();
-};
+const latestWorkoutsValidator = z
+  .object({
+    id: z.string(),
+    name: z.string()
+  })
+  .array();
 
 export const useGetLatestWorkouts = () =>
-  useQuery<GetLatestWorkouts, ZodError>(
-    ["get-latest-workouts"],
-    getLatestWorkouts
-  );
+  useQuery(["latest-workouts"], async () => {
+    const res = await fetch("/api/workouts/get-latest").then(r => r.json());
+    console.log(res);
+
+    return latestWorkoutsValidator.parse(res);
+  });
