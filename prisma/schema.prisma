@@ -7,8 +7,75 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DEV_DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
+
+model Workout {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  exercise Exercise[]
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@index([userId])
+}
+
+model Exercise {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name          String
+  description   String
+  currentWeight Int?
+  targetWeight  Int?
+
+  entries   Entry[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  workout   Workout? @relation(fields: [workoutId], references: [id])
+  workoutId String?
+
+  @@index([userId, workoutId])
+}
+
+model Entry {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes String
+
+  sets       Set[]
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId String
+
+  @@index([exerciseId])
+}
+
+model Set {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  reps      Int
+  // For machine / body weights
+  weight    Int?
+  // For cardio
+  distance  Int?
+  intensity Int?
+  isCurrent Boolean @default(false)
+
+  entry   Entry  @relation(fields: [entryId], references: [id])
+  entryId String
+
+  @@index([entryId])
+}
+
+// NEXT AUTH TABLES
 
 model Account {
   id                String  @id @default(cuid())
@@ -27,6 +94,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -36,6 +104,8 @@ model Session {
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -57,61 +127,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Workout {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name String
-
-  exercise Exercise[]
-  user     User       @relation(fields: [userId], references: [id])
-  userId   String
-}
-
-model Exercise {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name          String
-  description   String
-  currentWeight Int?
-  targetWeight  Int?
-
-  entries   Entry[]
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  workout   Workout? @relation(fields: [workoutId], references: [id])
-  workoutId String?
-}
-
-model Entry {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  notes String
-
-  sets       Set[]
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId String
-}
-
-model Set {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-
-  reps      Int
-  // For machine / body weights
-  weight    Int?
-  // For cardio
-  distance  Int?
-  intensity Int?
-  isCurrent Boolean @default(false)
-
-  entry   Entry  @relation(fields: [entryId], references: [id])
-  entryId String
 }
