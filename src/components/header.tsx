@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
+  HiLightningBolt,
   HiLogout,
   HiMenu,
   HiOutlineLightningBolt,
@@ -66,6 +67,14 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       {isOptionsOpen && (
         <ul className='absolute top-16 right-4 space-y-4 bg-slate-900 rounded-md shadow-md overflow-hidden'>
           <li>
+            <Link href='/dashboard'>
+              <a className='flex items-center gap-2 p-4 hover:bg-slate-700'>
+                <HiLightningBolt className='w-6 h-6' />
+                <p>Dashboard</p>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link href='/profile'>
               <a className='flex items-center gap-2 p-4 hover:bg-slate-700'>
                 <HiUser className='w-6 h-6' />
@@ -87,12 +96,9 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <div className='hidden md:flex md:items-center md:gap-8'>
-            <Link href='/api/auth/signin'>
-              <a className='hover:opacity-80 hover:underline'>Sign In</a>
-            </Link>
-            <Button onClick={signIn}>Get Started</Button>
-          </div>
+          <Button onClick={signIn} className='hidden md:inline'>
+            Get Started
+          </Button>
 
           <button
             onClick={() => setIsMenuOpen(true)}

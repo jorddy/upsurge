@@ -5,14 +5,17 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Button from "@/components/button";
 import Loader from "@/components/loader";
+import { useEffect } from "react";
 
 const Home = () => {
   const { push } = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === "loading") return <Loader />;
+  useEffect(() => {
+    if (session) push("/");
+  }, [push, session]);
 
-  if (session) push("/dashboard");
+  if (status === "loading") return <Loader />;
 
   return (
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
