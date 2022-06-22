@@ -14,7 +14,7 @@ const Tabs = () => {
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
-              className={`mr-2 ${
+              className={`mr-4 ${
                 selected ? "border-b-2 border-orange-400 pb-1" : ""
               }`}
             >
@@ -25,7 +25,7 @@ const Tabs = () => {
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
-              className={`mr-2 ${
+              className={`mr-4 ${
                 selected ? "border-b-2 border-orange-400 pb-1" : ""
               }`}
             >
@@ -36,7 +36,7 @@ const Tabs = () => {
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
-              className={`mr-2 ${
+              className={`mr-4 ${
                 selected ? "border-b-2 border-orange-400 pb-1" : ""
               }`}
             >
@@ -47,7 +47,7 @@ const Tabs = () => {
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
-              className={`mr-2 ${
+              className={`mr-4 ${
                 selected ? "border-b-2 border-orange-400 pb-1" : ""
               }`}
             >

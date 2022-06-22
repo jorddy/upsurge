@@ -11,7 +11,6 @@ import {
 import Link from "next/link";
 import Button from "@/components/button";
 import Image from "next/image";
-import Loader from "./loader";
 
 const Header: FC<{ app?: boolean }> = ({ app }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +21,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
       <nav className='flex items-center gap-8'>
         <Link href='/'>
-          <p className='text-2xl font-bold flex items-center gap-2'>
+          <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
             {!app && "Upsurge"}
           </p>
@@ -35,7 +34,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
                 Home
               </a>
             </Link>
-            <Link href='/'>
+            <Link href='/features'>
               <a className='hidden hover:opacity-80 hover:underline md:inline'>
                 Features
               </a>

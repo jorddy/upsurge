@@ -8,12 +8,12 @@ import Tabs from "@/components/tabs";
 
 const Dashboard = () => {
   const { push } = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { data, isLoading } = useGetLatestWorkouts();
 
   useEffect(() => {
-    if (!session) push("/");
-  }, [push, session]);
+    if (status === "authenticated" && !session) push("/");
+  }, [push, session, status]);
 
   if (isLoading) return <Loader />;
 
