@@ -29,8 +29,7 @@ const CreateWorkoutPage = () => {
   });
 
   const { fields, prepend, append, remove, swap, insert } = useFieldArray({
-    control,
-    name: "awd"
+    control
   });
 
   return (
@@ -66,10 +65,7 @@ const CreateWorkoutPage = () => {
                   <ExerciseDropdown />
                 </div>
               ))}
-              <button
-                onClick={() => append("aw")}
-                className='bg-slate-900 py-2'
-              >
+              <button onClick={() => append("")} className='bg-slate-900 py-2'>
                 + Add exercise
               </button>
             </div>
