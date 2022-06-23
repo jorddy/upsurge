@@ -15,7 +15,7 @@ const Tabs = () => {
 
   return (
     <Tab.Group>
-      <Tab.List className='flex overflow-x-auto'>
+      <Tab.List className='flex overflow-x-auto scrollbar-hide'>
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
