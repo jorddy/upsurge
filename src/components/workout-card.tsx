@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { LatestWorkoutType } from "@/hooks/queries/use-get-latest-workouts";
 import Link from "next/link";
+import { WorkoutType } from "@/shared/workout-validator";
 
-const WorkoutCard: FC<{ workout: LatestWorkoutType }> = ({ workout }) => {
+const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
   const totalWeight = workout.exercise.reduce(
     (prev, curr) => curr.currentWeight + prev,
     0
@@ -10,7 +10,7 @@ const WorkoutCard: FC<{ workout: LatestWorkoutType }> = ({ workout }) => {
 
   return (
     <Link href={`/workout/${workout.id}`}>
-      <a className='p-4 space-y-2 bg-slate-900 rounded-md'>
+      <a className='block p-4 space-y-2 bg-slate-900 rounded-md'>
         <h2 className='text-xl font-semibold'>{workout.name}</h2>
 
         <div>
