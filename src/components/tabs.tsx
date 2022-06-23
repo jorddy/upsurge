@@ -1,16 +1,18 @@
 import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
 import { useGetAllWorkouts } from "@/hooks/queries/use-get-all-workouts";
+import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
 import Loader from "./loader";
 
 const Tabs = () => {
-  const { data, isLoading } = useGetAllWorkouts();
+  const allWorkouts = useGetAllWorkouts();
+  const allExercises = useGetAllExercises();
 
-  if (isLoading) return <Loader />;
+  if (allWorkouts.isLoading || allExercises.isLoading) return <Loader />;
 
   return (
     <Tab.Group>
-      <Tab.List>
+      <Tab.List className='flex overflow-x-auto'>
         <Tab as={Fragment}>
           {({ selected }) => (
             <button
@@ -58,11 +60,15 @@ const Tabs = () => {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          {data?.map(workout => (
+          {allWorkouts.data?.map(workout => (
             <p key={workout.id}>{workout.name}</p>
           ))}
         </Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
+        <Tab.Panel>
+          {allExercises.data?.map(exercise => (
+            <p key={exercise.id}>{exercise.name}</p>
+          ))}
+        </Tab.Panel>
         <Tab.Panel>Feature coming soon</Tab.Panel>
         <Tab.Panel>Feature coming soon</Tab.Panel>
       </Tab.Panels>

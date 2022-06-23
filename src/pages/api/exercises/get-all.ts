@@ -6,21 +6,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
 
   if (session) {
-    const workouts = await prisma.workout.findMany({
-      orderBy: { updatedAt: "desc" },
+    const exercises = await prisma.exercise.findMany({
       where: { userId: session.user.id },
-      include: {
-        exercise: {
-          include: {
-            entries: {
-              include: { sets: true }
-            }
-          }
-        }
-      }
+      orderBy: { updatedAt: "desc" },
+      include: { entries: { include: { sets: true } } }
     });
 
-    res.status(200).json(workouts);
+    res.status(200).json(exercises);
   }
 };
 
