@@ -30,7 +30,7 @@ model Exercise {
   updatedAt DateTime @updatedAt
 
   name          String
-  description   String
+  description   String?
   currentWeight Int?
   targetWeight  Int?
 
