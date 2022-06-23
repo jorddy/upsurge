@@ -25,7 +25,7 @@ const Dashboard = () => {
       <main className='container mx-auto p-4 space-y-6'>
         <section className='space-y-2'>
           <h2 className='text-2xl font-semibold'>Recent</h2>
-          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {data?.map(workout => (
               <WorkoutCard key={workout.id} workout={workout} />
             ))}

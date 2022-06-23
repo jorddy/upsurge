@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { QueryClient, useMutation } from "react-query";
 import { ExerciseType } from "@/shared/exercise-validator";
 import {
   CreateExerciseErrors,
@@ -6,7 +6,7 @@ import {
 } from "@/shared/create-exercise-validator";
 import toast from "react-hot-toast";
 
-export const useCreateExercise = () =>
+export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<ExerciseType, CreateExerciseErrors, CreateExerciseType>(
     async data => {
       const res = await fetch("/api/exercises/create", {
@@ -19,9 +19,10 @@ export const useCreateExercise = () =>
     },
     {
       onError: error => {
-        // TODO: Can we find a better way to do errors??
-        if (error.fieldErrors.currentWeight)
-          toast.error(error.fieldErrors.currentWeight.join(", "));
+        toast.error(Object.values(error.fieldErrors).join(", "));
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["all-exercises"]);
       }
     }
   );

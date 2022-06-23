@@ -4,8 +4,24 @@ import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Toaster } from "react-hot-toast";
+import { FC, PropsWithChildren } from "react";
+import { useRefetching } from "@/hooks/use-refetching";
 
 const queryClient = new QueryClient();
+
+const AppLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
+  useRefetching();
+
+  return (
+    <div
+      className='min-h-screen bg-slate-800 text-white 
+      [background-image:url("/Background.png")] bg-cover'
+    >
+      {children}
+      <Toaster position='top-right' />
+    </div>
+  );
+};
 
 const MyApp = ({
   Component,
@@ -14,13 +30,9 @@ const MyApp = ({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <div
-          className='min-h-screen bg-slate-800 text-white 
-          [background-image:url("/Background.png")] bg-cover'
-        >
+        <AppLayout>
           <Component {...pageProps} />
-          <Toaster position='top-right' />
-        </div>
+        </AppLayout>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </SessionProvider>

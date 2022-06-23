@@ -9,7 +9,7 @@ export const exerciseValidator = z.object({
   currentWeight: z.number(),
   targetWeight: z.number(),
   userId: z.string(),
-  workoutId: z.string()
+  workoutId: z.string().nullable()
 });
 
 export type ExerciseType = z.infer<typeof exerciseValidator>;

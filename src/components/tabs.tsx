@@ -68,7 +68,7 @@ const Tabs = () => {
               + Create New Workout
             </a>
           </Link>
-          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {allWorkouts.data?.map(workout => (
               <WorkoutCard key={workout.id} workout={workout} />
             ))}
@@ -80,10 +80,11 @@ const Tabs = () => {
               + Create New Exercise
             </a>
           </Link>
-          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'></div>
-          {allExercises.data?.map(exercise => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
-          ))}
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
+            {allExercises.data?.map(exercise => (
+              <ExerciseCard key={exercise.id} exercise={exercise} />
+            ))}
+          </div>
         </Tab.Panel>
         <Tab.Panel>Feature coming soon</Tab.Panel>
         <Tab.Panel>Feature coming soon</Tab.Panel>

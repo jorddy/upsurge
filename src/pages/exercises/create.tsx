@@ -1,15 +1,17 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
+import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 import {
   CreateExerciseType,
   createExerciseValidator
 } from "@/shared/create-exercise-validator";
-import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 
 const CreateExercisePage = () => {
   const { push } = useRouter();
-  const { mutate } = useCreateExercise();
+  const queryClient = useQueryClient();
+  const { mutate, isError, isLoading } = useCreateExercise(queryClient);
 
   const {
     register,
@@ -23,7 +25,7 @@ const CreateExercisePage = () => {
     <form
       onSubmit={handleSubmit(data => {
         mutate(data);
-        push("/dashboard");
+        if (!isError) push("/dashboard");
       })}
     >
       <div className='space-y-2'>
@@ -67,7 +69,9 @@ const CreateExercisePage = () => {
         )}
       </div>
 
-      <button type='submit'>Create</button>
+      <button type='submit' disabled={isLoading}>
+        {isLoading ? "Creating..." : "Create"}
+      </button>
     </form>
   );
 };
