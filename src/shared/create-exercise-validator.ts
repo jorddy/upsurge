@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createExerciseValidator = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, "You must provide a name"),
   description: z.string().optional(),
   currentWeight: z.string().transform(data => parseInt(data)),
   targetWeight: z.string().transform(data => parseInt(data))

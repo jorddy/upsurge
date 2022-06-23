@@ -5,9 +5,12 @@ import {
   CreateExerciseType,
   createExerciseValidator
 } from "@/shared/create-exercise-validator";
+import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 
 const CreateExercisePage = () => {
   const { push } = useRouter();
+  const { mutate } = useCreateExercise();
+
   const {
     register,
     handleSubmit,
@@ -16,10 +19,13 @@ const CreateExercisePage = () => {
     resolver: zodResolver(createExerciseValidator)
   });
 
-  console.log(errors);
-
   return (
-    <form onSubmit={handleSubmit(data => console.log(data))}>
+    <form
+      onSubmit={handleSubmit(data => {
+        mutate(data);
+        push("/dashboard");
+      })}
+    >
       <div className='space-y-2'>
         <label htmlFor='name'>Name:</label>
         <input {...register("name")} className='bg-slate-900 text-white' />
