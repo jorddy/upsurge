@@ -7,8 +7,6 @@ import { Toaster } from "react-hot-toast";
 import { FC, PropsWithChildren } from "react";
 import { useRefetching } from "@/hooks/use-refetching";
 
-const queryClient = new QueryClient();
-
 const AppLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
   useRefetching();
 
@@ -22,6 +20,8 @@ const AppLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
     </div>
   );
 };
+
+const queryClient = new QueryClient();
 
 const MyApp = ({
   Component,
