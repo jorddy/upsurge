@@ -28,8 +28,9 @@ const CreateWorkoutPage = () => {
     resolver: zodResolver(createWorkoutValidator)
   });
 
-  const { fields, prepend, append, remove, swap, insert } = useFieldArray({
-    control
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "exercises"
   });
 
   return (
@@ -63,9 +64,19 @@ const CreateWorkoutPage = () => {
                     Exercise {idx}:
                   </p>
                   <ExerciseDropdown />
+                  <button
+                    onClick={() => remove(idx)}
+                    className='bg-red-500 p-2 rounded-sm'
+                  >
+                    X
+                  </button>
                 </div>
               ))}
-              <button onClick={() => append("")} className='bg-slate-900 py-2'>
+              <button
+                type='button'
+                onClick={() => append({})}
+                className='bg-slate-900 py-2'
+              >
                 + Add exercise
               </button>
             </div>

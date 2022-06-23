@@ -18,10 +18,15 @@ export const useCreateExercise = (queryClient: QueryClient) =>
       return await res.json();
     },
     {
+      onMutate: () => {
+        toast.loading("Creating exercise...");
+      },
       onError: error => {
+        toast.dismiss();
         toast.error(Object.values(error.fieldErrors).join(", "));
       },
       onSuccess: () => {
+        toast.dismiss();
         queryClient.invalidateQueries(["all-exercises"]);
       }
     }
