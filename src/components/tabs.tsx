@@ -61,13 +61,26 @@ const Tabs = () => {
           )}
         </Tab>
       </Tab.List>
-      <Tab.Panels className=''>
-        <Tab.Panel>
-          {allWorkouts.data?.map(workout => (
-            <WorkoutCard key={workout.id} workout={workout} />
-          ))}
+      <Tab.Panels>
+        <Tab.Panel className='space-y-2'>
+          <Link href='/workouts/create'>
+            <a className='underline hover:text-orange-400'>
+              + Create New Workout
+            </a>
+          </Link>
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
+            {allWorkouts.data?.map(workout => (
+              <WorkoutCard key={workout.id} workout={workout} />
+            ))}
+          </div>
         </Tab.Panel>
-        <Tab.Panel className='space-y-4'>
+        <Tab.Panel className='space-y-2'>
+          <Link href='/exercises/create'>
+            <a className='underline hover:text-orange-400'>
+              + Create New Exercise
+            </a>
+          </Link>
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'></div>
           {allExercises.data?.map(exercise => (
             <ExerciseCard key={exercise.id} exercise={exercise} />
           ))}
