@@ -6,7 +6,7 @@ import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 import {
   CreateExerciseType,
   createExerciseValidator
-} from "@/shared/create-exercise-validator";
+} from "@/hooks/mutations/validators";
 import Header from "@/components/header";
 
 const CreateExercisePage = () => {

@@ -63,10 +63,11 @@ const Tabs = () => {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel className='space-y-2'>
-          <Link href='/workouts/create'>
-            <a className='underline hover:text-orange-400'>
-              + Create New Workout
-            </a>
+          <Link
+            href='/workouts/create'
+            className='underline hover:text-orange-400'
+          >
+            + Create New Workout
           </Link>
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {allWorkouts.data?.map(workout => (
@@ -75,10 +76,11 @@ const Tabs = () => {
           </div>
         </Tab.Panel>
         <Tab.Panel className='space-y-2'>
-          <Link href='/exercises/create'>
-            <a className='underline hover:text-orange-400'>
-              + Create New Exercise
-            </a>
+          <Link
+            href='/exercises/create'
+            className='underline hover:text-orange-400'
+          >
+            + Create New Exercise
           </Link>
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {allExercises.data?.map(exercise => (

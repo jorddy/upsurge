@@ -1,10 +1,7 @@
 import toast from "react-hot-toast";
 import { QueryClient, useMutation } from "react-query";
-import { ExerciseType } from "@/shared/exercise-validator";
-import {
-  CreateExerciseErrors,
-  CreateExerciseType
-} from "@/shared/create-exercise-validator";
+import { ExerciseType } from "../queries/validators";
+import { CreateExerciseErrors, CreateExerciseType } from "./validators";
 
 export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<ExerciseType, CreateExerciseErrors, CreateExerciseType>(

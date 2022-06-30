@@ -4,13 +4,12 @@ import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
 import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
+import Header from "@/components/header";
+import ExerciseDropdown from "@/components/exercise-dropdown";
 import {
   CreateWorkoutType,
   createWorkoutValidator
-} from "@/shared/create-workout-validator";
-import Header from "@/components/header";
-import ExerciseDropdown from "@/components/exercise-dropdown";
-import { Fragment } from "react";
+} from "@/hooks/mutations/validators";
 
 const CreateWorkoutPage = () => {
   const { push } = useRouter();

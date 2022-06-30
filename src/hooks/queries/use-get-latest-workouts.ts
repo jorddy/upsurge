@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { workoutValidator } from "@/shared/workout-validator";
+import { workoutValidator } from "./validators";
 
 export const useGetLatestWorkouts = () =>
   useQuery(["latest-workouts"], async () => {

@@ -1,10 +1,7 @@
-import { QueryClient, useMutation } from "react-query";
-import { WorkoutType } from "@/shared/workout-validator";
-import {
-  CreateWorkoutErrors,
-  CreateWorkoutType
-} from "@/shared/create-workout-validator";
 import toast from "react-hot-toast";
+import { QueryClient, useMutation } from "react-query";
+import { WorkoutType } from "../queries/validators";
+import { CreateWorkoutErrors, CreateWorkoutType } from "./validators";
 
 export const useCreateWorkout = (queryClient: QueryClient) =>
   useMutation<WorkoutType, CreateWorkoutErrors, CreateWorkoutType>(
