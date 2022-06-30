@@ -3,6 +3,6 @@ import { workoutValidator } from "./validators";
 
 export const useGetLatestWorkouts = () =>
   useQuery(["latest-workouts"], async () => {
-    const res = await fetch("/api/workouts/get-latest").then(r => r.json());
+    const res = await (await fetch("/api/workouts/get-latest")).json();
     return workoutValidator.array().parse(res);
   });

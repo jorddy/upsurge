@@ -3,6 +3,6 @@ import { exerciseValidator } from "./validators";
 
 export const useGetAllExercises = () =>
   useQuery(["all-exercises"], async () => {
-    const res = await fetch("/api/exercises/get-all").then(r => r.json());
+    const res = await (await fetch("/api/exercises/get-all")).json();
     return exerciseValidator.array().parse(res);
   });
