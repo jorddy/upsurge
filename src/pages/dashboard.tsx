@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
 import Header from "@/components/header";
 import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
 
 const Dashboard = () => {
   const { push } = useRouter();

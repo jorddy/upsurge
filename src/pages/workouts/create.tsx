@@ -1,11 +1,11 @@
+import Header from "@/components/header";
+import ExerciseDropdown from "@/components/exercise-dropdown";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
 import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
-import Header from "@/components/header";
-import ExerciseDropdown from "@/components/exercise-dropdown";
 import {
   CreateWorkoutType,
   createWorkoutValidator

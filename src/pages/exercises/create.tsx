@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
@@ -7,7 +8,6 @@ import {
   CreateExerciseType,
   createExerciseValidator
 } from "@/hooks/mutations/validators";
-import Header from "@/components/header";
 
 const CreateExercisePage = () => {
   const { push } = useRouter();

@@ -1,8 +1,8 @@
-import { FaDumbbell } from "react-icons/fa";
-import { signIn } from "next-auth/react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Button from "@/components/button";
+import { FaDumbbell } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 const Home = () => {
   return (

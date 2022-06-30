@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { ZodError } from "zod";
 import { prisma } from "@/utils/db";
-import { createExerciseValidator } from "@/shared/create-exercise-validator";
+import { createExerciseValidator } from "@/hooks/mutations/validators";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
