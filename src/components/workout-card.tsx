@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
-import { WorkoutType } from "@/shared/workout-validator";
+import { WorkoutType } from "@/hooks/queries/validators";
 
 const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
   const totalWeight = workout.exercise.reduce(

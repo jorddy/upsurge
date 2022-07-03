@@ -100,7 +100,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
             }
             className='hidden md:inline'
           >
-            Get Started
+            Get Started With Google
           </Button>
 
           <button
