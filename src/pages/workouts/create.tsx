@@ -1,11 +1,9 @@
 import Header from "@/components/header";
-import ExerciseDropdown from "@/components/exercise-dropdown";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
-import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
 import {
   CreateWorkoutType,
   createWorkoutValidator
@@ -14,23 +12,15 @@ import {
 const CreateWorkoutPage = () => {
   const { push } = useRouter();
   const queryClient = useQueryClient();
-  const { data } = useGetAllExercises();
   const { mutate, isError, isLoading } = useCreateWorkout(queryClient);
 
   const {
     register,
     handleSubmit,
-    watch,
-    control,
     formState: { errors }
   } = useForm<CreateWorkoutType>({
     resolver: zodResolver(createWorkoutValidator)
   });
-
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "exercises"
-  // });
 
   return (
     <>
@@ -53,33 +43,6 @@ const CreateWorkoutPage = () => {
               <p className='text-red-500'>{errors.name.message}</p>
             )}
           </div>
-
-          {!!watch("name") && (
-            <div className='field'>
-              <label htmlFor='name'>Exercises:</label>
-              {/* {fields.map((field, idx) => (
-                <div key={field.id} className='flex gap-2 items-center'>
-                  <p className='text-sm self-start min-w-[80px]'>
-                    Exercise {idx}:
-                  </p>
-                  <ExerciseDropdown />
-                  <button
-                    onClick={() => remove(idx)}
-                    className='bg-red-500 p-2 rounded-sm'
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
-              <button
-                type='button'
-                onClick={() => append({})}
-                className='bg-slate-900 py-2'
-              >
-                + Add exercise
-              </button> */}
-            </div>
-          )}
 
           <button
             type='submit'
