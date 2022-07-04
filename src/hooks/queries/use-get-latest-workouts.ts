@@ -1,17 +1,8 @@
-import { z } from "zod";
 import { useQuery } from "react-query";
-
-const latestWorkoutsValidator = z
-  .object({
-    id: z.string(),
-    name: z.string()
-  })
-  .array();
+import { workoutValidator } from "./validators";
 
 export const useGetLatestWorkouts = () =>
   useQuery(["latest-workouts"], async () => {
-    const res = await fetch("/api/workouts/get-latest").then(r => r.json());
-    console.log(res);
-
-    return latestWorkoutsValidator.parse(res);
+    const res = await (await fetch("/api/workout/get-latest-workouts")).json();
+    return workoutValidator.array().parse(res);
   });

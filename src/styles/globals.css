@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .field {
+    @apply max-w-sm flex flex-col gap-2;
+  }
+
+  .input {
+    @apply bg-slate-900 text-white px-2 py-1 truncate;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

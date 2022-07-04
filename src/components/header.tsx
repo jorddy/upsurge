@@ -10,8 +10,7 @@ import {
 } from "react-icons/hi";
 import Link from "next/link";
 import Button from "@/components/button";
-import Image from "next/image";
-import Loader from "./loader";
+import Image from "next/future/image";
 
 const Header: FC<{ app?: boolean }> = ({ app }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +21,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
       <nav className='flex items-center gap-8'>
         <Link href='/'>
-          <p className='text-2xl font-bold flex items-center gap-2'>
+          <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
             {!app && "Upsurge"}
           </p>
@@ -30,15 +29,17 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
         {!app && (
           <>
-            <Link href='/'>
-              <a className='hidden hover:opacity-80 hover:underline md:inline'>
-                Home
-              </a>
+            <Link
+              href='/'
+              className='hidden hover:opacity-80 hover:underline md:inline'
+            >
+              Home
             </Link>
-            <Link href='/'>
-              <a className='hidden hover:opacity-80 hover:underline md:inline'>
-                Features
-              </a>
+            <Link
+              href='/features'
+              className='hidden hover:opacity-80 hover:underline md:inline'
+            >
+              Features
             </Link>
           </>
         )}
@@ -48,16 +49,11 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
         <div className='flex items-center gap-4'>
           <p>{session.user?.name}</p>
           {session.user?.image && (
-            <button
-              onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-              className='relative w-10 h-10'
-            >
+            <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
               <Image
-                className='rounded-full'
+                className='w-10 h-10 rounded-full object-contain'
                 src={session.user?.image as string}
                 alt={session.user?.name as string}
-                layout='fill'
-                objectFit='contain'
               />
             </button>
           )}
@@ -67,19 +63,21 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       {isOptionsOpen && (
         <ul className='absolute top-16 right-4 space-y-4 bg-slate-900 rounded-md shadow-md overflow-hidden'>
           <li>
-            <Link href='/dashboard'>
-              <a className='flex items-center gap-2 p-4 hover:bg-slate-700'>
-                <HiLightningBolt className='w-6 h-6' />
-                <p>Dashboard</p>
-              </a>
+            <Link
+              href='/dashboard'
+              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+            >
+              <HiLightningBolt className='w-6 h-6' />
+              <p>Dashboard</p>
             </Link>
           </li>
           <li>
-            <Link href='/profile'>
-              <a className='flex items-center gap-2 p-4 hover:bg-slate-700'>
-                <HiUser className='w-6 h-6' />
-                <p>Profile</p>
-              </a>
+            <Link
+              href='/profile'
+              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+            >
+              <HiUser className='w-6 h-6' />
+              <p>Profile</p>
             </Link>
           </li>
           <li>
@@ -96,8 +94,13 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <Button onClick={signIn} className='hidden md:inline'>
-            Get Started
+          <Button
+            onClick={() =>
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
+            }
+            className='hidden md:inline'
+          >
+            Get Started With Google
           </Button>
 
           <button
@@ -129,16 +132,19 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
               <div className='flex justify-between items-center gap-4'>
                 <ul className='flex gap-4'>
-                  <Link href='/'>
-                    <a className='hover:opacity-80 hover:underline'>Home</a>
+                  <Link href='/' className='hover:opacity-80 hover:underline'>
+                    Home
                   </Link>
-                  <Link href='/'>
-                    <a className='hover:opacity-80 hover:underline'>Features</a>
+                  <Link href='/' className='hover:opacity-80 hover:underline'>
+                    Features
                   </Link>
                 </ul>
 
-                <Link href='/api/auth/signin'>
-                  <a className='hover:opacity-80 hover:underline'>Sign In</a>
+                <Link
+                  href='/api/auth/signin'
+                  className='hover:opacity-80 hover:underline'
+                >
+                  Sign In
                 </Link>
               </div>
             </nav>

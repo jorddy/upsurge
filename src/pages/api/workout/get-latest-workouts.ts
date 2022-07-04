@@ -2,7 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { prisma } from "@/utils/db";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function getLatestWorkouts(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const session = await getSession({ req });
 
   if (session) {
@@ -11,12 +14,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       orderBy: { updatedAt: "desc" },
       where: { userId: session.user.id },
       include: {
-        exercise: true
+        entries: {
+          include: { sets: true }
+        }
       }
     });
 
     res.status(200).json(latestworkouts);
   }
-};
-
-export default handler;
+}

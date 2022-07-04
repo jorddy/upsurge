@@ -14,60 +14,54 @@ model Workout {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  name      String
 
-  name String
-
-  exercise Exercise[]
-  user     User       @relation(fields: [userId], references: [id])
-  userId   String
+  entries Entry[]
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
 
   @@index([userId])
 }
 
 model Exercise {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String
+  currentWeight   Int?
+  targetWeight    Int?
+  currentDistance Int?
+  targetDistance  Int?
 
-  name          String
-  description   String
-  currentWeight Int?
-  targetWeight  Int?
+  entries Entry[]
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
 
-  entries   Entry[]
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  workout   Workout? @relation(fields: [workoutId], references: [id])
-  workoutId String?
-
-  @@index([userId, workoutId])
+  @@index([userId])
 }
 
 model Entry {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  notes String
+  notes     String
 
   sets       Set[]
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   exerciseId String
+  workout    Workout? @relation(fields: [workoutId], references: [id])
+  workoutId  String?
 
-  @@index([exerciseId])
+  @@index([exerciseId, workoutId])
 }
 
 model Set {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-
-  reps      Int
-  // For machine / body weights
+  reps      Int?
   weight    Int?
-  // For cardio
   distance  Int?
-  intensity Int?
-  isCurrent Boolean @default(false)
+  elevation Int?
 
   entry   Entry  @relation(fields: [entryId], references: [id])
   entryId String
@@ -75,8 +69,7 @@ model Set {
   @@index([entryId])
 }
 
-// NEXT AUTH TABLES
-
+// NEXT AUTH
 model Account {
   id                String  @id @default(cuid())
   userId            String
