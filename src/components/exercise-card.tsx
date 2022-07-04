@@ -1,5 +1,5 @@
-import { FC } from "react";
 import Link from "next/link";
+import { FC } from "react";
 import { ExerciseType } from "@/hooks/queries/validators";
 
 const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
@@ -14,12 +14,28 @@ const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
         <p>
           <strong>Sets:</strong> 0
         </p>
-        <p>
-          <strong>Current Weight:</strong> {exercise.currentWeight}kg
-        </p>
-        <p>
-          <strong>Target Weight:</strong> {exercise.targetWeight}kg
-        </p>
+
+        {exercise.currentWeight && exercise.targetWeight && (
+          <>
+            <p>
+              <strong>Current Weight:</strong> {exercise.currentWeight}kg
+            </p>
+            <p>
+              <strong>Target Weight:</strong> {exercise.targetWeight}kg
+            </p>
+          </>
+        )}
+
+        {exercise.currentDistance && exercise.targetDistance && (
+          <>
+            <p>
+              <strong>Current Distance:</strong> {exercise.currentDistance}m
+            </p>
+            <p>
+              <strong>Target Distance:</strong> {exercise.targetDistance}kg
+            </p>
+          </>
+        )}
       </div>
     </Link>
   );

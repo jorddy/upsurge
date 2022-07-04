@@ -1,13 +1,8 @@
-import { FC } from "react";
 import Link from "next/link";
+import { FC } from "react";
 import { WorkoutType } from "@/hooks/queries/validators";
 
 const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
-  const totalWeight = workout.exercise.reduce(
-    (prev, curr) => curr.currentWeight + prev,
-    0
-  );
-
   return (
     <Link
       href={`/workout/${workout.id}`}
@@ -17,11 +12,21 @@ const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
 
       <div>
         <p>
-          <strong>Exercises:</strong> {workout.exercise.length}
+          <strong>Sets:</strong> {workout.entries[0].sets.length}
         </p>
-        <p>
-          <strong>Total Weight Lifted:</strong> {totalWeight}kg
-        </p>
+
+        {/* TODO: Clean up & figure our how to sum up the totals */}
+        {workout.entries[0].sets[0].reps ||
+          (workout.entries[0].sets[0].weight && (
+            <p>{/* <strong>Total Weight Lifted:</strong> {totalWeight}kg */}</p>
+          ))}
+
+        {workout.entries[0].sets[0].distance ||
+          (workout.entries[0].sets[0].elevation && (
+            <p>
+              {/* <strong>Total Distance Travelled:</strong> {totalDistance}m */}
+            </p>
+          ))}
       </div>
     </Link>
   );
