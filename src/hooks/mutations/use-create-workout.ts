@@ -6,7 +6,7 @@ import { CreateWorkoutErrors, CreateWorkoutType } from "./validators";
 export const useCreateWorkout = (queryClient: QueryClient) =>
   useMutation<WorkoutType, CreateWorkoutErrors, CreateWorkoutType>(
     async data => {
-      const res = await fetch("/api/workouts/create", {
+      const res = await fetch("/api/workout/create-workout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

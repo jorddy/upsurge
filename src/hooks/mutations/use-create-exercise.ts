@@ -6,7 +6,7 @@ import { CreateExerciseErrors, CreateExerciseType } from "./validators";
 export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<ExerciseType, CreateExerciseErrors, CreateExerciseType>(
     async data => {
-      const res = await fetch("/api/exercises/create", {
+      const res = await fetch("/api/exercise/create-exercise", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
