@@ -27,10 +27,10 @@ const CreateWorkoutPage = () => {
     resolver: zodResolver(createWorkoutValidator)
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "exercises"
-  });
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "exercises"
+  // });
 
   return (
     <>
@@ -57,7 +57,7 @@ const CreateWorkoutPage = () => {
           {!!watch("name") && (
             <div className='field'>
               <label htmlFor='name'>Exercises:</label>
-              {fields.map((field, idx) => (
+              {/* {fields.map((field, idx) => (
                 <div key={field.id} className='flex gap-2 items-center'>
                   <p className='text-sm self-start min-w-[80px]'>
                     Exercise {idx}:
@@ -77,7 +77,7 @@ const CreateWorkoutPage = () => {
                 className='bg-slate-900 py-2'
               >
                 + Add exercise
-              </button>
+              </button> */}
             </div>
           )}
 
