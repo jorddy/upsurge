@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
-import { ExerciseType } from "@/shared/exercise-validator";
+import { ExerciseType } from "@/hooks/queries/validators";
 
 const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
   return (

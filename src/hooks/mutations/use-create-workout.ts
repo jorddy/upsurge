@@ -8,6 +8,7 @@ export const useCreateWorkout = (queryClient: QueryClient) =>
     async data => {
       const res = await fetch("/api/workouts/create", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       });
 
