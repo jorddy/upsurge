@@ -103,8 +103,8 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
           {isMenuOpen && (
             <nav
-              className='absolute top-4 left-0 w-full p-4 space-y-4 rounded-md bg-slate-900 
-              border border-slate-500 animate-scale'
+              className='absolute top-4 left-0 w-full p-4 space-y-4 rounded-md bg-zinc-900 
+              border border-gray-400 animate-scale'
               aria-hidden={isMenuOpen}
             >
               <div className='flex justify-between items-center'>
@@ -120,16 +120,19 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
                 </button>
               </div>
 
-              <div className='flex justify-between items-center gap-4'>
-                <ul className='flex gap-4'>
+              <ul className='flex gap-4 justify-between'>
+                <li className='flex gap-2'>
                   <Link href='/' className='hover:opacity-80 hover:underline'>
                     Home
                   </Link>
                   <Link href='/' className='hover:opacity-80 hover:underline'>
                     Features
                   </Link>
-                </ul>
-              </div>
+                </li>
+                <li>
+                  <button onClick={() => signIn()}>Sign In</button>
+                </li>
+              </ul>
             </nav>
           )}
         </>

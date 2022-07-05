@@ -14,7 +14,7 @@ const Home = () => {
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
 
-      <main className='container mx-auto p-4'>
+      <main className='text-center container mx-auto p-4 sm:text-left'>
         <section className='py-8 space-y-6 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
             The simpiler way to log your gym workouts.
@@ -28,7 +28,7 @@ const Home = () => {
             onClick={() =>
               signIn("google", { redirect: true, callbackUrl: "/dashboard" })
             }
-            className='sm:mx-auto'
+            className='mx-auto'
           >
             Get Started Now
           </Button>
@@ -98,7 +98,7 @@ const Home = () => {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <Button onClick={signIn} className='mt-6 sm:mx-auto'>
+          <Button onClick={signIn} className='mt-6 mx-auto'>
             Get Started Today
           </Button>
         </section>
