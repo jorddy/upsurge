@@ -11,6 +11,8 @@ export const setsValidator = z.object({
   elevation: z.number().optional()
 });
 
+export type SetType = z.infer<typeof setsValidator>;
+
 export const entryValidator = z.object({
   id: z.string(),
   createdAt: z.string().transform(data => new Date(data)),
@@ -18,6 +20,8 @@ export const entryValidator = z.object({
   notes: z.string(),
   sets: setsValidator.array()
 });
+
+export type EntryType = z.infer<typeof entryValidator>;
 
 export const exerciseValidator = z.object({
   id: z.string(),
