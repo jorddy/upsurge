@@ -56,7 +56,10 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       )}
 
       {isOptionsOpen && (
-        <ul className='absolute top-16 right-4 space-y-4 bg-slate-900 rounded-md shadow-md overflow-hidden'>
+        <ul
+          className='absolute top-16 right-4 space-y-4 bg-zinc-900 border border-gray-400 
+          rounded-md shadow-md overflow-hidden'
+        >
           <li>
             <Link
               href='/dashboard'
