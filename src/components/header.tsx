@@ -94,13 +94,8 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='hidden md:inline'
-          >
-            Get Started With Google
+          <Button onClick={signIn} className='hidden md:inline'>
+            Get Started Today
           </Button>
 
           <button
@@ -139,13 +134,6 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
                     Features
                   </Link>
                 </ul>
-
-                <Link
-                  href='/api/auth/signin'
-                  className='hover:opacity-80 hover:underline'
-                >
-                  Sign In
-                </Link>
               </div>
             </nav>
           )}

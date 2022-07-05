@@ -1,7 +1,5 @@
-// export { default } from "next-auth/middleware";
+export { default } from "next-auth/middleware";
 
-export const middleware = () => {};
-
-// export const config = {
-//   matcher: ["/dashboard", "/exercises/:path*", "/workouts/:path*"]
-// };
+export const config = {
+  matcher: ["/dashboard", "/exercises/:path*", "/workouts/:path*"]
+};

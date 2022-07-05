@@ -24,12 +24,7 @@ const Home = () => {
             is the app that gets out of your way and lets you focus on what
             really matters.
           </p>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='sm:mx-auto'
-          >
+          <Button onClick={signIn} className='sm:mx-auto'>
             Get Started Now
           </Button>
         </section>
@@ -98,12 +93,7 @@ const Home = () => {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='mt-6 sm:mx-auto'
-          >
+          <Button onClick={signIn} className='mt-6 sm:mx-auto'>
             Get Started Today
           </Button>
         </section>
