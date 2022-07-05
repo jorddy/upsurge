@@ -42,3 +42,12 @@ export const workoutValidator = z.object({
 });
 
 export type WorkoutType = z.infer<typeof workoutValidator>;
+
+const sumEntryTypeEnum = z.enum(["weight", "distance"]);
+
+export type SumEntryTypeEnum = z.infer<typeof sumEntryTypeEnum>;
+
+export const sumEntriesValidator = z.object({
+  type: sumEntryTypeEnum,
+  workoutId: z.string()
+});

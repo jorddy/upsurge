@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { FC } from "react";
 import { WorkoutType } from "@/hooks/queries/validators";
-import { sumEntries } from "@/utils/sum-entries";
+import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 
 const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
-  const totalSum = sumEntries(workout.entries);
+  const type = workout.entries[0].sets[0].weight ? "weight" : "distance";
+  const { data, isLoading } = useSumWorkout(type, workout.id);
 
   return (
     <Link
@@ -18,15 +19,18 @@ const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
           <strong>Sets:</strong> {workout.entries[0].sets.length}
         </p>
 
-        {workout.entries[0].sets[0].weight && (
+        {isLoading && type === "weight" && <p>Summing weights...</p>}
+        {isLoading && type === "distance" && <p>Summing distance...</p>}
+
+        {data && type === "weight" && (
           <p>
-            <strong>Total Weight Lifted:</strong> {totalSum}kg
+            <strong>Total Weight Lifted:</strong> {data}kg
           </p>
         )}
 
-        {workout.entries[0].sets[0].distance && (
+        {data && type === "distance" && (
           <p>
-            <strong>Total Distance Travelled:</strong> {totalSum}m
+            <strong>Total Distance Travelled:</strong> {data}m
           </p>
         )}
       </div>
