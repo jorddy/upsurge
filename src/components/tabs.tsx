@@ -15,7 +15,9 @@ const Tabs = () => {
   const [exerciseFilter, setExerciseFilter] = useState("");
   const allWorkouts = useGetAllWorkouts();
   const allExercises = useGetAllExercises();
-  // const filteredData = useFilter();
+
+  const filteredWorkoutData = useFilter(workoutFilter, allWorkouts.data);
+  const filteredExerciseData = useFilter(exerciseFilter, allExercises.data);
 
   if (allWorkouts.isLoading || allExercises.isLoading) return <Loader />;
 
@@ -43,9 +45,10 @@ const Tabs = () => {
           />
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-            {allWorkouts.data?.map(workout => (
-              <WorkoutCard key={workout.id} workout={workout} />
-            ))}
+            {filteredWorkoutData &&
+              filteredWorkoutData.map(workout => (
+                <WorkoutCard key={workout.id} workout={workout} />
+              ))}
           </div>
         </Tab.Panel>
 
@@ -64,9 +67,10 @@ const Tabs = () => {
           />
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-            {allExercises.data?.map(exercise => (
-              <ExerciseCard key={exercise.id} exercise={exercise} />
-            ))}
+            {filteredExerciseData &&
+              filteredExerciseData?.map(exercise => (
+                <ExerciseCard key={exercise.id} exercise={exercise} />
+              ))}
           </div>
         </Tab.Panel>
 
