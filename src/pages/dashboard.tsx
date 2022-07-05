@@ -2,28 +2,14 @@ import Header from "@/components/header";
 import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: { session }
-  };
-};
-
 const Dashboard = () => {
+  const { status } = useSession();
+
+  if (status === "unauthenticated") signIn();
+
   const { data, isLoading } = useGetLatestWorkouts();
 
   if (isLoading) return <Loader />;

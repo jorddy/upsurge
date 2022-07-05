@@ -1,8 +1,7 @@
 import Header from "@/components/header";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
@@ -11,26 +10,13 @@ import {
   createExerciseValidator
 } from "@/hooks/mutations/validators";
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: { session }
-  };
-};
-
 const CreateExercisePage = () => {
-  const { push } = useRouter();
+  const { status } = useSession();
+
+  if (status === "unauthenticated") signIn();
+
   const queryClient = useQueryClient();
+  const { push } = useRouter();
   const { mutate, isError, isLoading } = useCreateExercise(queryClient);
 
   const {

@@ -1,9 +1,7 @@
 import Header from "@/components/header";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import { useQueryClient } from "react-query";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
 import {
@@ -11,25 +9,11 @@ import {
   createWorkoutValidator
 } from "@/hooks/mutations/validators";
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: { session }
-  };
-};
-
 const CreateWorkoutPage = () => {
-  const { push } = useRouter();
+  const { status } = useSession();
+
+  if (status === "unauthenticated") signIn();
+
   const queryClient = useQueryClient();
   const { mutate, isError, isLoading } = useCreateWorkout(queryClient);
 
