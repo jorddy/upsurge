@@ -9,13 +9,11 @@ import {
   CreateExerciseType,
   createExerciseValidator
 } from "@/hooks/mutations/validators";
+import Loader from "@/components/loader";
 
 const CreateExercisePage = () => {
-  const { status } = useSession();
-
-  if (status === "unauthenticated") signIn();
-
   const queryClient = useQueryClient();
+  const { status } = useSession();
   const { push } = useRouter();
   const { mutate, isError, isLoading } = useCreateExercise(queryClient);
 
@@ -26,6 +24,9 @@ const CreateExercisePage = () => {
   } = useForm<CreateExerciseType>({
     resolver: zodResolver(createExerciseValidator)
   });
+
+  if (status === "loading") return <Loader />;
+  if (status === "unauthenticated") signIn();
 
   return (
     <>
