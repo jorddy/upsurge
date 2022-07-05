@@ -25,7 +25,10 @@ const Dashboard = () => {
               <h1 className='text-lg font-bold sm:text-2xl'>
                 Welcome back, {session.user.name}
               </h1>
-              <Link href='/create' className='text-sm font-semibold underline'>
+              <Link
+                href='/create'
+                className='text-sm font-semibold underline hover:text-orange-600'
+              >
                 + New Log
               </Link>
             </div>
