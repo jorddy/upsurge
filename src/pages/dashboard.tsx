@@ -3,6 +3,25 @@ import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
 import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
+import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await unstable_getServerSession(req, res);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+};
 
 const Dashboard = () => {
   const { data, isLoading } = useGetLatestWorkouts();
