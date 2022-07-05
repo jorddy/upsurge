@@ -26,6 +26,7 @@ const CreateExercisePage = () => {
   });
 
   if (status === "loading") return <Loader />;
+
   if (status === "unauthenticated") signIn();
 
   if (session) {

@@ -8,13 +8,11 @@ import {
   CreateWorkoutType,
   createWorkoutValidator
 } from "@/hooks/mutations/validators";
+import Loader from "@/components/loader";
 
 const CreateWorkoutPage = () => {
-  const { status } = useSession();
-
-  if (status === "unauthenticated") signIn();
-
   const queryClient = useQueryClient();
+  const { data: session, status } = useSession();
   const { mutate, isError, isLoading } = useCreateWorkout(queryClient);
 
   const {
@@ -25,40 +23,48 @@ const CreateWorkoutPage = () => {
     resolver: zodResolver(createWorkoutValidator)
   });
 
-  return (
-    <>
-      <Header app />
+  if (status === "loading") return <Loader />;
 
-      <main className='container mx-auto p-4 space-y-8'>
-        <div className='space-y-2'>
-          <h1 className='text-xl font-semibold'>Create your workout</h1>
-          <p>Begin with a name for your workout and add exercises from there</p>
-        </div>
+  if (status === "unauthenticated") signIn();
 
-        <form
-          className='space-y-4'
-          onSubmit={handleSubmit(data => console.log(data))}
-        >
-          <div className='field'>
-            <label htmlFor='name'>Name:</label>
-            <input {...register("name")} className='input' />
-            {errors.name && (
-              <p className='text-red-500'>{errors.name.message}</p>
-            )}
+  if (session) {
+    return (
+      <>
+        <Header app />
+
+        <main className='container mx-auto p-4 space-y-8'>
+          <div className='space-y-2'>
+            <h1 className='text-xl font-semibold'>Create your workout</h1>
+            <p>
+              Begin with a name for your workout and add exercises from there
+            </p>
           </div>
 
-          <button
-            type='submit'
-            disabled={isLoading}
-            className='px-4 py-2 bg-orange-400 text-slate-900 rounded-sm 
-            transition hover:bg-orange-500'
+          <form
+            className='space-y-4'
+            onSubmit={handleSubmit(data => console.log(data))}
           >
-            {isLoading ? "Creating..." : "Create"}
-          </button>
-        </form>
-      </main>
-    </>
-  );
+            <div className='field'>
+              <label htmlFor='name'>Name:</label>
+              <input {...register("name")} className='input' />
+              {errors.name && (
+                <p className='text-red-500'>{errors.name.message}</p>
+              )}
+            </div>
+
+            <button
+              type='submit'
+              disabled={isLoading}
+              className='px-4 py-2 bg-orange-400 text-slate-900 rounded-sm 
+            transition hover:bg-orange-500'
+            >
+              {isLoading ? "Creating..." : "Create"}
+            </button>
+          </form>
+        </main>
+      </>
+    );
+  }
 };
 
 export default CreateWorkoutPage;
