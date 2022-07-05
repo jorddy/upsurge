@@ -90,8 +90,8 @@ const CreateExercisePage = () => {
             <button
               type='submit'
               disabled={isLoading}
-              className='px-4 py-2 bg-orange-400 text-slate-900 rounded-sm 
-              transition hover:bg-orange-500'
+              className='px-4 py-2 bg-orange-600 text-slate-900 rounded-sm 
+              transition hover:scale-95'
             >
               {isLoading ? "Creating..." : "Create"}
             </button>

@@ -12,7 +12,7 @@ const AppLayout: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   return (
     <div
-      className='min-h-screen bg-slate-800 text-white 
+      className='min-h-screen bg-zinc-800 text-white 
       [background-image:url("/Background.png")] bg-cover bg-no-repeat'
     >
       {children}

@@ -10,7 +10,7 @@ const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
   return (
     <Link
       href={`/workout/${workout.id}`}
-      className='block p-4 space-y-2 bg-slate-900 rounded-md'
+      className='block p-4 space-y-2 bg-zinc-900 rounded-md'
     >
       <h2 className='text-xl font-semibold'>{workout.name}</h2>
 

@@ -22,7 +22,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       <nav className='flex items-center gap-8'>
         <Link href='/'>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
-            <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
+            <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
             {!app && "Upsurge"}
           </p>
         </Link>
@@ -45,19 +45,14 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
         )}
       </nav>
 
-      {session && (
-        <div className='flex items-center gap-4'>
-          <p>{session.user?.name}</p>
-          {session.user?.image && (
-            <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
-              <Image
-                className='w-10 h-10 rounded-full object-contain'
-                src={session.user?.image as string}
-                alt={session.user?.name as string}
-              />
-            </button>
-          )}
-        </div>
+      {session && session.user?.image && (
+        <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
+          <Image
+            className='w-10 h-10 rounded-full object-contain'
+            src={session.user?.image as string}
+            alt={session.user?.name as string}
+          />
+        </button>
       )}
 
       {isOptionsOpen && (
@@ -114,7 +109,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
             >
               <div className='flex justify-between items-center'>
                 <p className='text-2xl font-bold flex items-center gap-2'>
-                  <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
+                  <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
                   {!app && "Upsurge"}
                 </p>
                 <button

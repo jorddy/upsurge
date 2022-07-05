@@ -1,11 +1,11 @@
-import { Fragment } from "react";
-import { Tab } from "@headlessui/react";
-import { useGetAllWorkouts } from "@/hooks/queries/use-get-all-workouts";
-import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
+import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
-import Link from "next/link";
+import TabComponent from "./tab";
+import { Tab } from "@headlessui/react";
+import { useGetAllWorkouts } from "@/hooks/queries/use-get-all-workouts";
+import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
 
 const Tabs = () => {
   const allWorkouts = useGetAllWorkouts();
@@ -16,51 +16,11 @@ const Tabs = () => {
   return (
     <Tab.Group>
       <Tab.List className='flex overflow-x-auto scrollbar-hide'>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Workouts
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Exercises
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Progress
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              History
-            </button>
-          )}
-        </Tab>
+        <TabComponent>Workouts</TabComponent>
+        <TabComponent>Exercises</TabComponent>
+        <TabComponent>History</TabComponent>
       </Tab.List>
+
       <Tab.Panels>
         <Tab.Panel className='space-y-2'>
           <Link
@@ -75,6 +35,7 @@ const Tabs = () => {
             ))}
           </div>
         </Tab.Panel>
+
         <Tab.Panel className='space-y-2'>
           <Link
             href='/exercises/create'
@@ -88,8 +49,8 @@ const Tabs = () => {
             ))}
           </div>
         </Tab.Panel>
-        <Tab.Panel>Feature coming soon</Tab.Panel>
-        <Tab.Panel>Feature coming soon</Tab.Panel>
+
+        <Tab.Panel className='font-bold'>Feature coming soon</Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );

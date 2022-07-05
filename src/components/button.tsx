@@ -7,7 +7,7 @@ const Button: FC<
     <button
       onClick={onClick}
       className={`flex justify-between items-center gap-2 px-6 py-4 rounded-md 
-      bg-orange-400 text-gray-800 font-semibold transition hover:bg-orange-500
+      bg-orange-600 text-gray-800 font-semibold transition hover:scale-95
       ${className}`}
     >
       {children}
