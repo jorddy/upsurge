@@ -95,7 +95,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       {!session && (
         <>
           <Button onClick={signIn} className='hidden md:inline'>
-            Get Started Today
+            Get Started Now
           </Button>
 
           <button

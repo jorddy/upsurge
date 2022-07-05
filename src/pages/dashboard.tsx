@@ -2,12 +2,12 @@ import Header from "@/components/header";
 import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
-import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
 import { GetServerSideProps } from "next";
-import { unstable_getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
+import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res);
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
 
   if (!session) {
     return {
