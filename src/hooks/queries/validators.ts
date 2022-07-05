@@ -3,21 +3,17 @@ import { z } from "zod";
 export const setsValidator = z.object({
   id: z.string(),
   createdAt: z.string().transform(data => new Date(data)),
-  updatedAt: z.string().transform(data => new Date(data)),
-  notes: z.string(),
-  reps: z.number().optional(),
-  weight: z.number().optional(),
-  distance: z.number().optional(),
-  elevation: z.number().optional()
+  reps: z.number().nullable(),
+  weight: z.number().nullable(),
+  distance: z.number().nullable(),
+  elevation: z.number().nullable()
 });
-
-export type SetType = z.infer<typeof setsValidator>;
 
 export const entryValidator = z.object({
   id: z.string(),
   createdAt: z.string().transform(data => new Date(data)),
   updatedAt: z.string().transform(data => new Date(data)),
-  notes: z.string(),
+  notes: z.string().nullable(),
   sets: setsValidator.array()
 });
 
@@ -28,11 +24,10 @@ export const exerciseValidator = z.object({
   createdAt: z.string().transform(data => new Date(data)),
   updatedAt: z.string().transform(data => new Date(data)),
   name: z.string(),
-  description: z.string(),
-  currentWeight: z.number().optional(),
-  targetWeight: z.number().optional(),
-  currentDistance: z.number().optional(),
-  targetDistance: z.number().optional(),
+  currentWeight: z.number().nullable(),
+  targetWeight: z.number().nullable(),
+  currentDistance: z.number().nullable(),
+  targetDistance: z.number().nullable(),
   entries: entryValidator.array()
 });
 
