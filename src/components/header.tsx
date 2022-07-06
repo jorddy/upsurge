@@ -20,7 +20,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
   return (
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
       <nav className='flex items-center gap-8'>
-        <Link href='/'>
+        <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
             {!app && "Upsurge"}

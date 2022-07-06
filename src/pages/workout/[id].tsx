@@ -3,11 +3,11 @@ import Loader from "@/components/loader";
 import Header from "@/components/header";
 import DateBar from "@/components/date-bar";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
-import { useState } from "react";
 
 const WorkoutPage = () => {
   const { data: session, status } = useSession();
@@ -15,9 +15,8 @@ const WorkoutPage = () => {
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
   const { data: sum } = useSumWorkout(workout?.id);
 
-  const [selectedDate, setSelectedDate] = useState("");
-  const filteredData = useDateFilter(selectedDate, workout);
-  console.log(filteredData);
+  const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
+  const filteredData = useDateFilter(date, workout);
 
   if (status === "loading") return <Loader />;
 
@@ -61,13 +60,16 @@ const WorkoutPage = () => {
 
           <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
 
-          <DateBar
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-          />
+          <DateBar date={date} setDate={setDate} />
 
           <section className='space-y-4'>
-            {workout?.entries.map(entry => (
+            {filteredData && filteredData?.length <= 0 && (
+              <p className='p-4 bg-zinc-900 rounded-md'>
+                No entries found with this date.
+              </p>
+            )}
+
+            {filteredData?.map(entry => (
               <article
                 key={entry.id}
                 className='p-4 space-y-2 rounded-md bg-zinc-900'

@@ -12,7 +12,7 @@ const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
 
       <div>
         <p>
-          <strong>Sets:</strong> 0
+          <strong>Entries:</strong> {exercise.entries.length}
         </p>
 
         {exercise.currentWeight && exercise.targetWeight && (

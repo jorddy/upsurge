@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { ExerciseType, WorkoutType } from "./queries/validators";
 
-export const useFilter = (
-  filter: string,
+export const useSearch = (
+  query: string,
   data: WorkoutType[] | ExerciseType[] | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data);
@@ -10,10 +10,10 @@ export const useFilter = (
   useEffect(() => {
     setFilteredData(
       data?.filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
+        item.name.toLowerCase().includes(query.toLowerCase())
       )
     );
-  }, [data, filter]);
+  }, [data, query]);
 
   return filteredData;
 };

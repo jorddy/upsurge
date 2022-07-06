@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { WorkoutByIdType } from "./queries/validators";
+import { ExerciseType, WorkoutByIdType } from "./queries/validators";
 
 export const useDateFilter = (
-  selectedDate: string,
-  data: WorkoutByIdType | undefined
+  date: string | undefined,
+  data: WorkoutByIdType | ExerciseType | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data?.entries);
 
-  // useEffect(() => {
-  //   setFilteredData(
-  //     data?.entries.filter(entry => entry.createdAt === new Date(selectedDate))
-  //   );
-  // }, [data, selectedDate]);
+  useEffect(() => {
+    if (date) {
+      setFilteredData(
+        data?.entries.filter(entry => entry.createdAt >= new Date(date))
+      );
+    }
+  }, [data, date]);
 
   return filteredData;
 };

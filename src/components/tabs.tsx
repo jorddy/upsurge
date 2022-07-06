@@ -3,22 +3,22 @@ import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
 import TabComponent from "./tab";
-import FilterBar from "./filter-bar";
+import SearchBar from "./search-bar";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
-import { useFilter } from "@/hooks/use-filter";
+import { useSearch } from "@/hooks/use-search";
 import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
 const Tabs = () => {
-  const [workoutFilter, setWorkoutFilter] = useState("");
-  const [exerciseFilter, setExerciseFilter] = useState("");
+  const [workoutQuery, setWorkoutQuery] = useState("");
+  const [exerciseQuery, setExerciseQuery] = useState("");
   const workouts = useWorkouts();
   const exercises = useExercises();
 
-  const filteredWorkoutData = useFilter(workoutFilter, workouts.data);
-  const filteredExerciseData = useFilter(exerciseFilter, exercises.data);
+  const filteredWorkoutData = useSearch(workoutQuery, workouts.data);
+  const filteredExerciseData = useSearch(exerciseQuery, exercises.data);
 
   if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
@@ -39,10 +39,10 @@ const Tabs = () => {
             + Create New Workout
           </Link>
 
-          <FilterBar
+          <SearchBar
             type='workout'
-            filter={workoutFilter}
-            setFilter={setWorkoutFilter}
+            query={workoutQuery}
+            setQuery={setWorkoutQuery}
           />
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -64,10 +64,10 @@ const Tabs = () => {
             + Create New Exercise
           </Link>
 
-          <FilterBar
+          <SearchBar
             type='exercise'
-            filter={exerciseFilter}
-            setFilter={setExerciseFilter}
+            query={exerciseQuery}
+            setQuery={setExerciseQuery}
           />
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
