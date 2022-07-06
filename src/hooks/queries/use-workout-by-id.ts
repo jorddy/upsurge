@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { ByIdError, WorkoutType, workoutValidator } from "./validators";
+import { workoutValidator } from "./validators";
 
 export const useWorkoutById = (id: string) =>
-  useQuery<WorkoutType, ByIdError>(
+  useQuery(
     ["workout-by-id", id],
     async () => {
       const res = await fetch(`/api/workout/get-workout-by-id?id=${id}`);

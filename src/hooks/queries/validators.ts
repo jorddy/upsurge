@@ -37,11 +37,9 @@ export const workoutValidator = z.object({
   entries: entryValidator.array()
 });
 
-const sumEntryTypeEnum = z.enum(["weight", "distance"]);
-
 export const sumEntriesValidator = z.object({
-  type: sumEntryTypeEnum,
-  workoutId: z.string()
+  weight: z.number().nullable(),
+  distance: z.number().nullable()
 });
 
 export const byIdValidator = z.object({
@@ -51,7 +49,3 @@ export const byIdValidator = z.object({
 export type EntryType = z.infer<typeof entryValidator>;
 export type ExerciseType = z.infer<typeof exerciseValidator>;
 export type WorkoutType = z.infer<typeof workoutValidator>;
-export type SumEntryTypeEnum = z.infer<typeof sumEntryTypeEnum>;
-
-export type SumEntryError = z.inferFlattenedErrors<typeof sumEntriesValidator>;
-export type ByIdError = z.inferFlattenedErrors<typeof byIdValidator>;

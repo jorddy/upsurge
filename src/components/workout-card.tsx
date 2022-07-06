@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { WorkoutType } from "@/hooks/queries/validators";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
+import { useTotalSets } from "@/hooks/use-total-sets";
 
 const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
-  const type = workout.entries[0].sets[0].weight ? "weight" : "distance";
-  const { data, isLoading } = useSumWorkout(type, workout.id);
+  const { data, isLoading } = useSumWorkout(workout.id);
+  const totalSets = useTotalSets(workout.entries);
 
   return (
     <Link
@@ -16,23 +17,22 @@ const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
 
       <div>
         <p>
-          <strong>Sets:</strong> {workout.entries[0].sets.length}
+          <strong>Sets:</strong> {totalSets}
         </p>
 
-        {isLoading && type === "weight" && <p>Summing weights...</p>}
-        {isLoading && type === "distance" && <p>Summing distance...</p>}
-
-        {data && type === "weight" && (
-          <p>
-            <strong>Total Weight Lifted:</strong> {data}kg
-          </p>
-        )}
-
-        {data && type === "distance" && (
-          <p>
-            <strong>Total Distance Travelled:</strong> {data}m
-          </p>
-        )}
+        <div className='flex flex-wrap gap-2'>
+          {isLoading && <p>Summing totals...</p>}
+          {data?.weight && (
+            <p>
+              <strong>Total Weight Lifted:</strong> {data?.weight}kg
+            </p>
+          )}
+          {data?.distance && (
+            <p>
+              <strong>Total Distance Travelled:</strong> {data?.distance}kg
+            </p>
+          )}
+        </div>
       </div>
     </Link>
   );
