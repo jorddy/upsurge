@@ -32,13 +32,6 @@ const Tabs = () => {
 
       <Tab.Panels>
         <Tab.Panel className='space-y-4'>
-          <Link
-            href='/workouts/create'
-            className='underline font-semibold hover:text-orange-600'
-          >
-            + Create New Workout
-          </Link>
-
           <SearchBar
             type='workout'
             query={workoutQuery}
@@ -57,13 +50,6 @@ const Tabs = () => {
         </Tab.Panel>
 
         <Tab.Panel className='space-y-4'>
-          <Link
-            href='/exercises/create'
-            className='underline font-semibold hover:text-orange-600'
-          >
-            + Create New Exercise
-          </Link>
-
           <SearchBar
             type='exercise'
             query={exerciseQuery}
@@ -81,7 +67,7 @@ const Tabs = () => {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel className='font-bold'>Feature coming soon</Tab.Panel>
+        <Tab.Panel>Feature coming soon</Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );
