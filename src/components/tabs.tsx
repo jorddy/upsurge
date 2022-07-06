@@ -9,6 +9,7 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useFilter } from "@/hooks/use-filter";
+import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
 const Tabs = () => {
   const [workoutFilter, setWorkoutFilter] = useState("");
@@ -47,7 +48,10 @@ const Tabs = () => {
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredWorkoutData &&
               filteredWorkoutData.map(workout => (
-                <WorkoutCard key={workout.id} workout={workout} />
+                <WorkoutCard
+                  key={workout.id}
+                  workout={workout as WorkoutType}
+                />
               ))}
           </div>
         </Tab.Panel>
@@ -70,7 +74,10 @@ const Tabs = () => {
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
                 // TODO: Why is the type here wrong??
-                <ExerciseCard key={exercise.id} exercise={exercise} />
+                <ExerciseCard
+                  key={exercise.id}
+                  exercise={exercise as ExerciseType}
+                />
               ))}
           </div>
         </Tab.Panel>
