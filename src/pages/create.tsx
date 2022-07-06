@@ -1,5 +1,7 @@
 import Header from "@/components/header";
 import Loader from "@/components/loader";
+import OneOffForm from "@/components/one-off-form";
+import WorkoutForm from "@/components/workout-form";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -16,7 +18,7 @@ const CreateExercisePage = () => {
       <>
         <Header app />
 
-        <main className='container mx-auto p-4 space-y-8'>
+        <main className='container mx-auto p-4 space-y-6'>
           <div className='space-y-2'>
             <h1 className='text-xl font-semibold'>Log a workout or exercise</h1>
             <p>
@@ -25,25 +27,27 @@ const CreateExercisePage = () => {
             </p>
           </div>
 
-          <fieldset>
-            <legend>What would you like to log?</legend>
+          <fieldset className='space-y-2'>
+            <legend className='font-semibold'>
+              What would you like to log?
+            </legend>
             <div className='flex gap-4'>
-              <label htmlFor='workout-option'>
+              <label htmlFor='workout'>
                 <input
                   className='mr-2'
                   type='radio'
-                  id='workout-option'
+                  id='workout'
                   value='workout'
                   checked={option === "workout"}
                   onChange={e => setOption(e.target.value)}
                 />
                 Workout
               </label>
-              <label htmlFor='exercise-option'>
+              <label htmlFor='exercise'>
                 <input
                   className='mr-2'
                   type='radio'
-                  id='exercise-option'
+                  id='exercise'
                   value='exercise'
                   checked={option === "exercise"}
                   onChange={e => setOption(e.target.value)}
@@ -53,11 +57,8 @@ const CreateExercisePage = () => {
             </div>
           </fieldset>
 
-          {/* Workout form */}
-          <form></form>
-
-          {/* Exercise form */}
-          <form></form>
+          {option === "workout" && <WorkoutForm />}
+          {option === "exercise" && <OneOffForm />}
         </main>
       </>
     );
