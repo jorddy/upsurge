@@ -1,18 +1,18 @@
 import { useQuery } from "react-query";
 import { z } from "zod";
-import { SumEntryTypeEnum } from "./validators";
+import { SumEntryError, SumEntryTypeEnum } from "./validators";
 
 export const useSumWorkout = (type: SumEntryTypeEnum, workoutId: string) =>
-  useQuery(
+  useQuery<number, SumEntryError>(
     ["sum-workout", workoutId],
     async () => {
-      const res = await (
-        await fetch(
-          `/api/workout/sum-workout?type=${type}&workoutId=${workoutId}`
-        )
-      ).json();
+      const res = await fetch(
+        `/api/workout/sum-workout?type=${type}&workoutId=${workoutId}`
+      );
 
-      return z.number().parse(res);
+      if (!res.ok) throw await res.json();
+
+      return z.number().parse(await res.json());
     },
     {
       enabled: !!workoutId

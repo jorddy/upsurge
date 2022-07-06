@@ -6,20 +6,20 @@ import TabComponent from "./tab";
 import FilterBar from "./filter-bar";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import { useGetAllWorkouts } from "@/hooks/queries/use-get-all-workouts";
-import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
+import { useWorkouts } from "@/hooks/queries/use-workouts";
+import { useExercises } from "@/hooks/queries/use-exercises";
 import { useFilter } from "@/hooks/use-filter";
 
 const Tabs = () => {
   const [workoutFilter, setWorkoutFilter] = useState("");
   const [exerciseFilter, setExerciseFilter] = useState("");
-  const allWorkouts = useGetAllWorkouts();
-  const allExercises = useGetAllExercises();
+  const workouts = useWorkouts();
+  const exercises = useExercises();
 
-  const filteredWorkoutData = useFilter(workoutFilter, allWorkouts.data);
-  const filteredExerciseData = useFilter(exerciseFilter, allExercises.data);
+  const filteredWorkoutData = useFilter(workoutFilter, workouts.data);
+  const filteredExerciseData = useFilter(exerciseFilter, exercises.data);
 
-  if (allWorkouts.isLoading || allExercises.isLoading) return <Loader />;
+  if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
   return (
     <Tab.Group>
@@ -69,6 +69,7 @@ const Tabs = () => {
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
+                // TODO: Why is the type here wrong??
                 <ExerciseCard key={exercise.id} exercise={exercise} />
               ))}
           </div>

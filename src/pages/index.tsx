@@ -45,7 +45,7 @@ const Home = () => {
 
           <div className='mt-20 grid grid-cols-1 gap-16 sm:grid-cols-2'>
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiPencilAlt className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Powerful Logging Capablities</h3>
@@ -57,7 +57,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiBookOpen className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Your Personal Diary</h3>
@@ -69,7 +69,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiLockClosed className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Private, Secure & No Ads</h3>
@@ -81,7 +81,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiChartBar className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Analytical Reporting</h3>

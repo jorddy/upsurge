@@ -3,16 +3,18 @@ import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
 import { signIn, useSession } from "next-auth/react";
-import { useGetLatestWorkouts } from "@/hooks/queries/use-get-latest-workouts";
+import { useLatestWorkouts } from "@/hooks/queries/use-latest-workouts";
 import Link from "next/link";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
-  const { data, isLoading } = useGetLatestWorkouts();
+  const { data, isLoading } = useLatestWorkouts();
 
-  if (status === "loading" || isLoading) return <Loader />;
+  if (status === "loading") return <Loader />;
 
   if (status === "unauthenticated") signIn();
+
+  if (status === "authenticated" && isLoading) return <Loader />;
 
   if (session) {
     return (

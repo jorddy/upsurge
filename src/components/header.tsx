@@ -57,8 +57,8 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {isOptionsOpen && (
         <ul
-          className='absolute top-16 right-4 space-y-4 bg-zinc-900 border border-gray-400 
-          rounded-md shadow-md overflow-hidden'
+          className='absolute top-16 right-4 bg-zinc-900 border border-gray-400 
+          rounded-md shadow-md'
         >
           <li>
             <Link
@@ -80,7 +80,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
           </li>
           <li>
             <button
-              onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+              onClick={() => signOut()}
               className='flex items-center gap-2 p-4 hover:bg-slate-700'
             >
               <HiLogout className='w-6 h-6' />
