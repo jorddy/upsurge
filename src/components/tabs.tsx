@@ -34,7 +34,7 @@ const Tabs = () => {
         <Tab.Panel className='space-y-4'>
           <Link
             href='/workouts/create'
-            className='underline hover:text-orange-600'
+            className='underline font-semibold hover:text-orange-600'
           >
             + Create New Workout
           </Link>
@@ -59,7 +59,7 @@ const Tabs = () => {
         <Tab.Panel className='space-y-4'>
           <Link
             href='/exercises/create'
-            className='underline hover:text-orange-600'
+            className='underline font-semibold hover:text-orange-600'
           >
             + Create New Exercise
           </Link>
@@ -73,7 +73,6 @@ const Tabs = () => {
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
-                // TODO: Why is the type here wrong??
                 <ExerciseCard
                   key={exercise.id}
                   exercise={exercise as ExerciseType}

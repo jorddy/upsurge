@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { sumEntriesValidator } from "./validators";
 
-export const useSumWorkout = (workoutId: string) =>
+export const useSumWorkout = (workoutId: string | undefined) =>
   useQuery(
     ["sum-workout", workoutId],
     async () => {

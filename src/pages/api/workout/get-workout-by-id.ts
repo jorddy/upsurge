@@ -18,7 +18,7 @@ export default async function getExerciseById(
         where: { id },
         include: {
           entries: {
-            include: { sets: true }
+            include: { exercise: true, sets: true }
           }
         }
       });

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
-import { workoutValidator } from "./validators";
+import { workoutByIdValidator } from "./validators";
 
-export const useWorkoutById = (id: string) =>
+export const useWorkoutById = (id: string | undefined) =>
   useQuery(
     ["workout-by-id", id],
     async () => {
@@ -9,7 +9,7 @@ export const useWorkoutById = (id: string) =>
 
       if (!res.ok) throw await res.json();
 
-      return workoutValidator.parse(await res.json());
+      return workoutByIdValidator.parse(await res.json());
     },
     {
       enabled: !!id
