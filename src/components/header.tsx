@@ -58,12 +58,12 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       {isOptionsOpen && (
         <ul
           className='absolute top-16 right-4 bg-zinc-900 border border-gray-400 
-          rounded-md shadow-md'
+          rounded-md shadow-md overflow-hidden'
         >
           <li>
             <Link
               href='/dashboard'
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiLightningBolt className='w-6 h-6' />
               <p>Dashboard</p>
@@ -72,7 +72,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
           <li>
             <Link
               href='/profile'
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiUser className='w-6 h-6' />
               <p>Profile</p>
@@ -81,7 +81,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
           <li>
             <button
               onClick={() => signOut()}
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiLogout className='w-6 h-6' />
               <p>Sign Out</p>

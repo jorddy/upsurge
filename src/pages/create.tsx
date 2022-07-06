@@ -1,29 +1,11 @@
 import Header from "@/components/header";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
-import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
-import {
-  CreateExerciseType,
-  createExerciseValidator
-} from "@/hooks/mutations/validators";
 import Loader from "@/components/loader";
+import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
 
 const CreateExercisePage = () => {
-  const queryClient = useQueryClient();
   const { data: session, status } = useSession();
-  const { push } = useRouter();
-  const { mutate, isError, isLoading } = useCreateExercise(queryClient);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<CreateExerciseType>({
-    resolver: zodResolver(createExerciseValidator)
-  });
+  const [option, setOption] = useState("");
 
   if (status === "loading") return <Loader />;
 
@@ -36,66 +18,46 @@ const CreateExercisePage = () => {
 
         <main className='container mx-auto p-4 space-y-8'>
           <div className='space-y-2'>
-            <h1 className='text-xl font-semibold'>Create your exercise</h1>
-            <p>Enter a name and your current/target weights</p>
+            <h1 className='text-xl font-semibold'>Log a workout or exercise</h1>
+            <p>
+              Here you can log a collection of exercises through a workout or a
+              one-off exercise.
+            </p>
           </div>
 
-          <form
-            className='space-y-4'
-            onSubmit={handleSubmit(data => {
-              mutate(data);
-              if (!isError) push("/dashboard");
-            })}
-          >
-            <div className='field'>
-              <label htmlFor='name'>Name:</label>
-              <input {...register("name")} className='input' />
-              {errors.name && (
-                <p className='text-red-500'>{errors.name.message}</p>
-              )}
+          <fieldset>
+            <legend>What would you like to log?</legend>
+            <div className='flex gap-4'>
+              <label htmlFor='workout-option'>
+                <input
+                  className='mr-2'
+                  type='radio'
+                  id='workout-option'
+                  value='workout'
+                  checked={option === "workout"}
+                  onChange={e => setOption(e.target.value)}
+                />
+                Workout
+              </label>
+              <label htmlFor='exercise-option'>
+                <input
+                  className='mr-2'
+                  type='radio'
+                  id='exercise-option'
+                  value='exercise'
+                  checked={option === "exercise"}
+                  onChange={e => setOption(e.target.value)}
+                />
+                Exercise
+              </label>
             </div>
+          </fieldset>
 
-            <div className='field'>
-              <label htmlFor='description'>Description (optional):</label>
-              <input {...register("description")} className='input' />
-              {errors.description && (
-                <p className='text-red-500'>{errors.description.message}</p>
-              )}
-            </div>
+          {/* Workout form */}
+          <form></form>
 
-            <div className='field'>
-              <label htmlFor='current-weight'>Current Weight:</label>
-              <input
-                {...register("currentWeight")}
-                type='number'
-                className='input'
-              />
-              {errors.currentWeight && (
-                <p className='text-red-500'>{errors.currentWeight.message}</p>
-              )}
-            </div>
-
-            <div className='field'>
-              <label htmlFor='target-weight'>Target Weight:</label>
-              <input
-                {...register("targetWeight")}
-                type='number'
-                className='input'
-              />
-              {errors.targetWeight && (
-                <p className='text-red-500'>{errors.targetWeight.message}</p>
-              )}
-            </div>
-
-            <button
-              type='submit'
-              disabled={isLoading}
-              className='px-4 py-2 bg-orange-600 text-slate-900 rounded-sm 
-              transition hover:scale-95'
-            >
-              {isLoading ? "Creating..." : "Create"}
-            </button>
-          </form>
+          {/* Exercise form */}
+          <form></form>
         </main>
       </>
     );
