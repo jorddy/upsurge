@@ -58,4 +58,5 @@ export const byIdValidator = z.object({
 
 export type ExerciseType = z.infer<typeof exerciseValidator>;
 export type WorkoutType = z.infer<typeof workoutValidator>;
+export type WorkoutByIdType = z.infer<typeof workoutByIdValidator>;
 export type EntryType = z.infer<typeof entryValidator>;

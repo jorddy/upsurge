@@ -6,12 +6,18 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
+import { useDateFilter } from "@/hooks/use-date-filter";
+import { useState } from "react";
 
 const WorkoutPage = () => {
   const { data: session, status } = useSession();
   const { query } = useRouter();
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
   const { data: sum } = useSumWorkout(workout?.id);
+
+  const [selectedDate, setSelectedDate] = useState("");
+  const filteredData = useDateFilter(selectedDate, workout);
+  console.log(filteredData);
 
   if (status === "loading") return <Loader />;
 
@@ -40,13 +46,13 @@ const WorkoutPage = () => {
 
           <section className='flex flex-col gap-4 sm:flex-row'>
             {sum?.weight && (
-              <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 text-white sm:flex-initial'>
+              <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Weight Lifted</h2>
                 <p className='text-xl font-bold'>{sum.weight}kg</p>
               </div>
             )}
             {sum?.distance && (
-              <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 text-white sm:flex-initial'>
+              <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Distance Travelled</h2>
                 <p className='text-xl font-bold'>{sum.distance}m</p>
               </div>
@@ -55,11 +61,17 @@ const WorkoutPage = () => {
 
           <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
 
-          <DateBar />
+          <DateBar
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
 
           <section className='space-y-4'>
             {workout?.entries.map(entry => (
-              <article key={entry.id} className='p-4 rounded-md bg-zinc-900'>
+              <article
+                key={entry.id}
+                className='p-4 space-y-2 rounded-md bg-zinc-900'
+              >
                 <div className='flex flex-wrap gap-2 items-center justify-between'>
                   <p className='text-xl font-semibold'>
                     {entry.createdAt.toLocaleDateString()}
@@ -77,6 +89,18 @@ const WorkoutPage = () => {
                     <strong>Exercise:</strong> {entry.exercise.name}
                   </p>
                 )}
+
+                <ul>
+                  {entry.sets.map(set => (
+                    <li key={set.id}>
+                      {set.weight && `${set.weight}kg - ${set.reps} reps`}
+                      {set.distance &&
+                        `${set.distance}m ${
+                          set.elevation ? `- ${set.elevation} ft` : ""
+                        }`}
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
           </section>

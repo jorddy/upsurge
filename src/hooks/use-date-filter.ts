@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
-import { ExerciseType, WorkoutType } from "./queries/validators";
+import { WorkoutByIdType } from "./queries/validators";
 
-export const useFilter = (
-  filter: string,
-  data: WorkoutType[] | ExerciseType[] | undefined
+export const useDateFilter = (
+  selectedDate: string,
+  data: WorkoutByIdType | undefined
 ) => {
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data?.entries);
 
-  useEffect(() => {
-    setFilteredData(
-      data?.filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    );
-  }, [data, filter]);
+  // useEffect(() => {
+  //   setFilteredData(
+  //     data?.entries.filter(entry => entry.createdAt === new Date(selectedDate))
+  //   );
+  // }, [data, selectedDate]);
 
   return filteredData;
 };
