@@ -16,7 +16,7 @@ const Home = () => {
       <main className='text-center container mx-auto p-4 sm:text-left'>
         <section className='py-8 space-y-6 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
-            The simpiler way to log your gym workouts.
+            The simpler way to log your gym workouts.
           </h1>
           <p className='text-xl text-gray-300'>
             No ads, automation, and the ability to share with friends. Upsurge
