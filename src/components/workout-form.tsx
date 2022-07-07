@@ -66,11 +66,10 @@ const WorkoutForm = () => {
         {/* TODO: Exercise search box */}
 
         {/* TODO: List of Exercises to add */}
-
         <div>
-          {fields.map(entry => {
-            <div className=''></div>;
-          })}
+          {fields.map(entry => (
+            <div key={entry.id}>placeholder</div>
+          ))}
         </div>
       </div>
     </form>
