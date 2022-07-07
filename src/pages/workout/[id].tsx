@@ -84,11 +84,11 @@ const WorkoutPage = () => {
                   </Link>
                 </div>
 
-                {entry.exercise && (
+                {/* {entry.exercise && (
                   <p>
                     <strong>Exercise:</strong> {entry.exercise.name}
                   </p>
-                )}
+                )} */}
 
                 <ul>
                   {entry.sets.map(set => (
