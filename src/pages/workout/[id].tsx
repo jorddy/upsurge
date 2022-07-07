@@ -19,9 +19,7 @@ const WorkoutPage = () => {
   const filteredData = useDateFilter(date, workout);
 
   if (status === "loading") return <Loader />;
-
   if (status === "unauthenticated") signIn();
-
   if (status === "authenticated" && isLoading) return <Loader />;
 
   if (session) {

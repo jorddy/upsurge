@@ -11,17 +11,17 @@ declare module "next-auth" {
 }
 
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
-  callbacks: {
-    session({ session, user }) {
-      session.user.id = user.id;
-      return session;
-    }
-  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!
     })
-  ]
+  ],
+  adapter: PrismaAdapter(prisma),
+  callbacks: {
+    session({ session, user }) {
+      session.user.id = user?.id;
+      return session;
+    }
+  }
 });

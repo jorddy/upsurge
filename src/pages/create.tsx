@@ -10,7 +10,6 @@ const CreateExercisePage = () => {
   const [option, setOption] = useState("");
 
   if (status === "loading") return <Loader />;
-
   if (status === "unauthenticated") signIn();
 
   if (session) {

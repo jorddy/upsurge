@@ -66,7 +66,12 @@ const WorkoutForm = () => {
         {/* TODO: Exercise search box */}
 
         {/* TODO: List of Exercises to add */}
-        {/* TODO: List of Entries within those exercises to add */}
+
+        <div>
+          {fields.map(entry => {
+            <div className=''></div>;
+          })}
+        </div>
       </div>
     </form>
   );

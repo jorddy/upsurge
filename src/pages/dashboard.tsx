@@ -11,9 +11,7 @@ const Dashboard = () => {
   const { data, isLoading } = useLatestWorkouts();
 
   if (status === "loading") return <Loader />;
-
   if (status === "unauthenticated") signIn();
-
   if (status === "authenticated" && isLoading) return <Loader />;
 
   if (session) {
