@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -10,7 +10,7 @@ declare module "next-auth" {
   }
 }
 
-export default NextAuth({
+export const nextAuthOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -24,4 +24,6 @@ export default NextAuth({
       return session;
     }
   }
-});
+};
+
+export default NextAuth(nextAuthOptions);
