@@ -28,10 +28,10 @@ model Exercise {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   name            String
-  currentWeight   Int?
-  targetWeight    Int?
-  currentDistance Int?
-  targetDistance  Int?
+  currentWeight   Float?
+  targetWeight    Float?
+  currentDistance Float?
+  targetDistance  Float?
 
   entries Entry[]
   user    User    @relation(fields: [userId], references: [id])
@@ -41,16 +41,16 @@ model Exercise {
 }
 
 model Entry {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  notes     String
-
-  sets       Set[]
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId String
-  workout    Workout? @relation(fields: [workoutId], references: [id])
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  notes      String?
   workoutId  String?
+  exerciseId String
+
+  sets     Set[]
+  workout  Workout? @relation(fields: [workoutId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
 
   @@index([exerciseId, workoutId])
 }
@@ -58,10 +58,10 @@ model Entry {
 model Set {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  reps      Int?
-  weight    Int?
-  distance  Int?
-  elevation Int?
+  reps      Float?
+  weight    Float?
+  distance  Float?
+  elevation Float?
 
   entry   Entry  @relation(fields: [entryId], references: [id])
   entryId String
@@ -69,7 +69,6 @@ model Set {
   @@index([entryId])
 }
 
-// NEXT AUTH
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -90,17 +89,6 @@ model Account {
   @@index([userId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -114,10 +102,13 @@ model User {
   workouts  Workout[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
 
-  @@unique([identifier, token])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

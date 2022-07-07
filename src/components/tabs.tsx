@@ -1,94 +1,72 @@
-import { Fragment } from "react";
-import { Tab } from "@headlessui/react";
-import { useGetAllWorkouts } from "@/hooks/queries/use-get-all-workouts";
-import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
+import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
-import Link from "next/link";
+import TabComponent from "./tab";
+import SearchBar from "./search-bar";
+import { useState } from "react";
+import { Tab } from "@headlessui/react";
+import { useWorkouts } from "@/hooks/queries/use-workouts";
+import { useExercises } from "@/hooks/queries/use-exercises";
+import { useSearch } from "@/hooks/use-search";
+import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
 const Tabs = () => {
-  const allWorkouts = useGetAllWorkouts();
-  const allExercises = useGetAllExercises();
+  const [workoutQuery, setWorkoutQuery] = useState("");
+  const [exerciseQuery, setExerciseQuery] = useState("");
+  const workouts = useWorkouts();
+  const exercises = useExercises();
 
-  if (allWorkouts.isLoading || allExercises.isLoading) return <Loader />;
+  const filteredWorkoutData = useSearch(workoutQuery, workouts.data);
+  const filteredExerciseData = useSearch(exerciseQuery, exercises.data);
+
+  if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
   return (
     <Tab.Group>
       <Tab.List className='flex overflow-x-auto scrollbar-hide'>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Workouts
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Exercises
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              Progress
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={`mr-4 ${
-                selected ? "border-b-2 border-orange-400" : ""
-              }`}
-            >
-              History
-            </button>
-          )}
-        </Tab>
+        <TabComponent>Workouts</TabComponent>
+        <TabComponent>Exercises</TabComponent>
+        <TabComponent>History</TabComponent>
       </Tab.List>
+
       <Tab.Panels>
-        <Tab.Panel className='space-y-2'>
-          <Link
-            href='/workouts/create'
-            className='underline hover:text-orange-400'
-          >
-            + Create New Workout
-          </Link>
+        <Tab.Panel className='space-y-4'>
+          <SearchBar
+            type='workout'
+            query={workoutQuery}
+            setQuery={setWorkoutQuery}
+          />
+
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-            {allWorkouts.data?.map(workout => (
-              <WorkoutCard key={workout.id} workout={workout} />
-            ))}
+            {filteredWorkoutData &&
+              filteredWorkoutData.map(workout => (
+                <WorkoutCard
+                  key={workout.id}
+                  workout={workout as WorkoutType}
+                />
+              ))}
           </div>
         </Tab.Panel>
-        <Tab.Panel className='space-y-2'>
-          <Link
-            href='/exercises/create'
-            className='underline hover:text-orange-400'
-          >
-            + Create New Exercise
-          </Link>
+
+        <Tab.Panel className='space-y-4'>
+          <SearchBar
+            type='exercise'
+            query={exerciseQuery}
+            setQuery={setExerciseQuery}
+          />
+
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-            {allExercises.data?.map(exercise => (
-              <ExerciseCard key={exercise.id} exercise={exercise} />
-            ))}
+            {filteredExerciseData &&
+              filteredExerciseData?.map(exercise => (
+                <ExerciseCard
+                  key={exercise.id}
+                  exercise={exercise as ExerciseType}
+                />
+              ))}
           </div>
         </Tab.Panel>
-        <Tab.Panel>Feature coming soon</Tab.Panel>
+
         <Tab.Panel>Feature coming soon</Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

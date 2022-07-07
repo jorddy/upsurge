@@ -20,9 +20,9 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
   return (
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
       <nav className='flex items-center gap-8'>
-        <Link href='/'>
+        <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
-            <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
+            <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
             {!app && "Upsurge"}
           </p>
         </Link>
@@ -45,27 +45,25 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
         )}
       </nav>
 
-      {session && (
-        <div className='flex items-center gap-4'>
-          <p>{session.user?.name}</p>
-          {session.user?.image && (
-            <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
-              <Image
-                className='w-10 h-10 rounded-full object-contain'
-                src={session.user?.image as string}
-                alt={session.user?.name as string}
-              />
-            </button>
-          )}
-        </div>
+      {session && session.user?.image && (
+        <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
+          <Image
+            className='w-10 h-10 rounded-full object-contain'
+            src={session.user?.image as string}
+            alt={session.user?.name as string}
+          />
+        </button>
       )}
 
       {isOptionsOpen && (
-        <ul className='absolute top-16 right-4 space-y-4 bg-slate-900 rounded-md shadow-md overflow-hidden'>
+        <ul
+          className='absolute top-16 right-4 bg-zinc-900 border border-gray-400 
+          rounded-md shadow-md overflow-hidden'
+        >
           <li>
             <Link
               href='/dashboard'
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiLightningBolt className='w-6 h-6' />
               <p>Dashboard</p>
@@ -74,7 +72,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
           <li>
             <Link
               href='/profile'
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiUser className='w-6 h-6' />
               <p>Profile</p>
@@ -82,8 +80,8 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
           </li>
           <li>
             <button
-              onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-              className='flex items-center gap-2 p-4 hover:bg-slate-700'
+              onClick={() => signOut()}
+              className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiLogout className='w-6 h-6' />
               <p>Sign Out</p>
@@ -94,13 +92,8 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='hidden md:inline'
-          >
-            Get Started With Google
+          <Button onClick={signIn} className='hidden md:inline'>
+            Get Started Now
           </Button>
 
           <button
@@ -113,13 +106,13 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
           {isMenuOpen && (
             <nav
-              className='absolute top-4 left-0 w-full p-4 space-y-4 rounded-md bg-slate-900 
-              border border-slate-500 animate-scale'
+              className='absolute top-4 left-0 w-full p-4 space-y-4 rounded-md bg-zinc-900 
+              border border-gray-400 animate-scale'
               aria-hidden={isMenuOpen}
             >
               <div className='flex justify-between items-center'>
                 <p className='text-2xl font-bold flex items-center gap-2'>
-                  <HiOutlineLightningBolt className='w-9 h-9 text-orange-400 rotate-12' />
+                  <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
                   {!app && "Upsurge"}
                 </p>
                 <button
@@ -130,23 +123,19 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
                 </button>
               </div>
 
-              <div className='flex justify-between items-center gap-4'>
-                <ul className='flex gap-4'>
+              <ul className='flex gap-4 justify-between'>
+                <li className='flex gap-2'>
                   <Link href='/' className='hover:opacity-80 hover:underline'>
                     Home
                   </Link>
                   <Link href='/' className='hover:opacity-80 hover:underline'>
                     Features
                   </Link>
-                </ul>
-
-                <Link
-                  href='/api/auth/signin'
-                  className='hover:opacity-80 hover:underline'
-                >
-                  Sign In
-                </Link>
-              </div>
+                </li>
+                <li>
+                  <button onClick={() => signIn()}>Sign In</button>
+                </li>
+              </ul>
             </nav>
           )}
         </>

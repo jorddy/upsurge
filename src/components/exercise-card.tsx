@@ -6,13 +6,13 @@ const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
   return (
     <Link
       href={`exercise/${exercise.id}`}
-      className='block p-4 space-y-2 bg-slate-900 rounded-md'
+      className='block p-4 space-y-2 bg-zinc-900 rounded-md'
     >
       <h2 className='text-xl font-semibold'>{exercise.name}</h2>
 
       <div>
         <p>
-          <strong>Sets:</strong> 0
+          <strong>Entries:</strong> {exercise.entries.length}
         </p>
 
         {exercise.currentWeight && exercise.targetWeight && (

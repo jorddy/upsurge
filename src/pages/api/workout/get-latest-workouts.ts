@@ -9,17 +9,15 @@ export default async function getLatestWorkouts(
   const session = await getSession({ req });
 
   if (session) {
-    const latestworkouts = await prisma.workout.findMany({
+    const latestWorkouts = await prisma.workout.findMany({
       take: 2,
       orderBy: { updatedAt: "desc" },
       where: { userId: session.user.id },
       include: {
-        entries: {
-          include: { sets: true }
-        }
+        entries: { include: { sets: true } }
       }
     });
 
-    res.status(200).json(latestworkouts);
+    res.status(200).json([...latestWorkouts]);
   }
 }

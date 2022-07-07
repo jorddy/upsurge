@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { ZodError } from "zod";
+import { byIdValidator } from "@/hooks/queries/validators";
 import { prisma } from "@/utils/db";
-import { createExerciseValidator } from "@/hooks/mutations/validators";
 
-export default async function createExercise(
+export default async function getExerciseById(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -12,11 +12,14 @@ export default async function createExercise(
 
   if (session) {
     try {
-      const input = createExerciseValidator.parse(req.body);
-      const exercise = await prisma.exercise.create({
-        data: {
-          ...input,
-          user: { connect: { id: session.user.id } }
+      const { id } = byIdValidator.parse(req.query);
+
+      const exercise = await prisma.workout.findUnique({
+        where: { id },
+        include: {
+          entries: {
+            include: { exercise: true, sets: true }
+          }
         }
       });
 

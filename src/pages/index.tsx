@@ -14,7 +14,7 @@ const Home = () => {
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
 
-      <main className='container mx-auto p-4'>
+      <main className='text-center container mx-auto p-4 sm:text-left'>
         <section className='py-8 space-y-6 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
             The simpiler way to log your gym workouts.
@@ -28,7 +28,7 @@ const Home = () => {
             onClick={() =>
               signIn("google", { redirect: true, callbackUrl: "/dashboard" })
             }
-            className='sm:mx-auto'
+            className='mx-auto'
           >
             Get Started Now
           </Button>
@@ -45,7 +45,7 @@ const Home = () => {
 
           <div className='mt-20 grid grid-cols-1 gap-16 sm:grid-cols-2'>
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiPencilAlt className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Powerful Logging Capablities</h3>
@@ -57,7 +57,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiBookOpen className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Your Personal Diary</h3>
@@ -69,7 +69,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiLockClosed className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Private, Secure & No Ads</h3>
@@ -81,7 +81,7 @@ const Home = () => {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-slate-900 rounded-md'>
+              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
                 <HiChartBar className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Analytical Reporting</h3>
@@ -98,12 +98,7 @@ const Home = () => {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='mt-6 sm:mx-auto'
-          >
+          <Button onClick={signIn} className='mt-6 mx-auto'>
             Get Started Today
           </Button>
         </section>

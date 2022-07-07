@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Combobox } from "@headlessui/react";
 import { HiCheck } from "react-icons/hi";
-import { useGetAllExercises } from "@/hooks/queries/use-get-all-exercises";
+import { useExercises } from "@/hooks/queries/use-exercises";
 
 const ExerciseDropdown = () => {
-  const { data, isLoading } = useGetAllExercises();
+  const { data, isLoading } = useExercises();
   const [selectedExercise, setSelectedExercise] = useState([]);
 
   return (
