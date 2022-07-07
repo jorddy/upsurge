@@ -31,7 +31,10 @@ const WorkoutPage = () => {
           <div className='flex flex-wrap items-center justify-between gap-2'>
             <div className='space-y-1'>
               <h1 className='text-lg font-bold sm:text-2xl'>{workout?.name}</h1>
-              <p>Last Updated: {workout?.updatedAt.toLocaleDateString()}</p>
+              <p>
+                Last Updated:{" "}
+                {new Date(workout?.updatedAt as Date).toLocaleDateString()}
+              </p>
             </div>
             <Link
               className='underline font-semibold hover:text-orange-600'

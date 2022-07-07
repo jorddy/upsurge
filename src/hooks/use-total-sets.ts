@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Entry, Set } from "@prisma/client";
 
-export const useTotalSets = (entries: Entry & { sets: Set[] }[]) => {
+export const useTotalSets = (entries: (Entry & { sets: Set[] })[]) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {

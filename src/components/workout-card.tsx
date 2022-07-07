@@ -22,12 +22,12 @@ const WorkoutCard: FC<{ workout: Workouts[0] }> = ({ workout }) => {
 
         <div className='flex flex-wrap'>
           {isLoading && <p>Summing totals...</p>}
-          {data?._sum.weight && (
+          {data?._sum?.weight && (
             <p>
               <strong>Total Weight Lifted:</strong> {data?._sum.weight}kg
             </p>
           )}
-          {data?._sum.distance && (
+          {data?._sum?.distance && (
             <p>
               <strong>Total Distance Travelled:</strong> {data?._sum.distance}kg
             </p>

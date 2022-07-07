@@ -31,7 +31,10 @@ const ExercisePage = () => {
               <h1 className='text-lg font-bold sm:text-2xl'>
                 {exercise?.name}
               </h1>
-              <p>Last Updated: {exercise?.updatedAt.toLocaleDateString()}</p>
+              <p>
+                Last Updated:{" "}
+                {new Date(exercise?.updatedAt as Date).toLocaleDateString()}
+              </p>
             </div>
             <Link
               className='underline font-semibold hover:text-orange-600'
