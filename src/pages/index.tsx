@@ -1,6 +1,5 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import {
   HiBookOpen,
@@ -17,21 +16,16 @@ const Home = () => {
       <main className='text-center container mx-auto p-4 sm:text-left'>
         <section className='py-8 space-y-6 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
-            The simpiler way to log your gym workouts.
+            The simpler way to log your gym workouts.
           </h1>
           <p className='text-xl text-gray-300'>
             No ads, automation, and the ability to share with friends. Upsurge
             is the app that gets out of your way and lets you focus on what
             really matters.
           </p>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='mx-auto'
-          >
+          <button className='button mx-auto' onClick={() => signIn()}>
             Get Started Now
-          </Button>
+          </button>
         </section>
 
         <section className='py-8 max-w-3xl mx-auto sm:py-16'>
@@ -98,9 +92,9 @@ const Home = () => {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <Button onClick={signIn} className='mt-6 mx-auto'>
+          <button className='button mt-6 mx-auto' onClick={() => signIn()}>
             Get Started Today
-          </Button>
+          </button>
         </section>
       </main>
 

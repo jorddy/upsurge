@@ -1,9 +1,26 @@
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
 const OneOffForm = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm();
 
-  return <form onSubmit={data => console.log(data)}>Oneoffform</form>;
+  const { fields, append, remove } = useFieldArray({
+    name: "wd",
+    control
+  });
+
+  return (
+    <form onSubmit={handleSubmit(data => console.log(data))}>
+      <div className='field'>
+        <label htmlFor='name'>Exercise name:</label>
+        <input {...register("name")} className='input' id='name' />
+      </div>
+    </form>
+  );
 };
 
 export default OneOffForm;

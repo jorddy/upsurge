@@ -3,11 +3,16 @@ import Loader from "@/components/loader";
 import OneOffForm from "@/components/one-off-form";
 import WorkoutForm from "@/components/workout-form";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const CreateExercisePage = () => {
+  const { query } = useRouter();
   const { data: session, status } = useSession();
-  const [option, setOption] = useState("");
+
+  const [option, setOption] = useState<"workout" | "exercise" | null>(
+    query.option === "workout" ? "workout" : null
+  );
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -30,6 +35,7 @@ const CreateExercisePage = () => {
             <legend className='font-semibold'>
               What would you like to log?
             </legend>
+
             <div className='flex gap-4'>
               <label htmlFor='workout'>
                 <input
@@ -38,10 +44,11 @@ const CreateExercisePage = () => {
                   id='workout'
                   value='workout'
                   checked={option === "workout"}
-                  onChange={e => setOption(e.target.value)}
+                  onChange={e => setOption(e.target.value as "workout")}
                 />
                 Workout
               </label>
+
               <label htmlFor='exercise'>
                 <input
                   className='mr-2'
@@ -49,7 +56,7 @@ const CreateExercisePage = () => {
                   id='exercise'
                   value='exercise'
                   checked={option === "exercise"}
-                  onChange={e => setOption(e.target.value)}
+                  onChange={e => setOption(e.target.value as "exercise")}
                 />
                 Exercise
               </label>

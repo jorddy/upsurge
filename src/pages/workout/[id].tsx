@@ -8,15 +8,19 @@ import { signIn, useSession } from "next-auth/react";
 import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
+import { Entry, Exercise, Set } from "@prisma/client";
 
 const WorkoutPage = () => {
   const { data: session, status } = useSession();
   const { query } = useRouter();
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
-  const { data: sum } = useSumWorkout(workout?.id);
+  const { data: total } = useSumWorkout(workout?.id);
 
   const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
-  const filteredData = useDateFilter(date, workout);
+  const filteredData = useDateFilter(date, workout) as (Entry & {
+    sets: Set[];
+    exercise: Exercise;
+  })[];
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -31,27 +35,27 @@ const WorkoutPage = () => {
           <div className='flex flex-wrap items-center justify-between gap-2'>
             <div className='space-y-1'>
               <h1 className='text-lg font-bold sm:text-2xl'>{workout?.name}</h1>
-              <p>Last Updated: {workout?.updatedAt.toLocaleDateString()}</p>
+              <p>
+                Last Updated:{" "}
+                {new Date(workout?.updatedAt as Date).toLocaleDateString()}
+              </p>
             </div>
-            <Link
-              className='underline font-semibold hover:text-orange-600'
-              href={`/workout/${workout?.id}/edit`}
-            >
+            <Link className='link' href={`/workout/${workout?.id}/edit`}>
               Edit
             </Link>
           </div>
 
           <section className='flex flex-col gap-4 sm:flex-row'>
-            {sum?.weight && (
+            {total?._sum.weight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Weight Lifted</h2>
-                <p className='text-xl font-bold'>{sum.weight}kg</p>
+                <p className='text-xl font-bold'>{total._sum.weight}kg</p>
               </div>
             )}
-            {sum?.distance && (
+            {total?._sum.distance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Distance Travelled</h2>
-                <p className='text-xl font-bold'>{sum.distance}m</p>
+                <p className='text-xl font-bold'>{total._sum.distance}m</p>
               </div>
             )}
           </section>
@@ -61,7 +65,7 @@ const WorkoutPage = () => {
           <DateBar date={date} setDate={setDate} />
 
           <section className='space-y-4'>
-            {filteredData && filteredData?.length <= 0 && (
+            {filteredData && filteredData?.entries.length <= 0 && (
               <p className='p-4 bg-zinc-900 rounded-md'>
                 No entries found with this date.
               </p>
@@ -74,21 +78,18 @@ const WorkoutPage = () => {
               >
                 <div className='flex flex-wrap gap-2 items-center justify-between'>
                   <p className='text-xl font-semibold'>
-                    {entry.createdAt.toLocaleDateString()}
+                    {new Date(entry.createdAt).toLocaleDateString()}
                   </p>
-                  <Link
-                    href='#'
-                    className='underline font-semibold hover:text-orange-600'
-                  >
+                  <Link href='#' className='link'>
                     Edit
                   </Link>
                 </div>
 
-                {/* {entry.exercise && (
+                {entry.exercise && (
                   <p>
                     <strong>Exercise:</strong> {entry.exercise.name}
                   </p>
-                )} */}
+                )}
 
                 <ul>
                   {entry.sets.map(set => (

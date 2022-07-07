@@ -9,7 +9,6 @@ import {
   HiX
 } from "react-icons/hi";
 import Link from "next/link";
-import Button from "@/components/button";
 import Image from "next/future/image";
 
 const Header: FC<{ app?: boolean }> = ({ app }) => {
@@ -92,14 +91,14 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
 
       {!session && (
         <>
-          <Button onClick={signIn} className='hidden md:inline'>
+          <button className='button hidden md:inline' onClick={() => signIn()}>
             Get Started Now
-          </Button>
+          </button>
 
           <button
+            className='md:hidden'
             onClick={() => setIsMenuOpen(true)}
             aria-label='Open navigation menu'
-            className='md:hidden'
           >
             <HiMenu className='w-8 h-8 cursor-pointer hover:opacity-80' />
           </button>

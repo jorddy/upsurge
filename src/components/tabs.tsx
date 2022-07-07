@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
@@ -9,7 +8,7 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
+import Link from "next/link";
 
 const Tabs = () => {
   const [workoutQuery, setWorkoutQuery] = useState("");
@@ -38,13 +37,20 @@ const Tabs = () => {
             setQuery={setWorkoutQuery}
           />
 
+          <Link className='link block' href='/create?option=workout'>
+            + Create workout
+          </Link>
+
+          {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
+            <p className='p-4 bg-zinc-900 rounded-md'>
+              No workouts found with that name.
+            </p>
+          )}
+
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredWorkoutData &&
               filteredWorkoutData.map(workout => (
-                <WorkoutCard
-                  key={workout.id}
-                  workout={workout as WorkoutType}
-                />
+                <WorkoutCard key={workout.id} workout={workout} />
               ))}
           </div>
         </Tab.Panel>
@@ -56,13 +62,20 @@ const Tabs = () => {
             setQuery={setExerciseQuery}
           />
 
+          <Link className='link block' href='/exercise/create'>
+            + Create exercise
+          </Link>
+
+          {filteredExerciseData && filteredExerciseData?.length <= 0 && (
+            <p className='p-4 bg-zinc-900 rounded-md'>
+              No exercises found with that name.
+            </p>
+          )}
+
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise as ExerciseType}
-                />
+                <ExerciseCard key={exercise.id} exercise={exercise as any} />
               ))}
           </div>
         </Tab.Panel>

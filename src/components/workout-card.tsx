@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { FC } from "react";
-import { WorkoutType } from "@/hooks/queries/validators";
+import { Workouts } from "@/pages/api/workout/get-workouts";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
 
-const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
+const WorkoutCard: FC<{ workout: Workouts[0] }> = ({ workout }) => {
   const { data, isLoading } = useSumWorkout(workout.id);
   const total = useTotalSets(workout.entries);
 
@@ -22,14 +22,14 @@ const WorkoutCard: FC<{ workout: WorkoutType }> = ({ workout }) => {
 
         <div className='flex flex-wrap'>
           {isLoading && <p>Summing totals...</p>}
-          {data?.weight && (
+          {data?._sum?.weight && (
             <p>
-              <strong>Total Weight Lifted:</strong> {data?.weight}kg
+              <strong>Total Weight Lifted:</strong> {data?._sum.weight}kg
             </p>
           )}
-          {data?.distance && (
+          {data?._sum?.distance && (
             <p>
-              <strong>Total Distance Travelled:</strong> {data?.distance}kg
+              <strong>Total Distance Travelled:</strong> {data?._sum.distance}kg
             </p>
           )}
         </div>

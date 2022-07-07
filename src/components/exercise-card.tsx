@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { FC } from "react";
-import { ExerciseType } from "@/hooks/queries/validators";
+import { Exercises } from "@/pages/api/exercise/get-exercises";
 
-const ExerciseCard: FC<{ exercise: ExerciseType }> = ({ exercise }) => {
+const ExerciseCard: FC<{ exercise: Exercises[0] }> = ({ exercise }) => {
   return (
     <Link
       href={`exercise/${exercise.id}`}
