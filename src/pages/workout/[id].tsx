@@ -36,10 +36,7 @@ const WorkoutPage = () => {
                 {new Date(workout?.updatedAt as Date).toLocaleDateString()}
               </p>
             </div>
-            <Link
-              className='underline font-semibold hover:text-orange-600'
-              href={`/workout/${workout?.id}/edit`}
-            >
+            <Link className='link' href={`/workout/${workout?.id}/edit`}>
               Edit
             </Link>
           </div>
@@ -79,10 +76,7 @@ const WorkoutPage = () => {
                   <p className='text-xl font-semibold'>
                     {new Date(entry.createdAt).toLocaleDateString()}
                   </p>
-                  <Link
-                    href='#'
-                    className='underline font-semibold hover:text-orange-600'
-                  >
+                  <Link href='#' className='link'>
                     Edit
                   </Link>
                 </div>

@@ -56,10 +56,7 @@ const WorkoutForm = () => {
           <label className='font-semibold' htmlFor='createdAt'>
             Add exercises
           </label>
-          <Link
-            className='font-semibold underline hover:text-orange-500'
-            href='/exercise/create'
-          >
+          <Link className='link' href='/exercise/create'>
             + Create Exercise
           </Link>
         </div>

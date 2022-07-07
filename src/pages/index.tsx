@@ -1,6 +1,5 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import {
   HiBookOpen,
@@ -24,14 +23,9 @@ const Home = () => {
             is the app that gets out of your way and lets you focus on what
             really matters.
           </p>
-          <Button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-            className='mx-auto'
-          >
+          <button className='button mx-auto' onClick={() => signIn()}>
             Get Started Now
-          </Button>
+          </button>
         </section>
 
         <section className='py-8 max-w-3xl mx-auto sm:py-16'>
@@ -98,9 +92,9 @@ const Home = () => {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <Button onClick={signIn} className='mt-6 mx-auto'>
+          <button className='button mt-6 mx-auto' onClick={() => signIn()}>
             Get Started Today
-          </Button>
+          </button>
         </section>
       </main>
 
