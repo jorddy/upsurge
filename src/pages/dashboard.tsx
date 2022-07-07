@@ -12,8 +12,6 @@ const Dashboard = () => {
   const { data, isLoading } = useLatestWorkouts();
   const { data: exercises } = trpc.useQuery(["exercise.get-by-id"]);
 
-  console.log(exercises);
-
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
   if (status === "authenticated" && isLoading) return <Loader />;

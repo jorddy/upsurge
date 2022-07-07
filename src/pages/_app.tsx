@@ -7,6 +7,7 @@ import { QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Head from "next/head";
 import toast, { Toaster } from "react-hot-toast";
+import superjson from "superjson";
 
 const MyApp = ({
   Component,
@@ -46,6 +47,7 @@ export default withTRPC<AppRouter>({
 
     return {
       url,
+      transformer: superjson,
       queryClientConfig: {
         queryCache: new QueryCache({
           onError: error => {

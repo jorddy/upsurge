@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { ZodError } from "zod";
 import { byIdValidator } from "@/hooks/queries/validators";
-import { prisma } from "@/utils/db";
+import { prisma } from "@/server/db";
 
 export default async function getExerciseById(
   req: NextApiRequest,

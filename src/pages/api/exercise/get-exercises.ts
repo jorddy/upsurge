@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import { prisma } from "@/utils/db";
+import { prisma } from "@/server/db";
 
 export default async function getExercises(
   req: NextApiRequest,

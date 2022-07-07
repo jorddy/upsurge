@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { ZodError } from "zod";
 import { byIdValidator } from "@/hooks/queries/validators";
-import { prisma } from "@/utils/db";
+import { prisma } from "@/server/db";
 import { cacheOneDay } from "@/utils/cache-one-day";
 
 export default async function sumEntries(
