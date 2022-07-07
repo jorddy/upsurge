@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
@@ -9,7 +8,6 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
 const Tabs = () => {
   const [workoutQuery, setWorkoutQuery] = useState("");
@@ -41,10 +39,7 @@ const Tabs = () => {
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredWorkoutData &&
               filteredWorkoutData.map(workout => (
-                <WorkoutCard
-                  key={workout.id}
-                  workout={workout as WorkoutType}
-                />
+                <WorkoutCard key={workout.id} workout={workout} />
               ))}
           </div>
         </Tab.Panel>
@@ -59,10 +54,7 @@ const Tabs = () => {
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise as ExerciseType}
-                />
+                <ExerciseCard key={exercise.id} exercise={exercise} />
               ))}
           </div>
         </Tab.Panel>

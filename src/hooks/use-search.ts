@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { ExerciseType, WorkoutType } from "./queries/validators";
+import { Workouts } from "@/pages/api/workout/get-workouts";
+import { Exercises } from "@/pages/api/exercise/get-exercises";
 
 export const useSearch = (
   query: string,
-  data: WorkoutType[] | ExerciseType[] | undefined
+  data: Workouts | Exercises | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data);
 

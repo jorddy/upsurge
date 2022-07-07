@@ -1,24 +1,29 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
+import { unauthorized } from "@/utils/unauthorized";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/utils/db";
 
-export default async function getWorkouts(
+const getWorkouts = (userId: string) =>
+  prisma.workout.findMany({
+    orderBy: { updatedAt: "desc" },
+    where: { userId },
+    include: {
+      entries: {
+        include: { sets: true }
+      }
+    }
+  });
+
+export type Workouts = Prisma.PromiseReturnType<typeof getWorkouts>;
+
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getSession({ req });
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return unauthorized(res);
 
-  if (session) {
-    const workouts = await prisma.workout.findMany({
-      orderBy: { updatedAt: "desc" },
-      where: { userId: session.user.id },
-      include: {
-        entries: {
-          include: { sets: true }
-        }
-      }
-    });
-
-    res.status(200).json(workouts);
-  }
+  res.status(200).json(await getWorkouts(session.user.id));
 }

@@ -13,7 +13,7 @@ const WorkoutPage = () => {
   const { data: session, status } = useSession();
   const { query } = useRouter();
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
-  const { data: sum } = useSumWorkout(workout?.id);
+  const { data: total } = useSumWorkout(workout?.id);
 
   const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
   const filteredData = useDateFilter(date, workout);
@@ -42,16 +42,16 @@ const WorkoutPage = () => {
           </div>
 
           <section className='flex flex-col gap-4 sm:flex-row'>
-            {sum?.weight && (
+            {total?._sum.weight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Weight Lifted</h2>
-                <p className='text-xl font-bold'>{sum.weight}kg</p>
+                <p className='text-xl font-bold'>{total._sum.weight}kg</p>
               </div>
             )}
-            {sum?.distance && (
+            {total?._sum.distance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Distance Travelled</h2>
-                <p className='text-xl font-bold'>{sum.distance}m</p>
+                <p className='text-xl font-bold'>{total._sum.distance}m</p>
               </div>
             )}
           </section>
