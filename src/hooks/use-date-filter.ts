@@ -11,7 +11,7 @@ export const useDateFilter = (
   useEffect(() => {
     if (date) {
       setFilteredData(
-        data?.entries.filter(entry => entry.createdAt >= new Date(date))
+        data?.entries.filter(entry => entry.createdAt.toString().includes(date))
       );
     }
   }, [data, date]);

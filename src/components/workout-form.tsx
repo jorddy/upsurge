@@ -1,10 +1,10 @@
+import Link from "next/link";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CreateWorkoutType,
+  CreateWorkout,
   createWorkoutValidator
 } from "@/hooks/mutations/validators";
-import Link from "next/link";
 
 const WorkoutForm = () => {
   const {
@@ -12,7 +12,7 @@ const WorkoutForm = () => {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm<CreateWorkoutType>({
+  } = useForm<CreateWorkout>({
     resolver: zodResolver(createWorkoutValidator)
   });
 

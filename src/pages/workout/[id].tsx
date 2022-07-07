@@ -77,7 +77,7 @@ const WorkoutPage = () => {
               >
                 <div className='flex flex-wrap gap-2 items-center justify-between'>
                   <p className='text-xl font-semibold'>
-                    {entry.createdAt.toLocaleDateString()}
+                    {new Date(entry.createdAt).toLocaleDateString()}
                   </p>
                   <Link
                     href='#'
@@ -87,11 +87,11 @@ const WorkoutPage = () => {
                   </Link>
                 </div>
 
-                {/* {entry.exercise && (
+                {entry.exercise && (
                   <p>
                     <strong>Exercise:</strong> {entry.exercise.name}
                   </p>
-                )} */}
+                )}
 
                 <ul>
                   {entry.sets.map(set => (

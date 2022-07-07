@@ -7,8 +7,13 @@
     @apply max-w-sm flex flex-col gap-2;
   }
 
+  .button {
+    @apply flex justify-between items-center gap-2 px-6 py-4 rounded-md 
+    bg-orange-600 font-semibold transition hover:scale-95;
+  }
+
   .input {
-    @apply bg-slate-900 text-white px-2 py-1 truncate;
+    @apply bg-zinc-900 px-3 py-2 truncate;
   }
 
   .scrollbar-hide {
