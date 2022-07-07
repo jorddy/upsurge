@@ -8,6 +8,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
+import { Entry, Exercise, Set } from "@prisma/client";
 
 const WorkoutPage = () => {
   const { data: session, status } = useSession();
@@ -16,7 +17,10 @@ const WorkoutPage = () => {
   const { data: total } = useSumWorkout(workout?.id);
 
   const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
-  const filteredData = useDateFilter(date, workout);
+  const filteredData = useDateFilter(date, workout) as (Entry & {
+    sets: Set[];
+    exercise: Exercise;
+  })[];
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -61,7 +65,7 @@ const WorkoutPage = () => {
           <DateBar date={date} setDate={setDate} />
 
           <section className='space-y-4'>
-            {filteredData && filteredData?.length <= 0 && (
+            {filteredData && filteredData?.entries.length <= 0 && (
               <p className='p-4 bg-zinc-900 rounded-md'>
                 No entries found with this date.
               </p>
