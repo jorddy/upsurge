@@ -92,7 +92,10 @@ export default function Home() {
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             What are you waiting for?
           </h2>
-          <button className='button mt-6 mx-auto' onClick={() => signIn()}>
+          <button
+            className='button mt-6 block mx-auto'
+            onClick={() => signIn()}
+          >
             Get Started Today
           </button>
         </section>
