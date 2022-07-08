@@ -32,7 +32,7 @@ const CreateExercisePage = () => {
     mutate(data);
 
     if (query.entry) {
-      push("/create?option=exercise");
+      push("/entry/create?option=exercise");
     } else {
       push("/dashboard");
     }

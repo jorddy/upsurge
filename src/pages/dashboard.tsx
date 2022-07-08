@@ -25,8 +25,8 @@ const Dashboard = () => {
               <h1 className='text-lg font-bold sm:text-2xl'>
                 Welcome back, {session.user.name}
               </h1>
-              <Link href='/create' className='link'>
-                + New Log
+              <Link href='/entry/create' className='link'>
+                + Log entry
               </Link>
             </div>
 
