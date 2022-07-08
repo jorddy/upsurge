@@ -6,7 +6,7 @@ import {
   createWorkoutValidator
 } from "@/hooks/mutations/validators";
 
-const WorkoutForm = () => {
+export default function WorkoutForm() {
   const {
     register,
     handleSubmit,
@@ -71,6 +71,4 @@ const WorkoutForm = () => {
       </div>
     </form>
   );
-};
-
-export default WorkoutForm;
+}

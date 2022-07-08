@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 
-const ProfilePage = () => {
+export default function ProfilePage() {
   return (
     <>
       <Header app />
@@ -10,6 +10,4 @@ const ProfilePage = () => {
       </main>
     </>
   );
-};
-
-export default ProfilePage;
+}

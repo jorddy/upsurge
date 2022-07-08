@@ -8,7 +8,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useExerciseById } from "@/hooks/queries/use-exercise-by-id";
 import { useDateFilter } from "@/hooks/use-date-filter";
 
-const ExercisePage = () => {
+export default function ExercisePage() {
   const { data: session, status } = useSession();
   const { query } = useRouter();
   const { data: exercise, isLoading } = useExerciseById(query.id as string);
@@ -111,6 +111,4 @@ const ExercisePage = () => {
       </>
     );
   }
-};
-
-export default ExercisePage;
+}

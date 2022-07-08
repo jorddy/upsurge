@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
-import { FC, Fragment, PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from "react";
 
-const TabComponent: FC<PropsWithChildren<{}>> = ({ children }) => {
+export default function TabComponent({ children }: PropsWithChildren<{}>) {
   return (
     <Tab as={Fragment}>
       {({ selected }) => (
@@ -16,6 +16,4 @@ const TabComponent: FC<PropsWithChildren<{}>> = ({ children }) => {
       )}
     </Tab>
   );
-};
-
-export default TabComponent;
+}

@@ -8,7 +8,7 @@ import {
   HiPencilAlt
 } from "react-icons/hi";
 
-const Home = () => {
+export default function Home() {
   return (
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
@@ -101,6 +101,4 @@ const Home = () => {
       <Footer />
     </div>
   );
-};
-
-export default Home;
+}

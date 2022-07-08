@@ -12,7 +12,7 @@ import {
 } from "@/hooks/mutations/validators";
 import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 
-const CreateExercisePage = () => {
+export default function CreateExercisePage() {
   const { push, query } = useRouter();
   const { data: session, status } = useSession();
   const [option, setOption] = useState<"weight" | "cardio" | null>(null);
@@ -174,6 +174,4 @@ const CreateExercisePage = () => {
       </>
     );
   }
-};
-
-export default CreateExercisePage;
+}

@@ -1,12 +1,12 @@
+import Link from "next/link";
 import Header from "@/components/header";
 import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
 import { signIn, useSession } from "next-auth/react";
 import { useLatestWorkouts } from "@/hooks/queries/use-latest-workouts";
-import Link from "next/link";
 
-const Dashboard = () => {
+export default function Dashboard() {
   const { data: session, status } = useSession();
   const { data, isLoading } = useLatestWorkouts();
 
@@ -46,6 +46,4 @@ const Dashboard = () => {
       </>
     );
   }
-};
-
-export default Dashboard;
+}

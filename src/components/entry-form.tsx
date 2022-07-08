@@ -13,7 +13,7 @@ import {
   createEntryValidator
 } from "@/hooks/mutations/validators";
 
-const EntryForm = () => {
+export default function EntryForm() {
   const [query, setQuery] = useState("");
   const [exerciseType, setExerciseType] = useState<{
     type: "weight" | "cardio";
@@ -127,6 +127,4 @@ const EntryForm = () => {
       )}
     </form>
   );
-};
-
-export default EntryForm;
+}

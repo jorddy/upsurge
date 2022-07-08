@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
@@ -8,9 +9,8 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import Link from "next/link";
 
-const Tabs = () => {
+export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
   const workouts = useWorkouts();
@@ -84,6 +84,4 @@ const Tabs = () => {
       </Tab.Panels>
     </Tab.Group>
   );
-};
-
-export default Tabs;
+}

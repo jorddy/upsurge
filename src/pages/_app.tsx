@@ -15,10 +15,10 @@ const queryClient = new QueryClient({
   })
 });
 
-const MyApp = ({
+export default function MyApp({
   Component,
   pageProps: { session, ...pageProps }
-}: AppProps) => {
+}: AppProps) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
@@ -40,6 +40,4 @@ const MyApp = ({
       </QueryClientProvider>
     </SessionProvider>
   );
-};
-
-export default MyApp;
+}

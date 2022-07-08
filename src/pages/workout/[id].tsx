@@ -10,7 +10,7 @@ import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
 import { Entry, Exercise, Set } from "@prisma/client";
 
-const WorkoutPage = () => {
+export default function WorkoutPage() {
   const { data: session, status } = useSession();
   const { query } = useRouter();
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
@@ -109,6 +109,4 @@ const WorkoutPage = () => {
       </>
     );
   }
-};
-
-export default WorkoutPage;
+}

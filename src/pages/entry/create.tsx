@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const CreateEntryPage = () => {
+export default function CreateEntryPage() {
   const { query } = useRouter();
   const { data: session, status } = useSession();
 
@@ -69,6 +69,4 @@ const CreateEntryPage = () => {
       </>
     );
   }
-};
-
-export default CreateEntryPage;
+}

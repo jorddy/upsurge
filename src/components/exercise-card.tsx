@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { FC } from "react";
 import { Exercises } from "@/pages/api/exercise/get-exercises";
 
-const ExerciseCard: FC<{ exercise: Exercises[0]; linkOff?: boolean }> = ({
+export default function ExerciseCard({
   exercise,
   linkOff
-}) => {
+}: {
+  exercise: Exercises[0];
+  linkOff?: boolean;
+}) {
   return (
     <Link
       href={linkOff ? "" : `exercise/${exercise.id}`}
@@ -42,6 +44,4 @@ const ExerciseCard: FC<{ exercise: Exercises[0]; linkOff?: boolean }> = ({
       </div>
     </Link>
   );
-};
-
-export default ExerciseCard;
+}

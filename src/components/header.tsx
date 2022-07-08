@@ -1,4 +1,6 @@
-import { FC, useState } from "react";
+import Link from "next/link";
+import Image from "next/future/image";
+import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
   HiLightningBolt,
@@ -8,10 +10,8 @@ import {
   HiUser,
   HiX
 } from "react-icons/hi";
-import Link from "next/link";
-import Image from "next/future/image";
 
-const Header: FC<{ app?: boolean }> = ({ app }) => {
+export default function Header({ app }: { app?: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const { data: session } = useSession();
@@ -141,6 +141,4 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       )}
     </header>
   );
-};
-
-export default Header;
+}

@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { FC } from "react";
 import { Workouts } from "@/pages/api/workout/get-workouts";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
 
-const WorkoutCard: FC<{ workout: Workouts[0] }> = ({ workout }) => {
+export default function WorkoutCard({ workout }: { workout: Workouts[0] }) {
   const { data, isLoading } = useSumWorkout(workout.id);
   const total = useTotalSets(workout.entries);
 
@@ -36,6 +35,4 @@ const WorkoutCard: FC<{ workout: Workouts[0] }> = ({ workout }) => {
       </div>
     </Link>
   );
-};
-
-export default WorkoutCard;
+}
