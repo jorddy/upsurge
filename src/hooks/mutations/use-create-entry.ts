@@ -3,8 +3,6 @@ import { CreateEntry } from "@/pages/api/entry/create-entry";
 import { CreateEntryErrors, CreateEntryInput } from "./validators";
 import toast from "react-hot-toast";
 
-let toastId: string;
-
 export const useCreateEntry = (queryClient: QueryClient) =>
   useMutation<CreateEntry, CreateEntryErrors, CreateEntryInput>(
     async data => {
@@ -19,15 +17,7 @@ export const useCreateEntry = (queryClient: QueryClient) =>
       return await res.json();
     },
     {
-      onMutate: () => {
-        toastId = toast.loading("Creating entry...");
-      },
-      onError: error => {
-        toast.error(`❌ Something went wrong, ${error}`, { id: toastId });
-      },
-      onSuccess: () => {
-        toast.success("✅ Successfully logged entry", { id: toastId });
-        queryClient.invalidateQueries(["exercises"]);
-      }
+      onMutate: () => toast.loading("Creating entry..."),
+      onSuccess: () => queryClient.invalidateQueries(["exercises"])
     }
   );
