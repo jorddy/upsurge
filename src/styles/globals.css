@@ -4,16 +4,20 @@
 
 @layer components {
   .button {
-    @apply flex justify-between items-center gap-2 px-6 py-4 rounded-md 
-    bg-orange-600 font-semibold transition hover:scale-95;
+    @apply w-full px-6 py-4 rounded-md bg-orange-600 font-semibold transition 
+    hover:scale-95 disabled:opacity-60 sm:w-fit;
   }
 
   .field {
-    @apply max-w-sm flex flex-col gap-2;
+    @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
   }
 
   .input {
     @apply bg-zinc-900 px-3 py-2 truncate;
+  }
+
+  .input-small {
+    @apply bg-zinc-700 px-3 py-2 truncate max-w-[6rem];
   }
 
   .link {

@@ -21,11 +21,13 @@ export default function WorkoutCard({ workout }: { workout: Workouts[0] }) {
 
         <div className='flex flex-wrap'>
           {isLoading && <p>Summing totals...</p>}
+
           {data?._sum?.weight && (
             <p>
               <strong>Total Weight Lifted:</strong> {data?._sum.weight}kg
             </p>
           )}
+
           {data?._sum?.distance && (
             <p>
               <strong>Total Distance Travelled:</strong> {data?._sum.distance}kg

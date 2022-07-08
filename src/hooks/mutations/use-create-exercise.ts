@@ -1,6 +1,9 @@
 import { QueryClient, useMutation } from "react-query";
 import { CreateExercise } from "@/pages/api/exercise/create-exercise";
 import { CreateExerciseErrors, CreateExerciseInput } from "./validators";
+import toast from "react-hot-toast";
+
+let toastId: string;
 
 export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<CreateExercise, CreateExerciseErrors, CreateExerciseInput>(
@@ -16,6 +19,15 @@ export const useCreateExercise = (queryClient: QueryClient) =>
       return await res.json();
     },
     {
-      onSuccess: () => queryClient.invalidateQueries(["exercises"])
+      onMutate: () => {
+        toastId = toast.loading("Creating entry...");
+      },
+      onError: error => {
+        toast.error(`❌ Something went wrong, ${error}`, { id: toastId });
+      },
+      onSuccess: () => {
+        toast.success("✅ Successfully logged entry", { id: toastId });
+        queryClient.invalidateQueries(["exercises"]);
+      }
     }
   );

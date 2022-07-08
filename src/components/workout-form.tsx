@@ -38,7 +38,7 @@ export default function WorkoutForm() {
         <label className='font-semibold' htmlFor='createdAt'>
           When did you do the workout? (optional)
         </label>
-        <p>
+        <p className='text-sm text-gray-300'>
           <strong>Note:</strong> Leaving this blank will default to today
         </p>
         <input

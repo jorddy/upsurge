@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Loader from "./loader";
 import SearchBar from "./search-bar";
 import ExerciseCard from "./exercise-card";
+import SetForm from "./set-form";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,9 @@ import {
   CreateEntryInput,
   createEntryValidator
 } from "@/hooks/mutations/validators";
+import { HiX } from "react-icons/hi";
+import { useQueryClient } from "react-query";
+import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
 
 export default function EntryForm() {
   const [query, setQuery] = useState("");
@@ -21,17 +24,20 @@ export default function EntryForm() {
     id: string;
   } | null>(null);
 
-  const { data: exercises, isLoading } = useExercises();
+  const { data: exercises } = useExercises();
   const filteredData = useSearch(query, exercises) as Exercises;
+
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useCreateEntry(queryClient);
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors }
   } = useForm<CreateEntryInput>({
-    resolver: zodResolver(createEntryValidator),
-    defaultValues: { exerciseId: exerciseType?.id }
+    resolver: zodResolver(createEntryValidator)
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -47,6 +53,8 @@ export default function EntryForm() {
     if (exercise.currentDistance || exercise.targetDistance) {
       setExerciseType({ name: exercise.name, type: "cardio", id: exercise.id });
     }
+
+    setValue("exerciseId", exercise.id);
   };
 
   return (
@@ -54,28 +62,84 @@ export default function EntryForm() {
       className='space-y-6'
       onSubmit={handleSubmit(data => console.log(data))}
     >
-      {isLoading && <Loader />}
+      {errors.exerciseId && (
+        <p className='text-red-500'>{errors.exerciseId.message}</p>
+      )}
 
       {exerciseType?.type === "weight" && (
         <>
-          <div className='flex gap-2 justify-between items-center'>
+          <div className='flex gap-4 items-center'>
             <h3>{exerciseType.name}</h3>
-            <button className='underline' onClick={() => setExerciseType(null)}>
-              Remove
+            <button
+              className='p-1 bg-red-500 rounded-sm'
+              type='button'
+              onClick={() => setExerciseType(null)}
+            >
+              <HiX className='h-5 w-5' />
             </button>
           </div>
 
           {fields.map((set, idx) => (
-            <div key={set.id} className='p-4 bg-zinc-900 rounded-md'>
-              <div className='flex gap-2 justify-between items-center'>
-                <p>Set {idx}</p>
-                <button onClick={() => remove(idx)}>Remove</button>
-              </div>
-            </div>
+            <SetForm
+              key={set.id}
+              set={set}
+              index={idx}
+              register={register}
+              remove={remove}
+            />
           ))}
 
           <button
             className='px-4 py-3 border border-dashed w-full'
+            type='button'
+            onClick={() => append({})}
+          >
+            + Add set
+          </button>
+
+          <div className='field'>
+            <label htmlFor='notes'>Notes</label>
+
+            <textarea
+              {...register("notes")}
+              className='input min-h-[100px]'
+              id='notes'
+            />
+
+            {errors.notes && (
+              <p className='text-red-500'>{errors.notes.message}</p>
+            )}
+          </div>
+        </>
+      )}
+
+      {exerciseType?.type === "cardio" && (
+        <>
+          <div className='flex gap-4 items-center'>
+            <h3>{exerciseType.name}</h3>
+            <button
+              className='p-1 bg-red-500 rounded-sm'
+              type='button'
+              onClick={() => setExerciseType(null)}
+            >
+              <HiX className='h-5 w-5' />
+            </button>
+          </div>
+
+          {fields.map((set, idx) => (
+            <SetForm
+              key={set.id}
+              cardio={true}
+              set={set}
+              index={idx}
+              register={register}
+              remove={remove}
+            />
+          ))}
+
+          <button
+            className='px-4 py-3 border border-dashed w-full'
+            type='button'
             onClick={() => append({})}
           >
             + Add set
@@ -93,8 +157,6 @@ export default function EntryForm() {
         </>
       )}
 
-      {exerciseType?.type === "cardio" && <p>Rendering cardio</p>}
-
       {!isLoading && !exerciseType && (
         <>
           <div className='flex flex-wrap gap-2 justify-between items-center'>
@@ -111,6 +173,7 @@ export default function EntryForm() {
               <button
                 key={exercise.id}
                 className='text-left w-full'
+                type='button'
                 onClick={() => handleExerciseType(exercise)}
               >
                 <ExerciseCard key={exercise.id} exercise={exercise} linkOff />
@@ -121,7 +184,7 @@ export default function EntryForm() {
       )}
 
       {exerciseType && (
-        <button className='button w-full sm:w-fit' type='submit'>
+        <button className='button' type='submit' disabled={isLoading}>
           Log Entry
         </button>
       )}

@@ -1,19 +1,12 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Head from "next/head";
 
-const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: error => {
-      toast.error(`Oops! Something went wrong, ${error}`);
-      console.error(error);
-    }
-  })
-});
+const queryClient = new QueryClient();
 
 export default function MyApp({
   Component,

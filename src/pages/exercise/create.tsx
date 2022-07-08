@@ -162,11 +162,7 @@ export default function CreateExercisePage() {
               </>
             )}
 
-            <button
-              className='button w-full sm:w-fit disabled:opacity-60'
-              type='submit'
-              disabled={isLoading}
-            >
+            <button className='button' type='submit' disabled={isLoading}>
               Create
             </button>
           </form>
