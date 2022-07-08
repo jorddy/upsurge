@@ -48,18 +48,21 @@ export default function ExercisePage() {
                 <p className='text-xl font-bold'>{exercise.targetWeight}kg</p>
               </div>
             )}
+
             {exercise?.currentWeight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
                 <h2>Current Weight</h2>
                 <p className='text-xl font-bold'>{exercise.currentWeight}kg</p>
               </div>
             )}
+
             {exercise?.targetDistance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Target Distance</h2>
                 <p className='text-xl font-bold'>{exercise.targetDistance}m</p>
               </div>
             )}
+
             {exercise?.currentDistance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
                 <h2>Current Distance</h2>
@@ -86,8 +89,9 @@ export default function ExercisePage() {
               >
                 <div className='flex flex-wrap gap-2 items-center justify-between'>
                   <p className='text-xl font-semibold'>
-                    {entry.createdAt.toLocaleDateString()}
+                    {new Date(entry.createdAt).toLocaleDateString()}
                   </p>
+
                   <Link href='#' className='link'>
                     Edit
                   </Link>

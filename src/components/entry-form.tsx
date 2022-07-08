@@ -2,6 +2,7 @@ import Link from "next/link";
 import SearchBar from "./search-bar";
 import ExerciseCard from "./exercise-card";
 import SetForm from "./set-form";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +18,8 @@ import { useQueryClient } from "react-query";
 import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
 
 export default function EntryForm() {
+  const { push } = useRouter();
+
   const [query, setQuery] = useState("");
   const [exerciseType, setExerciseType] = useState<{
     type: "weight" | "cardio";
@@ -28,7 +31,7 @@ export default function EntryForm() {
   const filteredData = useSearch(query, exercises) as Exercises;
 
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useCreateEntry(queryClient);
+  const { mutate, isLoading, isSuccess } = useCreateEntry(queryClient);
 
   const {
     register,
@@ -57,11 +60,13 @@ export default function EntryForm() {
     setValue("exerciseId", exercise.id);
   };
 
+  const onSubmit = async (data: CreateEntryInput) => {
+    mutate(data);
+    if (isSuccess) push("/dashboard");
+  };
+
   return (
-    <form
-      className='space-y-6'
-      onSubmit={handleSubmit(data => console.log(data))}
-    >
+    <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
       {errors.exerciseId && (
         <p className='text-red-500'>{errors.exerciseId.message}</p>
       )}

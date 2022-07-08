@@ -84,6 +84,7 @@ export const createEntryValidator = z.object({
         .optional()
     })
     .array()
+    .min(1)
 });
 
 export type CreateEntryInput = z.infer<typeof createEntryValidator>;
