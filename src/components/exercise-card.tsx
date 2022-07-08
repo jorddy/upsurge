@@ -2,11 +2,14 @@ import Link from "next/link";
 import { FC } from "react";
 import { Exercises } from "@/pages/api/exercise/get-exercises";
 
-const ExerciseCard: FC<{ exercise: Exercises[0] }> = ({ exercise }) => {
+const ExerciseCard: FC<{ exercise: Exercises[0]; linkOff?: boolean }> = ({
+  exercise,
+  linkOff
+}) => {
   return (
     <Link
-      href={`exercise/${exercise.id}`}
-      className='block p-4 space-y-2 bg-zinc-900 rounded-md'
+      href={linkOff ? "" : `exercise/${exercise.id}`}
+      className={`block p-4 space-y-2 bg-zinc-900 rounded-md`}
     >
       <h2 className='text-xl font-semibold'>{exercise.name}</h2>
 

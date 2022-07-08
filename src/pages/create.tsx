@@ -11,7 +11,7 @@ const CreateExercisePage = () => {
   const { data: session, status } = useSession();
 
   const [option, setOption] = useState<"workout" | "exercise" | null>(
-    query.option === "workout" ? "workout" : null
+    query.option === "workout" ? "exercise" : "exercise" ? "exercise" : null
   );
 
   if (status === "loading") return <Loader />;

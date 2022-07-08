@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateExerciseInput,
@@ -12,11 +13,12 @@ import {
 import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 
 const CreateExercisePage = () => {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { data: session, status } = useSession();
   const [option, setOption] = useState<"weight" | "cardio" | null>(null);
 
-  const { mutate, isLoading } = useCreateExercise();
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useCreateExercise(queryClient);
 
   const {
     register,
@@ -25,6 +27,16 @@ const CreateExercisePage = () => {
   } = useForm<CreateExerciseInput>({
     resolver: zodResolver(createExerciseValidator)
   });
+
+  const onSubmit = (data: CreateExerciseInput) => {
+    mutate(data);
+
+    if (query.entry) {
+      push("/create?option=exercise");
+    } else {
+      push("/dashboard");
+    }
+  };
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -37,13 +49,7 @@ const CreateExercisePage = () => {
         <main className='container mx-auto p-4 space-y-6'>
           <h1 className='text-xl font-semibold'>Create exercise</h1>
 
-          <form
-            className='space-y-6'
-            onSubmit={handleSubmit(data => {
-              mutate(data);
-              push("/dashboard");
-            })}
-          >
+          <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
             <div className='field'>
               <label htmlFor='name'>Exercise name:</label>
               <input {...register("name")} className='input' id='name' />

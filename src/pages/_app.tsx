@@ -33,7 +33,6 @@ const MyApp = ({
               content='Upsurge is the best way to log your gym workouts'
             />
           </Head>
-
           <Component {...pageProps} />
         </div>
         <Toaster position='top-right' />

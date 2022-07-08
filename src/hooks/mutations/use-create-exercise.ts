@@ -1,8 +1,8 @@
-import { useMutation } from "react-query";
+import { QueryClient, useMutation } from "react-query";
 import { CreateExercise } from "@/pages/api/exercise/create-exercise";
 import { CreateExerciseErrors, CreateExerciseInput } from "./validators";
 
-export const useCreateExercise = () =>
+export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<CreateExercise, CreateExerciseErrors, CreateExerciseInput>(
     async data => {
       const res = await fetch("/api/exercise/create-exercise", {
@@ -14,5 +14,8 @@ export const useCreateExercise = () =>
       if (!res.ok) throw await res.json();
 
       return await res.json();
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(["exercises"])
     }
   );
