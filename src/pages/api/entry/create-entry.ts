@@ -13,6 +13,7 @@ import {
 const createEntry = (input: CreateEntryInput) =>
   prisma.entry.create({
     data: {
+      notes: input.notes,
       exercise: { connect: { id: input.exerciseId } },
       sets: {
         createMany: { data: input.sets }
