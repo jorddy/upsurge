@@ -90,7 +90,7 @@ export default function WorkoutSetForm({
   });
 
   return (
-    <>
+    <div className='space-y-6'>
       <h3 className='font-semibold'>Sets</h3>
 
       {fields.map((set, setIndex) => (
@@ -111,6 +111,6 @@ export default function WorkoutSetForm({
       >
         + Add set
       </button>
-    </>
+    </div>
   );
 }

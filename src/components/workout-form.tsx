@@ -11,6 +11,7 @@ import { Exercises } from "@/pages/api/exercise/get-exercises";
 import { CreateWorkoutInput, createWorkoutValidator } from "@/utils/validators";
 import { useSearch } from "@/hooks/use-search";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
+import toast from "react-hot-toast";
 
 export default function WorkoutForm() {
   const queryClient = useQueryClient();
@@ -48,7 +49,9 @@ export default function WorkoutForm() {
   return (
     <form
       className='space-y-6'
-      onSubmit={handleSubmit(data => console.log(data))}
+      onSubmit={handleSubmit(data =>
+        toast.success("** TEMP** you've logged your workout!")
+      )}
     >
       <div className='field'>
         <label className='font-semibold' htmlFor='name'>
@@ -93,7 +96,7 @@ export default function WorkoutForm() {
         {fields.map((exercise, idx) => (
           <div
             key={exercise.id}
-            className='bg-zinc-900 px-6 py-4 space-y-3 rounded-md'
+            className='bg-zinc-900 px-6 py-4 space-y-2 rounded-md'
           >
             <div className='flex gap-4 items-center'>
               <h3 className='text-md font-semibold'>{exercise.name}</h3>

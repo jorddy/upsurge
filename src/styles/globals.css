@@ -9,7 +9,7 @@
   }
 
   .button-remove {
-    @apply flex items-center gap-2 px-3 py-2 bg-red-600 rounded-sm transition hover:bg-red-700;
+    @apply self-end flex items-center gap-2 px-3 py-2 bg-red-600 rounded-sm transition hover:bg-red-700;
   }
 
   .field {
@@ -21,7 +21,7 @@
   }
 
   .input-small {
-    @apply bg-zinc-700 px-3 py-2 truncate max-w-[6rem];
+    @apply bg-zinc-700 px-3 py-2 truncate w-full sm:max-w-[6rem];
   }
 
   .link {
