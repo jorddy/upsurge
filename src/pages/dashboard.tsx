@@ -33,7 +33,15 @@ export default function Dashboard() {
             </Link>
           </section>
 
+          <h2 className='text-lg font-bold sm:text-xl'>Recent</h2>
+
           <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
+            {data?.length === 0 && (
+              <p className='p-4 bg-zinc-900 rounded-md'>
+                You have no workouts recently logged.
+              </p>
+            )}
+
             {data?.map(workout => (
               <WorkoutCard key={workout.id} workout={workout} />
             ))}
