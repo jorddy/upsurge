@@ -15,8 +15,14 @@ const createWorkout = async (input: CreateWorkoutInput, userId: string) =>
       user: { connect: { id: userId } },
       entries: {
         create: input.entries.map(entry => ({
+          createdAt: input.createdAt,
           sets: {
-            createMany: { data: entry.sets }
+            createMany: {
+              data: entry.sets.map(set => ({
+                ...set,
+                createdAt: input.createdAt
+              }))
+            }
           },
           notes: entry.notes,
           exercise: { connect: { id: entry.exerciseId } }
