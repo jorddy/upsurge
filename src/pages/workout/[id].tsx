@@ -9,6 +9,7 @@ import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
 import { Entry, Exercise, Set } from "@prisma/client";
+import { HiX } from "react-icons/hi";
 
 export default function WorkoutPage() {
   const { data: session, status } = useSession();
@@ -40,9 +41,19 @@ export default function WorkoutPage() {
                 {new Date(workout?.updatedAt as Date).toLocaleDateString()}
               </p>
             </div>
-            <Link className='link' href={`/workout/${workout?.id}/edit`}>
-              Edit
-            </Link>
+
+            <div className='flex flex-wrap gap-2'>
+              <Link
+                className='bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600'
+                href={`/workout/${workout?.id}/edit`}
+              >
+                Edit
+              </Link>
+              <button className='button-remove' onClick={() => {}}>
+                <HiX className='h-5 w-5' />
+                <p>Delete</p>
+              </button>
+            </div>
           </div>
 
           <section className='flex flex-col gap-4 sm:flex-row'>
@@ -52,6 +63,7 @@ export default function WorkoutPage() {
                 <p className='text-xl font-bold'>{total._sum.weight}kg</p>
               </div>
             )}
+
             {total?._sum.distance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Distance Travelled</h2>

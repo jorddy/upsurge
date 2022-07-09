@@ -53,6 +53,7 @@ export default function CreateExercisePage() {
             <div className='field'>
               <label htmlFor='name'>Exercise name:</label>
               <input {...register("name")} className='input' id='name' />
+
               {errors.name && (
                 <p className='text-red-600'>{errors.name.message}</p>
               )}
@@ -101,6 +102,7 @@ export default function CreateExercisePage() {
                     step={0.01}
                     className='input'
                   />
+
                   {errors.currentWeight && (
                     <p className='text-red-600'>
                       {errors.currentWeight.message}
@@ -153,6 +155,7 @@ export default function CreateExercisePage() {
                     step={0.01}
                     id='target-distance'
                   />
+
                   {errors.targetDistance && (
                     <p className='text-red-600'>
                       {errors.targetDistance.message}

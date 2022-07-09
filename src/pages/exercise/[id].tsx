@@ -7,6 +7,7 @@ import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useExerciseById } from "@/hooks/queries/use-exercise-by-id";
 import { useDateFilter } from "@/hooks/use-date-filter";
+import { HiX } from "react-icons/hi";
 
 export default function ExercisePage() {
   const { data: session, status } = useSession();
@@ -31,14 +32,25 @@ export default function ExercisePage() {
               <h1 className='text-lg font-bold sm:text-2xl'>
                 {exercise?.name}
               </h1>
+
               <p>
                 Last Updated:{" "}
                 {new Date(exercise?.updatedAt as Date).toLocaleDateString()}
               </p>
             </div>
-            <Link className='link' href={`/exercise/${exercise?.id}/edit`}>
-              Edit
-            </Link>
+
+            <div className='flex flex-wrap gap-2'>
+              <Link
+                className='bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600'
+                href={`/exercise/${exercise?.id}/edit`}
+              >
+                Edit
+              </Link>
+              <button className='button-remove' onClick={() => {}}>
+                <HiX className='h-5 w-5' />
+                <p>Delete</p>
+              </button>
+            </div>
           </div>
 
           <section className='flex flex-col gap-4 sm:flex-row'>
