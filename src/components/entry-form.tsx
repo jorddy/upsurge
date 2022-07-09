@@ -151,7 +151,6 @@ export default function EntryForm() {
 
           <div className='field'>
             <label htmlFor='notes'>Notes</label>
-
             <textarea
               {...register("notes")}
               className='input min-h-[100px]'

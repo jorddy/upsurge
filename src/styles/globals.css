@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      @apply scroll-auto;
+    }
+  }
+}
+
 @layer components {
   .button {
     @apply w-full px-6 py-4 rounded-md bg-orange-600 font-semibold transition 
@@ -25,7 +37,7 @@
   }
 
   .link {
-    @apply font-semibold underline hover:text-orange-500;
+    @apply font-semibold hover:text-orange-500;
   }
 
   .scrollbar-hide {

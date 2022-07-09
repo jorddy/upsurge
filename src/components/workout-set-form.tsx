@@ -23,7 +23,7 @@ const Set = ({
   return (
     <div className='py-4 px-6 bg-zinc-800 rounded-md'>
       <div className='flex flex-wrap gap-6 items-center'>
-        <div className='field self-start'>
+        <div className='self-start flex gap-2 sm:flex-col'>
           <p>Set</p>
           <p>{setIndex + 1}</p>
         </div>
@@ -111,6 +111,15 @@ export default function WorkoutSetForm({
       >
         + Add set
       </button>
+
+      <div className='field'>
+        <label htmlFor='notes'>Notes</label>
+        <textarea
+          {...register(`entries.${index}.notes`)}
+          className='input bg-zinc-700 min-h-[100px]'
+          id='notes'
+        />
+      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function SetForm({
   return (
     <div key={set.id} className='py-4 px-6 bg-zinc-900 rounded-md'>
       <div className='flex flex-wrap gap-6 items-center'>
-        <div className='field self-start'>
+        <div className='self-start flex gap-2 sm:flex-col'>
           <p>Set</p>
           <p>{index + 1}</p>
         </div>
