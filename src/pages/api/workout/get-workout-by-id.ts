@@ -5,7 +5,7 @@ import { unauthorized } from "@/utils/unauthorized";
 import { ZodError } from "zod";
 import { prisma } from "@/utils/db";
 import { Prisma } from "@prisma/client";
-import { byIdValidator } from "@/utils/validators";
+import { idValidator } from "@/utils/validators";
 
 const getWorkoutById = (id: string) =>
   prisma.workout.findUnique({
@@ -27,7 +27,7 @@ export default async function handler(
   if (!session) return unauthorized(res);
 
   try {
-    const { id } = byIdValidator.parse(req.query);
+    const { id } = idValidator.parse(req.query);
     res.status(200).json(await getWorkoutById(id));
   } catch (error) {
     if (error instanceof ZodError) res.status(500).json(error.flatten());

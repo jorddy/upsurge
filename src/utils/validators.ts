@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export const byIdValidator = z.object({
+export const idValidator = z.object({
   id: z.string()
 });
 
-export type ByIdErrors = z.inferFlattenedErrors<typeof byIdValidator>;
+export type IdErrors = z.inferFlattenedErrors<typeof idValidator>;
 
 export const createExerciseValidator = z.object({
   name: z.string().min(1, "You must provide a name"),
@@ -31,6 +31,7 @@ export const createExerciseValidator = z.object({
 });
 
 export type CreateExerciseInput = z.infer<typeof createExerciseValidator>;
+
 export type CreateExerciseErrors = z.inferFlattenedErrors<
   typeof createExerciseValidator
 >;
@@ -66,6 +67,14 @@ export const createEntryValidator = z.object({
 });
 
 export type CreateEntryInput = z.infer<typeof createEntryValidator>;
+
 export type CreateEntryErrors = z.inferFlattenedErrors<
   typeof createEntryValidator
+>;
+
+export const createWorkoutValidator = z.object({});
+
+export type CreateWorkoutInput = z.infer<typeof createWorkoutValidator>;
+export type CreateWorkoutErrors = z.inferFlattenedErrors<
+  typeof createWorkoutValidator
 >;
