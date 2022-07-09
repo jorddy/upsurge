@@ -5,18 +5,20 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { Exercises } from "@/pages/api/exercise/get-exercises";
 import { CreateWorkoutInput, createWorkoutValidator } from "@/utils/validators";
 import { useSearch } from "@/hooks/use-search";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
-import toast from "react-hot-toast";
 
 export default function WorkoutForm() {
+  const { push } = useRouter();
   const queryClient = useQueryClient();
+
   const { data } = useExercises();
-  const { mutate, isLoading } = useCreateWorkout(queryClient);
+  const { mutate, isLoading, isSuccess } = useCreateWorkout(queryClient);
 
   const [query, setQuery] = useState("");
   const filteredData = useSearch(query, data) as Exercises;
@@ -46,13 +48,13 @@ export default function WorkoutForm() {
     }
   };
 
+  const onSubmit = (data: CreateWorkoutInput) => {
+    mutate(data);
+    if (isSuccess) push("/dashboard");
+  };
+
   return (
-    <form
-      className='space-y-6'
-      onSubmit={handleSubmit(data =>
-        toast.success("** TEMP** you've logged your workout!")
-      )}
-    >
+    <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
       <div className='field'>
         <label className='font-semibold' htmlFor='name'>
           Workout name

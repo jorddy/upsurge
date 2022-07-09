@@ -25,6 +25,10 @@ export default async function handler(
     const { id } = idValidator.parse(req.query);
     res.status(200).json(await sumEntries(id));
   } catch (error) {
-    if (error instanceof ZodError) res.status(500).json(error.flatten());
+    if (error instanceof ZodError) {
+      res.status(500).json(error.flatten());
+    } else {
+      throw error;
+    }
   }
 }

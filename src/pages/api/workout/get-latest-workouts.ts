@@ -24,5 +24,9 @@ export default async function handler(
   const session = await unstable_getServerSession(req, res, authOptions);
   if (!session) return unauthorized(res);
 
-  res.status(200).json(await getLatestWorkouts(session.user.id));
+  try {
+    res.status(200).json(await getLatestWorkouts(session.user.id));
+  } catch (error) {
+    throw error;
+  }
 }

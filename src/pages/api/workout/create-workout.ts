@@ -13,7 +13,15 @@ const createWorkout = async (input: CreateWorkoutInput, userId: string) =>
       name: input.name,
       createdAt: input.createdAt,
       user: { connect: { id: userId } },
-      entries: { create: input.entries }
+      entries: {
+        create: input.entries.map(entry => ({
+          sets: {
+            createMany: { data: entry.sets }
+          },
+          notes: entry.notes,
+          exercise: { connect: { id: entry.exerciseId } }
+        }))
+      }
     }
   });
 
@@ -32,6 +40,10 @@ export default async function handler(
 
     res.status(200).json(entry);
   } catch (error) {
-    if (error instanceof ZodError) res.status(500).json(error.flatten());
+    if (error instanceof ZodError) {
+      res.status(500).json(error.flatten());
+    } else {
+      throw error;
+    }
   }
 }
