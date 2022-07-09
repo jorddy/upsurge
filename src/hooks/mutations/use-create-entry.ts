@@ -13,11 +13,13 @@ export const useCreateEntry = (queryClient: QueryClient) =>
       });
 
       if (!res.ok) throw await res.json();
-
       return await res.json();
     },
     {
       onMutate: () => toast.loading("Creating entry..."),
-      onSuccess: () => queryClient.invalidateQueries(["exercises"])
+      onSuccess: () => {
+        queryClient.invalidateQueries(["exercises"]);
+        toast.success("Successfully logged exercise");
+      }
     }
   );

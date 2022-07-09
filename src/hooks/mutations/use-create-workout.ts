@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<CreateExercise, CreateExerciseErrors, CreateExerciseInput>(
     async data => {
-      const res = await fetch("/api/exercise/create-exercise", {
+      const res = await fetch("/api/workout/create-workout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -18,8 +18,9 @@ export const useCreateExercise = (queryClient: QueryClient) =>
     {
       onMutate: () => toast.loading("Creating entry..."),
       onSuccess: () => {
-        queryClient.invalidateQueries(["exercises"]);
-        toast.success("Successfully created exercise");
+        queryClient.invalidateQueries(["workouts"]);
+        queryClient.invalidateQueries(["latest-workouts"]);
+        toast.success("Successfully logged workout");
       }
     }
   );

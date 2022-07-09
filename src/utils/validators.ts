@@ -72,7 +72,15 @@ export type CreateEntryErrors = z.inferFlattenedErrors<
   typeof createEntryValidator
 >;
 
-export const createWorkoutValidator = z.object({});
+export const createWorkoutValidator = z.object({
+  name: z.string().min(1, "You must provide a name"),
+  createdAt: z
+    .string()
+    .transform(data => new Date(data))
+    .or(z.date())
+    .optional(),
+  entries: createEntryValidator.array()
+});
 
 export type CreateWorkoutInput = z.infer<typeof createWorkoutValidator>;
 export type CreateWorkoutErrors = z.inferFlattenedErrors<
