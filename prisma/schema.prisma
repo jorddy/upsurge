@@ -63,7 +63,7 @@ model Set {
   distance  Float?
   elevation Float?
 
-  entry   Entry  @relation(fields: [entryId], references: [id])
+  entry   Entry  @relation(fields: [entryId], references: [id], onDelete: Cascade)
   entryId String
 
   @@index([entryId])
