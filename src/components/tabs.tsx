@@ -9,6 +9,8 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
+import { Workouts } from "@/pages/api/workout/get-workouts";
+import { Exercises } from "@/pages/api/exercise/get-exercises";
 
 export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
@@ -16,8 +18,14 @@ export default function Tabs() {
   const workouts = useWorkouts();
   const exercises = useExercises();
 
-  const filteredWorkoutData = useSearch(workoutQuery, workouts.data);
-  const filteredExerciseData = useSearch(exerciseQuery, exercises.data);
+  const filteredWorkoutData = useSearch(
+    workoutQuery,
+    workouts.data
+  ) as Workouts;
+  const filteredExerciseData = useSearch(
+    exerciseQuery,
+    exercises.data
+  ) as Exercises;
 
   if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
