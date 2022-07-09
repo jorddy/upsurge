@@ -1,12 +1,11 @@
 import { QueryClient, useMutation } from "react-query";
-import { CreateWorkout } from "@/pages/api/workout/create-workout";
-import { CreateWorkoutErrors, CreateWorkoutInput } from "@/utils/validators";
+import { GenericResponse, IdErrors, IdInput } from "@/utils/validators";
 import toast from "react-hot-toast";
 
-export const useCreateWorkout = (queryClient: QueryClient) =>
-  useMutation<CreateWorkout, CreateWorkoutErrors, CreateWorkoutInput>(
+export const useDeleteWorkout = (queryClient: QueryClient) =>
+  useMutation<GenericResponse, IdErrors, IdInput>(
     async data => {
-      const res = await fetch("/api/workout/create-workout", {
+      const res = await fetch("/api/workout/delete-workout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -16,12 +15,12 @@ export const useCreateWorkout = (queryClient: QueryClient) =>
       return await res.json();
     },
     {
-      onMutate: () => toast.loading("Logging workout..."),
+      onMutate: () => toast.loading("Deleting workout..."),
       onSuccess: () => {
         queryClient.invalidateQueries(["workouts"]);
         queryClient.invalidateQueries(["latest-workouts"]);
         toast.dismiss();
-        toast.success("Successfully logged workout");
+        toast.success("Successfully deleted workout");
       }
     }
   );

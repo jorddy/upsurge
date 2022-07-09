@@ -13,12 +13,14 @@ export const useCreateExercise = (queryClient: QueryClient) =>
       });
 
       if (!res.ok) throw await res.json();
+
       return await res.json();
     },
     {
-      onMutate: () => toast.loading("Creating entry..."),
+      onMutate: () => toast.loading("Creating exercise..."),
       onSuccess: () => {
         queryClient.invalidateQueries(["exercises"]);
+        toast.dismiss();
         toast.success("Successfully created exercise");
       }
     }
