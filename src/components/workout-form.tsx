@@ -18,7 +18,7 @@ export default function WorkoutForm() {
   const queryClient = useQueryClient();
 
   const { data } = useExercises();
-  const { mutate, isLoading, isSuccess } = useCreateWorkout(queryClient);
+  const { mutate, isLoading } = useCreateWorkout(queryClient);
 
   const [query, setQuery] = useState("");
   const filteredData = useSearch(query, data) as Exercises;
@@ -50,11 +50,7 @@ export default function WorkoutForm() {
 
   const onSubmit = (data: CreateWorkoutInput) => {
     mutate(data, {
-      onSuccess: () => {
-        if (isSuccess) {
-          push("/dashboard");
-        }
-      }
+      onSuccess: () => push("/dashboard")
     });
   };
 

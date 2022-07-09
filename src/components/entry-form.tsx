@@ -28,7 +28,7 @@ export default function EntryForm() {
   const filteredData = useSearch(query, exercises) as Exercises;
 
   const queryClient = useQueryClient();
-  const { mutate, isLoading, isSuccess } = useCreateEntry(queryClient);
+  const { mutate, isLoading } = useCreateEntry(queryClient);
 
   const {
     register,
@@ -59,11 +59,7 @@ export default function EntryForm() {
 
   const onSubmit = async (data: CreateEntryInput) => {
     mutate(data, {
-      onSuccess: () => {
-        if (isSuccess) {
-          push("/dashboard");
-        }
-      }
+      onSuccess: () => push("/dashboard")
     });
   };
 
