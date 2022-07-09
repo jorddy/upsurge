@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/future/image";
+import Loader from "./loader";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
@@ -14,7 +15,11 @@ import {
 export default function Header({ app }: { app?: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <Loader inline={true} />;
+  }
 
   return (
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
