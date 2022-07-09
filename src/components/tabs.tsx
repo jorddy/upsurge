@@ -50,9 +50,7 @@ export default function Tabs() {
           </Link>
 
           {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
-              No workouts found with that name.
-            </p>
+            <p className='p-4 bg-zinc-900 rounded-md'>No workouts found.</p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -75,9 +73,7 @@ export default function Tabs() {
           </Link>
 
           {filteredExerciseData && filteredExerciseData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
-              No exercises found with that name.
-            </p>
+            <p className='p-4 bg-zinc-900 rounded-md'>No exercises found.</p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
