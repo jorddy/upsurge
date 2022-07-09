@@ -11,7 +11,12 @@ const getLatestWorkouts = (userId: string) =>
     orderBy: { updatedAt: "desc" },
     where: { userId },
     include: {
-      entries: { include: { sets: true } }
+      entries: {
+        include: {
+          _count: { select: { sets: true } },
+          sets: true
+        }
+      }
     }
   });
 

@@ -11,7 +11,10 @@ const getWorkouts = (userId: string) =>
     where: { userId },
     include: {
       entries: {
-        include: { sets: true }
+        include: {
+          _count: { select: { sets: true } },
+          sets: true
+        }
       }
     }
   });

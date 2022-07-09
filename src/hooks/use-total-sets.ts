@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Entry, Set } from "@prisma/client";
+import { Workouts } from "@/pages/api/workout/get-workouts";
 
-export const useTotalSets = (entries: (Entry & { sets: Set[] })[]) => {
+export const useTotalSets = (workout: Workouts[0]) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    entries.forEach(entry => setTotal(total => (total += entry.sets.length)));
-  }, [entries]);
+    setTotal(workout.entries.reduce((a, entry) => entry._count.sets + a, 0));
+  }, [workout]);
 
   return total;
 };

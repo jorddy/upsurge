@@ -5,7 +5,7 @@ import { useTotalSets } from "@/hooks/use-total-sets";
 
 export default function WorkoutCard({ workout }: { workout: Workouts[0] }) {
   const { data, isLoading } = useSumWorkout(workout.id);
-  const total = useTotalSets(workout.entries);
+  const totalSets = useTotalSets(workout);
 
   return (
     <Link
@@ -16,7 +16,7 @@ export default function WorkoutCard({ workout }: { workout: Workouts[0] }) {
 
       <div>
         <p>
-          <strong className='font-medium'>Sets:</strong> {total}
+          <strong className='font-medium'>Sets:</strong> {totalSets}
         </p>
 
         <div>
