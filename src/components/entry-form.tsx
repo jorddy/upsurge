@@ -65,7 +65,7 @@ export default function EntryForm() {
   return (
     <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
       {errors.exerciseId && (
-        <p className='text-red-500'>{errors.exerciseId.message}</p>
+        <p className='text-red-600'>{errors.exerciseId.message}</p>
       )}
 
       {exerciseType?.type === "weight" && (
@@ -110,7 +110,7 @@ export default function EntryForm() {
             />
 
             {errors.notes && (
-              <p className='text-red-500'>{errors.notes.message}</p>
+              <p className='text-red-600'>{errors.notes.message}</p>
             )}
           </div>
         </>

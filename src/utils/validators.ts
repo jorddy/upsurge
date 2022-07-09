@@ -79,7 +79,12 @@ export const createWorkoutValidator = z.object({
     .transform(data => new Date(data))
     .or(z.date())
     .optional(),
-  entries: createEntryValidator.array()
+  entries: createEntryValidator
+    .extend({
+      name: z.string(),
+      type: z.enum(["weight", "cardio"])
+    })
+    .array()
 });
 
 export type CreateWorkoutInput = z.infer<typeof createWorkoutValidator>;

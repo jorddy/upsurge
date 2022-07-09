@@ -14,6 +14,7 @@ export default function SetForm({
   register
 }: {
   cardio?: boolean;
+  workoutSet?: boolean;
   set: FieldArrayWithId<CreateEntryInput, "sets", "id">;
   index: number;
   remove: UseFieldArrayRemove;

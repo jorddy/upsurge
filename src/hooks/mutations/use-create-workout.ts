@@ -1,10 +1,10 @@
 import { QueryClient, useMutation } from "react-query";
-import { CreateExercise } from "@/pages/api/exercise/create-exercise";
-import { CreateExerciseErrors, CreateExerciseInput } from "@/utils/validators";
+import { CreateWorkout } from "@/pages/api/workout/create-workout";
+import { CreateWorkoutErrors, CreateWorkoutInput } from "@/utils/validators";
 import toast from "react-hot-toast";
 
-export const useCreateExercise = (queryClient: QueryClient) =>
-  useMutation<CreateExercise, CreateExerciseErrors, CreateExerciseInput>(
+export const useCreateWorkout = (queryClient: QueryClient) =>
+  useMutation<CreateWorkout, CreateWorkoutErrors, CreateWorkoutInput>(
     async data => {
       const res = await fetch("/api/workout/create-workout", {
         method: "POST",
