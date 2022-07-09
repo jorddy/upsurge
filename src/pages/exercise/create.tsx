@@ -29,13 +29,15 @@ export default function CreateExercisePage() {
   });
 
   const onSubmit = (data: CreateExerciseInput) => {
-    mutate(data);
-
-    if (query.entry) {
-      push("/entry/create?option=exercise");
-    } else {
-      push("/dashboard");
-    }
+    mutate(data, {
+      onSuccess: () => {
+        if (query.entry) {
+          push("/entry/create?option=exercise");
+        } else {
+          push("/dashboard");
+        }
+      }
+    });
   };
 
   if (status === "loading") return <Loader />;

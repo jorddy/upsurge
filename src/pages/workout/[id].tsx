@@ -10,11 +10,16 @@ import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
 import { Entry, Exercise, Set } from "@prisma/client";
 import { HiX } from "react-icons/hi";
+import { useQueryClient } from "react-query";
+import { useDeleteWorkout } from "@/hooks/mutations/use-delete-workout";
 
 export default function WorkoutPage() {
+  const { query, push } = useRouter();
   const { data: session, status } = useSession();
-  const { query } = useRouter();
+  const queryClient = useQueryClient();
+
   const { data: workout, isLoading } = useWorkoutById(query.id as string);
+  const { mutate, isLoading: isDeleting } = useDeleteWorkout(queryClient);
   const { data: total } = useSumWorkout(workout?.id);
 
   const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
@@ -22,6 +27,17 @@ export default function WorkoutPage() {
     sets: Set[];
     exercise: Exercise;
   })[];
+
+  const handleDelete = () => {
+    if (workout) {
+      mutate(
+        { id: workout.id },
+        {
+          onSuccess: () => push("/dashboard")
+        }
+      );
+    }
+  };
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -49,7 +65,12 @@ export default function WorkoutPage() {
               >
                 Edit
               </Link>
-              <button className='button-remove' onClick={() => {}}>
+
+              <button
+                className='button-remove'
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
                 <HiX className='h-5 w-5' />
                 <p>Delete</p>
               </button>

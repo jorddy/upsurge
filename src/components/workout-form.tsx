@@ -49,8 +49,13 @@ export default function WorkoutForm() {
   };
 
   const onSubmit = (data: CreateWorkoutInput) => {
-    mutate(data);
-    if (isSuccess) push("/dashboard");
+    mutate(data, {
+      onSuccess: () => {
+        if (isSuccess) {
+          push("/dashboard");
+        }
+      }
+    });
   };
 
   return (

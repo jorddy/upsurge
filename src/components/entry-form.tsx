@@ -58,8 +58,13 @@ export default function EntryForm() {
   };
 
   const onSubmit = async (data: CreateEntryInput) => {
-    mutate(data);
-    if (isSuccess) push("/dashboard");
+    mutate(data, {
+      onSuccess: () => {
+        if (isSuccess) {
+          push("/dashboard");
+        }
+      }
+    });
   };
 
   return (

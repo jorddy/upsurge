@@ -5,17 +5,33 @@ import DateBar from "@/components/date-bar";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { HiX } from "react-icons/hi";
+import { useQueryClient } from "react-query";
 import { useExerciseById } from "@/hooks/queries/use-exercise-by-id";
 import { useDateFilter } from "@/hooks/use-date-filter";
-import { HiX } from "react-icons/hi";
+import { useDeleteExercise } from "@/hooks/mutations/use-delete-exercise";
 
 export default function ExercisePage() {
+  const { query, push } = useRouter();
   const { data: session, status } = useSession();
-  const { query } = useRouter();
+  const queryClient = useQueryClient();
+
   const { data: exercise, isLoading } = useExerciseById(query.id as string);
+  const { mutate, isLoading: isDeleting } = useDeleteExercise(queryClient);
 
   const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
   const filteredData = useDateFilter(date, exercise);
+
+  const handleDelete = () => {
+    if (exercise) {
+      mutate(
+        { id: exercise.id },
+        {
+          onSuccess: () => push("/dashboard")
+        }
+      );
+    }
+  };
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -46,7 +62,12 @@ export default function ExercisePage() {
               >
                 Edit
               </Link>
-              <button className='button-remove' onClick={() => {}}>
+
+              <button
+                className='button-remove'
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
                 <HiX className='h-5 w-5' />
                 <p>Delete</p>
               </button>
