@@ -44,7 +44,7 @@ export default function ExercisePage() {
         <Header app />
 
         <main className='container mx-auto p-4 space-y-6'>
-          <div className='flex flex-wrap items-center justify-between gap-2'>
+          <section className='flex flex-wrap items-center justify-between gap-2'>
             <div className='space-y-1'>
               <h1 className='text-lg font-bold sm:text-2xl'>
                 {exercise?.name}
@@ -73,7 +73,7 @@ export default function ExercisePage() {
                 <p>Delete</p>
               </button>
             </div>
-          </div>
+          </section>
 
           <section className='flex flex-col gap-4 sm:flex-row'>
             {exercise?.targetWeight && (

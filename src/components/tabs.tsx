@@ -45,7 +45,7 @@ export default function Tabs() {
             setQuery={setWorkoutQuery}
           />
 
-          <Link className='link block' href='/entry/create?option=workout'>
+          <Link className='button-create' href='/entry/create?option=workout'>
             + Create workout
           </Link>
 
@@ -70,7 +70,7 @@ export default function Tabs() {
             setQuery={setExerciseQuery}
           />
 
-          <Link className='link block' href='/exercise/create'>
+          <Link className='button-create' href='/exercise/create'>
             + Create exercise
           </Link>
 

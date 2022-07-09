@@ -22,7 +22,7 @@ export default function Header({ app }: { app?: boolean }) {
         <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
-            {!app && "Upsurge"}
+            {!app ? "Upsurge" : "Beta v1.0"}
           </p>
         </Link>
 

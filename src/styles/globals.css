@@ -25,6 +25,11 @@
     hover:bg-red-700 disabled:opacity-60;
   }
 
+  .button-create {
+    @apply flex items-center gap-2 px-3 py-2 w-fit bg-orange-600 rounded-sm transition 
+    hover:bg-orange-700;
+  }
+
   .field {
     @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
   }

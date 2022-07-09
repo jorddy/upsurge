@@ -20,23 +20,23 @@ export default function Dashboard() {
         <Header app />
 
         <main className='container mx-auto p-4 space-y-6'>
-          <section>
-            <div className='flex flex-wrap gap-2 items-center justify-between'>
+          <section className='flex flex-wrap justify-between items-center gap-4'>
+            <div className='space-y-1'>
               <h1 className='text-lg font-bold sm:text-2xl'>
                 Welcome back, {session.user.name}
               </h1>
-              <Link href='/entry/create' className='link'>
-                + Log entry
-              </Link>
+              <p className='mb-4'>Your recent workout summary</p>
             </div>
 
-            <p className='mt-1 mb-4'>Your recent workout summary</p>
+            <Link className='button-create' href='/entry/create'>
+              + Log entry
+            </Link>
+          </section>
 
-            <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-              {data?.map(workout => (
-                <WorkoutCard key={workout.id} workout={workout} />
-              ))}
-            </div>
+          <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
+            {data?.map(workout => (
+              <WorkoutCard key={workout.id} workout={workout} />
+            ))}
           </section>
 
           <h2 className='text-lg font-bold sm:text-xl'>Explore</h2>
