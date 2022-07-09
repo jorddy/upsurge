@@ -3,7 +3,7 @@ import {
   UseFieldArrayRemove,
   UseFormRegister
 } from "react-hook-form";
-import { CreateEntryInput } from "@/hooks/mutations/validators";
+import { CreateEntryInput } from "@/utils/validators";
 import { HiX } from "react-icons/hi";
 
 export default function SetForm({
@@ -59,11 +59,9 @@ export default function SetForm({
           />
         </div>
 
-        <button
-          className='p-1 bg-red-500 rounded-sm'
-          onClick={() => remove(index)}
-        >
+        <button className='button-remove' onClick={() => remove(index)}>
           <HiX className='h-5 w-5' />
+          <p className='hidden sm:inline'>Remove set</p>
         </button>
       </div>
     </div>

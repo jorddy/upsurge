@@ -1,6 +1,6 @@
 import { QueryClient, useMutation } from "react-query";
 import { CreateExercise } from "@/pages/api/exercise/create-exercise";
-import { CreateExerciseErrors, CreateExerciseInput } from "./validators";
+import { CreateExerciseErrors, CreateExerciseInput } from "@/utils/validators";
 import toast from "react-hot-toast";
 
 export const useCreateExercise = (queryClient: QueryClient) =>

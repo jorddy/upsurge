@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { SumEntries } from "@/pages/api/workout/sum-workout";
-import { ByIdError } from "./validators";
+import { ByIdErrors } from "@/utils/validators";
 
 export const useSumWorkout = (workoutId: string | undefined) =>
-  useQuery<SumEntries, ByIdError>(
+  useQuery<SumEntries, ByIdErrors>(
     ["sum-workout", workoutId],
     async () => {
       const res = await fetch(`/api/workout/sum-workout?id=${workoutId}`);

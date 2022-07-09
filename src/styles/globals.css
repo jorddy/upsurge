@@ -8,6 +8,10 @@
     hover:scale-95 disabled:opacity-60 sm:w-fit;
   }
 
+  .button-remove {
+    @apply flex items-center gap-2 px-3 py-2 bg-red-600 rounded-sm transition hover:bg-red-700;
+  }
+
   .field {
     @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
   }

@@ -9,13 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
 import { Exercises } from "@/pages/api/exercise/get-exercises";
-import {
-  CreateEntryInput,
-  createEntryValidator
-} from "@/hooks/mutations/validators";
 import { HiX } from "react-icons/hi";
 import { useQueryClient } from "react-query";
 import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
+import { CreateEntryInput, createEntryValidator } from "@/utils/validators";
 
 export default function EntryForm() {
   const { push } = useRouter();
@@ -76,11 +73,12 @@ export default function EntryForm() {
           <div className='flex gap-4 items-center'>
             <h3>{exerciseType.name}</h3>
             <button
-              className='p-1 bg-red-500 rounded-sm'
+              className='button-remove'
               type='button'
               onClick={() => setExerciseType(null)}
             >
               <HiX className='h-5 w-5' />
+              <p className='hidden sm:inline'>Remove exercise</p>
             </button>
           </div>
 
@@ -95,7 +93,7 @@ export default function EntryForm() {
           ))}
 
           <button
-            className='px-4 py-3 border border-dashed w-full'
+            className='px-4 py-3 border border-dashed w-full hover:bg-zinc-900'
             type='button'
             onClick={() => append({})}
           >
@@ -107,7 +105,7 @@ export default function EntryForm() {
 
             <textarea
               {...register("notes")}
-              className='input min-h-[100px]'
+              className='input min-h-[100px] w-full'
               id='notes'
             />
 
@@ -123,11 +121,12 @@ export default function EntryForm() {
           <div className='flex gap-4 items-center'>
             <h3>{exerciseType.name}</h3>
             <button
-              className='p-1 bg-red-500 rounded-sm'
+              className='button-remove'
               type='button'
               onClick={() => setExerciseType(null)}
             >
               <HiX className='h-5 w-5' />
+              <p className='hidden sm:inline'>Remove exercise</p>
             </button>
           </div>
 

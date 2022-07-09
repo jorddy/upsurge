@@ -5,10 +5,7 @@ import { unauthorized } from "@/utils/unauthorized";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/utils/db";
 import { ZodError } from "zod";
-import {
-  CreateEntryInput,
-  createEntryValidator
-} from "@/hooks/mutations/validators";
+import { CreateEntryInput, createEntryValidator } from "@/utils/validators";
 
 const createEntry = (input: CreateEntryInput) =>
   prisma.entry.create({

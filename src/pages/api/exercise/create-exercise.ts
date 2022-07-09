@@ -8,7 +8,7 @@ import { ZodError } from "zod";
 import {
   CreateExerciseInput,
   createExerciseValidator
-} from "@/hooks/mutations/validators";
+} from "@/utils/validators";
 
 const createExercise = (input: CreateExerciseInput, id: string) =>
   prisma.exercise.create({

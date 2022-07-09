@@ -5,7 +5,7 @@ import { unauthorized } from "@/utils/unauthorized";
 import { ZodError } from "zod";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/utils/db";
-import { byIdValidator } from "@/hooks/queries/validators";
+import { byIdValidator } from "@/utils/validators";
 
 const getExerciseById = (id: string) =>
   prisma.exercise.findUnique({

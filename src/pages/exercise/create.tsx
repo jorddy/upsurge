@@ -6,11 +6,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 import {
   CreateExerciseInput,
   createExerciseValidator
-} from "@/hooks/mutations/validators";
-import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
+} from "@/utils/validators";
 
 export default function CreateExercisePage() {
   const { push, query } = useRouter();

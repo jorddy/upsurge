@@ -8,8 +8,7 @@ import Head from "next/head";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: error => toast.error(`Oops something went wrong!, ${error}`),
-    onSuccess: () => toast.success("Your data has been created")
+    onError: error => toast.error(`Oops something went wrong!, ${error}`)
   })
 });
 

@@ -1,6 +1,6 @@
 import { QueryClient, useMutation } from "react-query";
 import { CreateEntry } from "@/pages/api/entry/create-entry";
-import { CreateEntryErrors, CreateEntryInput } from "./validators";
+import { CreateEntryErrors, CreateEntryInput } from "@/utils/validators";
 import toast from "react-hot-toast";
 
 export const useCreateEntry = (queryClient: QueryClient) =>
