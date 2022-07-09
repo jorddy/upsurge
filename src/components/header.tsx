@@ -17,10 +17,6 @@ export default function Header({ app }: { app?: boolean }) {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return <Loader inline={true} />;
-  }
-
   return (
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
       <nav className='flex items-center gap-8'>
@@ -94,7 +90,9 @@ export default function Header({ app }: { app?: boolean }) {
         </ul>
       )}
 
-      {!session && (
+      {status === "loading" && <Loader inline />}
+
+      {status === "unauthenticated" && (
         <>
           <button className='button hidden md:inline' onClick={() => signIn()}>
             Get Started Now
