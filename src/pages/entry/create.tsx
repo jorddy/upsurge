@@ -11,7 +11,11 @@ export default function CreateEntryPage() {
   const { data: session, status } = useSession();
 
   const [option, setOption] = useState<"workout" | "exercise" | null>(
-    query.option === "workout" ? "workout" : "exercise" ? "exercise" : null
+    query.option === "workout"
+      ? "workout"
+      : query.option === "exercise"
+      ? "exercise"
+      : null
   );
 
   if (status === "loading") return <Loader />;
