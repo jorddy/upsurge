@@ -7,10 +7,11 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
+import toast from "react-hot-toast";
 import {
   CreateExerciseInput,
   createExerciseValidator
-} from "@/utils/validators";
+} from "@/shared/create-exercise-validator";
 
 export default function CreateExercisePage() {
   const { push, query } = useRouter();
@@ -29,13 +30,20 @@ export default function CreateExercisePage() {
   });
 
   const onSubmit = (data: CreateExerciseInput) => {
+    let toastId: string;
+    toastId = toast.loading("Creating exercise...");
+
     mutate(data, {
+      onError: error => {
+        toast.error(`Something went wrong: ${error}`, { id: toastId });
+      },
       onSuccess: () => {
         if (query.entry) {
           push("/entry/create?option=exercise");
         } else {
           push("/dashboard");
         }
+        toast.success("Successfully created exercise", { id: toastId });
       }
     });
   };

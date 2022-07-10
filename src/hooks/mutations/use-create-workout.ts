@@ -1,27 +1,18 @@
 import { QueryClient, useMutation } from "react-query";
-import { CreateWorkout } from "@/pages/api/workout/create-workout";
-import { CreateWorkoutErrors, CreateWorkoutInput } from "@/utils/validators";
-import toast from "react-hot-toast";
+import { fetcher } from "@/server/fetcher";
+import { CreateWorkout } from "@/server/data/create-workout";
+import {
+  CreateWorkoutErrors,
+  CreateWorkoutInput
+} from "@/shared/create-workout-validator";
 
 export const useCreateWorkout = (queryClient: QueryClient) =>
   useMutation<CreateWorkout, CreateWorkoutErrors, CreateWorkoutInput>(
-    async data => {
-      const res = await fetch("/api/workout/create-workout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (!res.ok) throw await res.json();
-      return await res.json();
-    },
+    data => fetcher("/api/data/create-workout", true, data),
     {
-      onMutate: () => toast.loading("Logging workout..."),
       onSuccess: () => {
         queryClient.invalidateQueries(["workouts"]);
         queryClient.invalidateQueries(["latest-workouts"]);
-        toast.dismiss();
-        toast.success("Successfully logged workout");
       }
     }
   );

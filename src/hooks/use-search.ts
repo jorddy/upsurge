@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Workouts } from "@/pages/api/workout/get-workouts";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { Workouts } from "@/server/data/get-workouts";
+import { Exercises } from "@/server/data/get-exercises";
 
 export const useSearch = (
   query: string,

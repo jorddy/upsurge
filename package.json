@@ -25,6 +25,7 @@
     "zod": "^3.17.3"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "autoprefixer": "^10.4.7",

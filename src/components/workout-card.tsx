@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Workouts } from "@/pages/api/workout/get-workouts";
+import { Workouts } from "@/server/data/get-workouts";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
 

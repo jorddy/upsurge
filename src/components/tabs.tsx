@@ -9,8 +9,8 @@ import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { Workouts } from "@/pages/api/workout/get-workouts";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { Workouts } from "@/server/data/get-workouts";
+import { Exercises } from "@/server/data/get-exercises";
 
 export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");

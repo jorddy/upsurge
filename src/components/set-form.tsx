@@ -3,7 +3,7 @@ import {
   UseFieldArrayRemove,
   UseFormRegister
 } from "react-hook-form";
-import { CreateEntryInput } from "@/utils/validators";
+import { CreateEntryInput } from "@/shared/create-entry-validator";
 import { HiX } from "react-icons/hi";
 
 export default function SetForm({

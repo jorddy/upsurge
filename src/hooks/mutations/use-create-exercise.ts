@@ -1,27 +1,15 @@
 import { QueryClient, useMutation } from "react-query";
-import { CreateExercise } from "@/pages/api/exercise/create-exercise";
-import { CreateExerciseErrors, CreateExerciseInput } from "@/utils/validators";
-import toast from "react-hot-toast";
+import { fetcher } from "@/server/fetcher";
+import { CreateExercise } from "@/server/data/create-exercise";
+import {
+  CreateExerciseErrors,
+  CreateExerciseInput
+} from "@/shared/create-exercise-validator";
 
 export const useCreateExercise = (queryClient: QueryClient) =>
   useMutation<CreateExercise, CreateExerciseErrors, CreateExerciseInput>(
-    async data => {
-      const res = await fetch("/api/exercise/create-exercise", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (!res.ok) throw await res.json();
-
-      return await res.json();
-    },
+    data => fetcher("/api/data/create-exercise", true, data),
     {
-      onMutate: () => toast.loading("Creating exercise..."),
-      onSuccess: () => {
-        queryClient.invalidateQueries(["exercises"]);
-        toast.dismiss();
-        toast.success("Successfully created exercise");
-      }
+      onSuccess: () => queryClient.invalidateQueries(["exercises"])
     }
   );

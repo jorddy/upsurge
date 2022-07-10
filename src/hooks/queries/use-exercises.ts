@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { fetcher } from "@/server/fetcher";
+import { Exercises } from "@/server/data/get-exercises";
 
 export const useExercises = () =>
-  useQuery<Exercises>(["exercises"], () =>
-    fetch("/api/exercise/get-exercises").then(r => r.json())
-  );
+  useQuery<Exercises>(["exercises"], () => fetcher("/api/data/get-exercises"));

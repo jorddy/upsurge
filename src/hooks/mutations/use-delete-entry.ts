@@ -1,25 +1,16 @@
 import { QueryClient, useMutation } from "react-query";
-import { GenericResponse, IdErrors, IdInput } from "@/utils/validators";
-import toast from "react-hot-toast";
+import { fetcher } from "@/server/fetcher";
+import { DeleteEntry } from "@/server/data/delete-entry";
+import { IdErrors, IdInput } from "@/shared/id-validator";
 
 export const useDeleteEntry = (
   queryClient: QueryClient,
   page: "workout" | "exercise",
   id: string
 ) =>
-  useMutation<GenericResponse, IdErrors, IdInput>(
-    async data => {
-      const res = await fetch("/api/entry/delete-entry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (!res.ok) throw await res.json();
-      return await res.json();
-    },
+  useMutation<DeleteEntry, IdErrors, IdInput>(
+    data => fetcher("/api/data/delete-entry", true, data),
     {
-      onMutate: () => toast.loading("Deleting entry..."),
       onSuccess: () => {
         if (page === "exercise") {
           queryClient.invalidateQueries(["exercise-by-id", id]);
@@ -28,9 +19,6 @@ export const useDeleteEntry = (
         if (page === "workout") {
           queryClient.invalidateQueries(["workout-by-id", id]);
         }
-
-        toast.dismiss();
-        toast.success("Successfully deleted entry");
       }
     }
   );

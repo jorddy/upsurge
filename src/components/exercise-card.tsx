@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { Exercises } from "@/server/data/get-exercises";
 
 export default function ExerciseCard({
   exercise,

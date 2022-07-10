@@ -11,6 +11,7 @@ import { useQueryClient } from "react-query";
 import { useExerciseById } from "@/hooks/queries/use-exercise-by-id";
 import { useDateFilter } from "@/hooks/use-date-filter";
 import { useDeleteExercise } from "@/hooks/mutations/use-delete-exercise";
+import toast from "react-hot-toast";
 
 export default function ExercisePage() {
   const { query, push } = useRouter();
@@ -25,10 +26,19 @@ export default function ExercisePage() {
 
   const handleDelete = () => {
     if (exercise) {
+      let toastId: string;
+      toastId = toast.loading("Deleting exercise...");
+
       mutate(
         { id: exercise.id },
         {
-          onSuccess: () => push("/dashboard")
+          onError: error => {
+            toast.error(`Something went wrong: ${error}`, { id: toastId });
+          },
+          onSuccess: () => {
+            push("/dashboard");
+            toast.success("Successfully deleted exercise", { id: toastId });
+          }
         }
       );
     }

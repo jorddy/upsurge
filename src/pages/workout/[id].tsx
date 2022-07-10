@@ -13,6 +13,7 @@ import { Entry, Exercise, Set } from "@prisma/client";
 import { HiX } from "react-icons/hi";
 import { useQueryClient } from "react-query";
 import { useDeleteWorkout } from "@/hooks/mutations/use-delete-workout";
+import toast from "react-hot-toast";
 
 export default function WorkoutPage() {
   const { query, push } = useRouter();
@@ -31,10 +32,19 @@ export default function WorkoutPage() {
 
   const handleDelete = () => {
     if (workout) {
+      let toastId: string;
+      toastId = toast.loading("Deleting workout...");
+
       mutate(
         { id: workout.id },
         {
-          onSuccess: () => push("/dashboard")
+          onError: error => {
+            toast.error(`Something went wrong: ${error}`, { id: toastId });
+          },
+          onSuccess: () => {
+            push("/dashboard");
+            toast.success("Successfully deleted workout", { id: toastId });
+          }
         }
       );
     }

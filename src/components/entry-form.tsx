@@ -4,15 +4,19 @@ import ExerciseCard from "./exercise-card";
 import SetForm from "./set-form";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
 import { HiX } from "react-icons/hi";
-import { useQueryClient } from "react-query";
 import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
-import { CreateEntryInput, createEntryValidator } from "@/utils/validators";
+import { Exercises } from "@/server/data/get-exercises";
+import {
+  CreateEntryInput,
+  createEntryValidator
+} from "@/shared/create-entry-validator";
+import toast from "react-hot-toast";
 
 export default function EntryForm() {
   const { push } = useRouter();
@@ -58,8 +62,17 @@ export default function EntryForm() {
   };
 
   const onSubmit = async (data: CreateEntryInput) => {
+    let toastId: string;
+    toastId = toast.loading("Creating entry...");
+
     mutate(data, {
-      onSuccess: () => push("/dashboard")
+      onError: error => {
+        toast.error(`Something went wrong: ${error}`, { id: toastId });
+      },
+      onSuccess: () => {
+        push("/dashboard");
+        toast.success("Successfully created entry", { id: toastId });
+      }
     });
   };
 

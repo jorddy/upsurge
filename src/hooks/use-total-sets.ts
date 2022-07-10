@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Workouts } from "@/pages/api/workout/get-workouts";
+import { Workouts } from "@/server/data/get-workouts";
 
 export const useTotalSets = (workout: Workouts[0]) => {
   const [total, setTotal] = useState(0);

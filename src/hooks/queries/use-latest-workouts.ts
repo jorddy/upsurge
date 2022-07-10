@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
-import { LatestWorkouts } from "@/pages/api/workout/get-latest-workouts";
+import { fetcher } from "@/server/fetcher";
+import { LatestWorkouts } from "@/server/data/get-latest-workouts";
 
 export const useLatestWorkouts = () =>
   useQuery<LatestWorkouts>(["latest-workouts"], () =>
-    fetch("/api/workout/get-latest-workouts").then(r => r.json())
+    fetcher("/api/data/get-latest-workouts")
   );

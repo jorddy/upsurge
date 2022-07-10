@@ -1,4 +1,5 @@
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import { Entry, Exercise, Set } from "@prisma/client";
 import { useDeleteEntry } from "@/hooks/mutations/use-delete-entry";
@@ -17,7 +18,20 @@ export default function EntryCard({
   const { mutate, isLoading } = useDeleteEntry(queryClient, page, pageId);
 
   const handleDelete = () => {
-    mutate({ id: entry.id });
+    let toastId: string;
+    toastId = toast.loading("Deleting entry...");
+
+    mutate(
+      { id: entry.id },
+      {
+        onError: error => {
+          toast.error(`Something went wrong: ${error}`, { id: toastId });
+        },
+        onSuccess: () => {
+          toast.success("Successfully deleted entry", { id: toastId });
+        }
+      }
+    );
   };
 
   return (
@@ -53,7 +67,7 @@ export default function EntryCard({
       )}
 
       {entry?.notes && (
-        <p className='truncate'>
+        <p className='line-clamp-3'>
           <strong>Notes:</strong> {entry.notes}
         </p>
       )}

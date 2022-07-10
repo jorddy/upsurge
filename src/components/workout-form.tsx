@@ -8,10 +8,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
 import { useExercises } from "@/hooks/queries/use-exercises";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
-import { CreateWorkoutInput, createWorkoutValidator } from "@/utils/validators";
 import { useSearch } from "@/hooks/use-search";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
+import { Exercises } from "@/server/data/get-exercises";
+import {
+  CreateWorkoutInput,
+  createWorkoutValidator
+} from "@/shared/create-workout-validator";
+import toast from "react-hot-toast";
 
 export default function WorkoutForm() {
   const { push } = useRouter();
@@ -49,8 +53,17 @@ export default function WorkoutForm() {
   };
 
   const onSubmit = (data: CreateWorkoutInput) => {
+    let toastId: string;
+    toastId = toast.loading("Creating workout...");
+
     mutate(data, {
-      onSuccess: () => push("/dashboard")
+      onError: error => {
+        toast.error(`Something went wrong: ${error}`, { id: toastId });
+      },
+      onSuccess: () => {
+        push("/dashboard");
+        toast.success("Successfully created workout", { id: toastId });
+      }
     });
   };
 

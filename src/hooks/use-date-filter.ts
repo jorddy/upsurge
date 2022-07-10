@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { WorkoutById } from "@/pages/api/workout/get-workout-by-id";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { WorkoutById } from "@/server/data/get-workout-by-id";
+import { Exercises } from "@/server/data/get-exercises";
 
 export const useDateFilter = (
   date: string | undefined,

@@ -1,4 +1,3 @@
-import { CreateWorkoutInput } from "@/utils/validators";
 import {
   Control,
   useFieldArray,
@@ -6,6 +5,7 @@ import {
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
+import { CreateWorkoutInput } from "@/shared/create-workout-validator";
 
 const Set = ({
   cardio,
