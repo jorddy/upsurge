@@ -1,41 +1,42 @@
 import Link from "next/link";
-import { FC } from "react";
-import { Workouts } from "@/pages/api/workout/get-workouts";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
+import { WorkoutType } from "@/hooks/queries/validators";
 
-const WorkoutCard: FC<{ workout: Workouts[0] }> = ({ workout }) => {
+export default function WorkoutCard({ workout }: { workout: WorkoutType }) {
   const { data, isLoading } = useSumWorkout(workout.id);
-  const total = useTotalSets(workout.entries);
+  const totalSets = useTotalSets(workout);
 
   return (
     <Link
       href={`/workout/${workout.id}`}
       className='block p-4 space-y-2 bg-zinc-900 rounded-md'
     >
-      <h2 className='text-xl font-semibold'>{workout.name}</h2>
+      <h2 className='text-lg font-bold'>{workout.name}</h2>
 
       <div>
         <p>
-          <strong>Sets:</strong> {total}
+          <strong className='font-medium'>Sets:</strong> {totalSets}
         </p>
 
-        <div className='flex flex-wrap'>
+        <div>
           {isLoading && <p>Summing totals...</p>}
+
           {data?._sum?.weight && (
             <p>
-              <strong>Total Weight Lifted:</strong> {data?._sum.weight}kg
+              <strong className='font-medium'>Total Weight Lifted:</strong>{" "}
+              {data?._sum.weight}kg
             </p>
           )}
+
           {data?._sum?.distance && (
             <p>
-              <strong>Total Distance Travelled:</strong> {data?._sum.distance}kg
+              <strong className='font-medium'>Total Distance Travelled:</strong>{" "}
+              {data?._sum.distance}kg
             </p>
           )}
         </div>
       </div>
     </Link>
   );
-};
-
-export default WorkoutCard;
+}

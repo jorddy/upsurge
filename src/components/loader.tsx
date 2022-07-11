@@ -1,9 +1,7 @@
-const Loader = () => {
+export default function Loader({ inline }: { inline?: boolean }) {
   return (
-    <div className='min-h-screen grid place-items-center'>
+    <div className={!inline ? "min-h-screen grid place-items-center" : ""}>
       <img src='/loader.svg' alt='Loading...' />
     </div>
   );
-};
-
-export default Loader;
+}

@@ -50,7 +50,7 @@ model Entry {
 
   sets     Set[]
   workout  Workout? @relation(fields: [workoutId], references: [id])
-  exercise Exercise @relation(fields: [exerciseId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
 
   @@index([exerciseId, workoutId])
 }
@@ -63,7 +63,7 @@ model Set {
   distance  Float?
   elevation Float?
 
-  entry   Entry  @relation(fields: [entryId], references: [id])
+  entry   Entry  @relation(fields: [entryId], references: [id], onDelete: Cascade)
   entryId String
 
   @@index([entryId])

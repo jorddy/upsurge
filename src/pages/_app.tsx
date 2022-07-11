@@ -8,17 +8,14 @@ import Head from "next/head";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: error => {
-      toast.error(`Oops! Something went wrong, ${error}`);
-      console.error(error);
-    }
+    onError: error => toast.error(`Something went wrong: ${error}`)
   })
 });
 
-const MyApp = ({
+export default function MyApp({
   Component,
   pageProps: { session, ...pageProps }
-}: AppProps) => {
+}: AppProps) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
@@ -33,7 +30,6 @@ const MyApp = ({
               content='Upsurge is the best way to log your gym workouts'
             />
           </Head>
-
           <Component {...pageProps} />
         </div>
         <Toaster position='top-right' />
@@ -41,6 +37,4 @@ const MyApp = ({
       </QueryClientProvider>
     </SessionProvider>
   );
-};
-
-export default MyApp;
+}

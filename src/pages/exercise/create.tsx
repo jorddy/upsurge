@@ -1,22 +1,25 @@
+import toast from "react-hot-toast";
 import Header from "@/components/header";
 import Loader from "@/components/loader";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 import {
   CreateExerciseInput,
   createExerciseValidator
 } from "@/hooks/mutations/validators";
-import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
 
-const CreateExercisePage = () => {
-  const { push } = useRouter();
+export default function CreateExercisePage() {
+  const { push, query } = useRouter();
   const { data: session, status } = useSession();
   const [option, setOption] = useState<"weight" | "cardio" | null>(null);
 
-  const { mutate, isLoading } = useCreateExercise();
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useCreateExercise(queryClient);
 
   const {
     register,
@@ -25,6 +28,25 @@ const CreateExercisePage = () => {
   } = useForm<CreateExerciseInput>({
     resolver: zodResolver(createExerciseValidator)
   });
+
+  const onSubmit = (data: CreateExerciseInput) => {
+    let toastId: string;
+    toastId = toast.loading("Creating exercise...");
+
+    mutate(data, {
+      onError: error => {
+        toast.error(`Something went wrong: ${error}`, { id: toastId });
+      },
+      onSuccess: () => {
+        if (query.entry) {
+          push("/entry/create?option=exercise");
+        } else {
+          push("/dashboard");
+        }
+        toast.success("Successfully created exercise", { id: toastId });
+      }
+    });
+  };
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
@@ -37,18 +59,13 @@ const CreateExercisePage = () => {
         <main className='container mx-auto p-4 space-y-6'>
           <h1 className='text-xl font-semibold'>Create exercise</h1>
 
-          <form
-            className='space-y-6'
-            onSubmit={handleSubmit(data => {
-              mutate(data);
-              push("/dashboard");
-            })}
-          >
+          <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
             <div className='field'>
               <label htmlFor='name'>Exercise name:</label>
               <input {...register("name")} className='input' id='name' />
+
               {errors.name && (
-                <p className='text-red-500'>{errors.name.message}</p>
+                <p className='text-red-600'>{errors.name.message}</p>
               )}
             </div>
 
@@ -95,8 +112,9 @@ const CreateExercisePage = () => {
                     step={0.01}
                     className='input'
                   />
+
                   {errors.currentWeight && (
-                    <p className='text-red-500'>
+                    <p className='text-red-600'>
                       {errors.currentWeight.message}
                     </p>
                   )}
@@ -112,7 +130,7 @@ const CreateExercisePage = () => {
                     id='target-weight'
                   />
                   {errors.targetWeight && (
-                    <p className='text-red-500'>
+                    <p className='text-red-600'>
                       {errors.targetWeight.message}
                     </p>
                   )}
@@ -132,7 +150,7 @@ const CreateExercisePage = () => {
                     id='current-distance'
                   />
                   {errors.currentDistance && (
-                    <p className='text-red-500'>
+                    <p className='text-red-600'>
                       {errors.currentDistance.message}
                     </p>
                   )}
@@ -147,8 +165,9 @@ const CreateExercisePage = () => {
                     step={0.01}
                     id='target-distance'
                   />
+
                   {errors.targetDistance && (
-                    <p className='text-red-500'>
+                    <p className='text-red-600'>
                       {errors.targetDistance.message}
                     </p>
                   )}
@@ -156,11 +175,7 @@ const CreateExercisePage = () => {
               </>
             )}
 
-            <button
-              className='button w-full sm:w-fit disabled:opacity-60'
-              type='submit'
-              disabled={isLoading}
-            >
+            <button className='button' type='submit' disabled={isLoading}>
               Create
             </button>
           </form>
@@ -168,6 +183,4 @@ const CreateExercisePage = () => {
       </>
     );
   }
-};
-
-export default CreateExercisePage;
+}

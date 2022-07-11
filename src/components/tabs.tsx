@@ -1,23 +1,31 @@
+import Link from "next/link";
 import Loader from "./loader";
 import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
 import TabComponent from "./tab";
 import SearchBar from "./search-bar";
+import HistoryTab from "./history-tab";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import Link from "next/link";
+import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
-const Tabs = () => {
+export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
   const workouts = useWorkouts();
   const exercises = useExercises();
 
-  const filteredWorkoutData = useSearch(workoutQuery, workouts.data);
-  const filteredExerciseData = useSearch(exerciseQuery, exercises.data);
+  const filteredWorkoutData = useSearch(
+    workoutQuery,
+    workouts.data
+  ) as WorkoutType[];
+  const filteredExerciseData = useSearch(
+    exerciseQuery,
+    exercises.data
+  ) as ExerciseType[];
 
   if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
@@ -37,14 +45,12 @@ const Tabs = () => {
             setQuery={setWorkoutQuery}
           />
 
-          <Link className='link block' href='/create?option=workout'>
+          <Link className='button-create' href='/entry/create?option=workout'>
             + Create workout
           </Link>
 
           {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
-              No workouts found with that name.
-            </p>
+            <p className='p-4 bg-zinc-900 rounded-md'>No workouts found.</p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -62,14 +68,12 @@ const Tabs = () => {
             setQuery={setExerciseQuery}
           />
 
-          <Link className='link block' href='/exercise/create'>
+          <Link className='button-create' href='/exercise/create'>
             + Create exercise
           </Link>
 
           {filteredExerciseData && filteredExerciseData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
-              No exercises found with that name.
-            </p>
+            <p className='p-4 bg-zinc-900 rounded-md'>No exercises found.</p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -80,10 +84,10 @@ const Tabs = () => {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel>Feature coming soon</Tab.Panel>
+        <Tab.Panel>
+          <HistoryTab />
+        </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );
-};
-
-export default Tabs;
+}

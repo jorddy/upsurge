@@ -1,14 +1,13 @@
 import { Tab } from "@headlessui/react";
-import { FC, Fragment, PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from "react";
 
-const TabComponent: FC<PropsWithChildren<{}>> = ({ children }) => {
+export default function TabComponent({ children }: PropsWithChildren<{}>) {
   return (
     <Tab as={Fragment}>
       {({ selected }) => (
         <button
-          className={`mr-4 ${
-            selected &&
-            "bg-orange-600 px-4 py-2 rounded-md font-bold outline-none"
+          className={`mr-4 px-3 py-2 rounded-md outline-none hover:bg-zinc-900 ${
+            selected && "bg-orange-600 font-bold hover:bg-orange-600"
           }`}
         >
           {children}
@@ -16,6 +15,4 @@ const TabComponent: FC<PropsWithChildren<{}>> = ({ children }) => {
       )}
     </Tab>
   );
-};
-
-export default TabComponent;
+}

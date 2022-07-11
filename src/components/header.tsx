@@ -1,4 +1,7 @@
-import { FC, useState } from "react";
+import Link from "next/link";
+import Image from "next/future/image";
+import Loader from "./loader";
+import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
   HiLightningBolt,
@@ -8,13 +11,11 @@ import {
   HiUser,
   HiX
 } from "react-icons/hi";
-import Link from "next/link";
-import Image from "next/future/image";
 
-const Header: FC<{ app?: boolean }> = ({ app }) => {
+export default function Header({ app }: { app?: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <header className='relative container mx-auto p-4 flex justify-between items-center'>
@@ -22,7 +23,7 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
         <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
-            {!app && "Upsurge"}
+            {!app ? "Upsurge" : "Beta v1.0"}
           </p>
         </Link>
 
@@ -89,7 +90,9 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
         </ul>
       )}
 
-      {!session && (
+      {status === "loading" && <Loader inline />}
+
+      {status === "unauthenticated" && (
         <>
           <button className='button hidden md:inline' onClick={() => signIn()}>
             Get Started Now
@@ -141,6 +144,4 @@ const Header: FC<{ app?: boolean }> = ({ app }) => {
       )}
     </header>
   );
-};
-
-export default Header;
+}

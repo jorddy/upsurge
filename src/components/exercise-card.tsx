@@ -1,44 +1,52 @@
 import Link from "next/link";
-import { FC } from "react";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { ExerciseType } from "@/hooks/queries/validators";
 
-const ExerciseCard: FC<{ exercise: Exercises[0] }> = ({ exercise }) => {
+export default function ExerciseCard({
+  exercise,
+  linkOff
+}: {
+  exercise: ExerciseType;
+  linkOff?: boolean;
+}) {
   return (
     <Link
-      href={`exercise/${exercise.id}`}
-      className='block p-4 space-y-2 bg-zinc-900 rounded-md'
+      href={linkOff ? "" : `exercise/${exercise.id}`}
+      className={`block p-4 space-y-2 bg-zinc-900 rounded-md`}
     >
-      <h2 className='text-xl font-semibold'>{exercise.name}</h2>
+      <h2 className='text-lg font-bold'>{exercise.name}</h2>
 
       <div>
         <p>
-          <strong>Entries:</strong> {exercise.entries.length}
+          <strong className='font-medium'>Entries:</strong>{" "}
+          {exercise.entries?.length}
         </p>
 
         {exercise.currentWeight && exercise.targetWeight && (
-          <>
+          <div>
             <p>
-              <strong>Current Weight:</strong> {exercise.currentWeight}kg
+              <strong className='font-medium'>Current Weight:</strong>{" "}
+              {exercise.currentWeight}kg
             </p>
             <p>
-              <strong>Target Weight:</strong> {exercise.targetWeight}kg
+              <strong className='font-medium'>Target Weight:</strong>{" "}
+              {exercise.targetWeight}kg
             </p>
-          </>
+          </div>
         )}
 
         {exercise.currentDistance && exercise.targetDistance && (
-          <>
+          <div>
             <p>
-              <strong>Current Distance:</strong> {exercise.currentDistance}m
+              <strong className='font-medium'>Current Distance:</strong>{" "}
+              {exercise.currentDistance}m
             </p>
             <p>
-              <strong>Target Distance:</strong> {exercise.targetDistance}kg
+              <strong className='font-medium'>Target Distance:</strong>{" "}
+              {exercise.targetDistance}kg
             </p>
-          </>
+          </div>
         )}
       </div>
     </Link>
   );
-};
-
-export default ExerciseCard;
+}

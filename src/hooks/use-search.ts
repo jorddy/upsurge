@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import { Workouts } from "@/pages/api/workout/get-workouts";
-import { Exercises } from "@/pages/api/exercise/get-exercises";
+import { ExerciseType, WorkoutType } from "./queries/validators";
 
 export const useSearch = (
   query: string,
-  data: Workouts | Exercises | undefined
+  data: WorkoutType[] | ExerciseType[] | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
-    setFilteredData(
-      data?.filter(item =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-      )
-    );
+    if (data) {
+      setFilteredData(
+        [...(data as any)].filter(item =>
+          item.name.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }
   }, [data, query]);
 
   return filteredData;

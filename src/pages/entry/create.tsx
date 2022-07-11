@@ -1,17 +1,21 @@
 import Header from "@/components/header";
 import Loader from "@/components/loader";
-import OneOffForm from "@/components/one-off-form";
+import EntryForm from "@/components/entry-form";
 import WorkoutForm from "@/components/workout-form";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const CreateExercisePage = () => {
+export default function CreateEntryPage() {
   const { query } = useRouter();
   const { data: session, status } = useSession();
 
   const [option, setOption] = useState<"workout" | "exercise" | null>(
-    query.option === "workout" ? "workout" : null
+    query.option === "workout"
+      ? "workout"
+      : query.option === "exercise"
+      ? "exercise"
+      : null
   );
 
   if (status === "loading") return <Loader />;
@@ -24,10 +28,10 @@ const CreateExercisePage = () => {
 
         <main className='container mx-auto p-4 space-y-6'>
           <div className='space-y-2'>
-            <h1 className='text-xl font-semibold'>Log a workout or exercise</h1>
+            <h1 className='text-xl font-semibold'>Log a new entry</h1>
             <p>
-              Here you can log a collection of exercises through a workout or a
-              one-off exercise.
+              Here you can log a collection of entries you have done through a
+              workout or a one-off exercise.
             </p>
           </div>
 
@@ -64,11 +68,9 @@ const CreateExercisePage = () => {
           </fieldset>
 
           {option === "workout" && <WorkoutForm />}
-          {option === "exercise" && <OneOffForm />}
+          {option === "exercise" && <EntryForm />}
         </main>
       </>
     );
   }
-};
-
-export default CreateExercisePage;
+}

@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
-import { Entry, Set } from "@prisma/client";
+import { WorkoutType } from "./queries/validators";
 
-export const useTotalSets = (entries: (Entry & { sets: Set[] })[]) => {
+export const useTotalSets = (workout: WorkoutType) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    entries.forEach(entry => setTotal(total => (total += entry.sets.length)));
-  }, [entries]);
+    if (workout.entries) {
+      setTotal(
+        workout.entries.reduce((current, entry) => {
+          if (entry._count) {
+            return entry._count?.sets + current;
+          }
+
+          return current;
+        }, 0)
+      );
+    }
+  }, [workout]);
 
   return total;
 };
