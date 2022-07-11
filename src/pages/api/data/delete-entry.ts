@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ZodError } from "zod";
-import { authorize } from "@/server/authorize";
-import { idValidator } from "@/shared/id-validator";
-import { deleteEntry } from "@/server/data/delete-entry";
+import { authorize } from "@/utils/authorize";
+import { idValidator } from "@/hooks/mutations/validators";
+import { prisma } from "@/utils/db";
+import { zodError } from "@/utils/zod-error";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,15 +11,14 @@ export default async function handler(
   await authorize(req, res);
 
   try {
-    const input = idValidator.parse(req.body);
-    const entry = await deleteEntry(input);
+    const { id } = idValidator.parse(req.body);
+
+    const entry = await prisma.entry.delete({
+      where: { id }
+    });
 
     res.status(200).json(entry);
   } catch (error) {
-    if (error instanceof ZodError) {
-      res.status(500).json(error.flatten());
-    } else {
-      res.status(500).json(error);
-    }
+    zodError(error, res);
   }
 }

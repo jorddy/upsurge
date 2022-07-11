@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import SearchBar from "./search-bar";
 import ExerciseCard from "./exercise-card";
 import WorkoutSetForm from "./workout-set-form";
@@ -10,12 +11,11 @@ import { useQueryClient } from "react-query";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
 import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
-import { Exercises } from "@/server/data/get-exercises";
 import {
   CreateWorkoutInput,
   createWorkoutValidator
-} from "@/shared/create-workout-validator";
-import toast from "react-hot-toast";
+} from "@/hooks/mutations/validators";
+import { ExerciseType } from "@/hooks/queries/validators";
 
 export default function WorkoutForm() {
   const { push } = useRouter();
@@ -25,7 +25,7 @@ export default function WorkoutForm() {
   const { mutate, isLoading } = useCreateWorkout(queryClient);
 
   const [query, setQuery] = useState("");
-  const filteredData = useSearch(query, data) as Exercises;
+  const filteredData = useSearch(query, data);
 
   const {
     register,
@@ -42,7 +42,7 @@ export default function WorkoutForm() {
     name: "entries"
   });
 
-  const handleExerciseType = (exercise: Exercises[0]) => {
+  const handleExerciseType = (exercise: ExerciseType) => {
     if (exercise.currentWeight || exercise.targetWeight) {
       append({ exerciseId: exercise.id, name: exercise.name, type: "weight" });
     }
@@ -158,9 +158,13 @@ export default function WorkoutForm() {
             key={exercise.id}
             className='text-left w-full'
             type='button'
-            onClick={() => handleExerciseType(exercise)}
+            onClick={() => handleExerciseType(exercise as any)}
           >
-            <ExerciseCard key={exercise.id} exercise={exercise} linkOff />
+            <ExerciseCard
+              key={exercise.id}
+              exercise={exercise as ExerciseType}
+              linkOff
+            />
           </button>
         ))}
       </div>

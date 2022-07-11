@@ -1,6 +1,8 @@
 import { useQuery } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { Exercises } from "@/server/data/get-exercises";
+import { exerciseValidator } from "./validators";
 
 export const useExercises = () =>
-  useQuery<Exercises>(["exercises"], () => fetcher("/api/data/get-exercises"));
+  useQuery(["exercises"], async () => {
+    const res = await (await fetch("/api/data/get-exercises")).json();
+    return exerciseValidator.array().parse(res);
+  });

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ZodError } from "zod";
-import { authorize } from "@/server/authorize";
-import { createEntry } from "@/server/data/create-entry";
-import { createEntryValidator } from "@/shared/create-entry-validator";
+import { authorize } from "@/utils/authorize";
+import { createEntryValidator } from "@/hooks/mutations/validators";
+import { prisma } from "@/utils/db";
+import { zodError } from "@/utils/zod-error";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,14 +12,19 @@ export default async function handler(
 
   try {
     const input = createEntryValidator.parse(req.body);
-    const entry = await createEntry(input);
+
+    const entry = await prisma.entry.create({
+      data: {
+        notes: input.notes,
+        exercise: { connect: { id: input.exerciseId } },
+        sets: {
+          createMany: { data: input.sets }
+        }
+      }
+    });
 
     res.status(200).json(entry);
   } catch (error) {
-    if (error instanceof ZodError) {
-      res.status(500).json(error.flatten());
-    } else {
-      res.status(500).json(error);
-    }
+    zodError(error, res);
   }
 }

@@ -1,12 +1,16 @@
 import { useQuery } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { SumEntries } from "@/server/data/sum-entries";
-import { IdErrors } from "@/shared/id-validator";
+import { sumWorkoutValidator } from "./validators";
 
 export const useSumWorkout = (workoutId: string | undefined) =>
-  useQuery<SumEntries, IdErrors>(
+  useQuery(
     ["sum-workout", workoutId],
-    () => fetcher(`/api/data/sum-workout?id=${workoutId}`),
+    async () => {
+      const res = await (
+        await fetch(`/api/data/sum-workout?id=${workoutId}`)
+      ).json();
+
+      return sumWorkoutValidator.parse(res);
+    },
     {
       enabled: !!workoutId
     }

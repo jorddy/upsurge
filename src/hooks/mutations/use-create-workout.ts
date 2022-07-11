@@ -1,14 +1,11 @@
 import { QueryClient, useMutation } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { CreateWorkout } from "@/server/data/create-workout";
-import {
-  CreateWorkoutErrors,
-  CreateWorkoutInput
-} from "@/shared/create-workout-validator";
+import { mutate } from "@/utils/mutate";
+import { WorkoutType } from "../queries/validators";
+import { CreateWorkoutError, CreateWorkoutInput } from "./validators";
 
 export const useCreateWorkout = (queryClient: QueryClient) =>
-  useMutation<CreateWorkout, CreateWorkoutErrors, CreateWorkoutInput>(
-    data => fetcher("/api/data/create-workout", true, data),
+  useMutation<WorkoutType, CreateWorkoutError, CreateWorkoutInput>(
+    data => mutate("/api/data/create-workout", data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["workouts"]);

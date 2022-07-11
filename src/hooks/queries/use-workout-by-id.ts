@@ -1,12 +1,16 @@
 import { useQuery } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { WorkoutById } from "@/server/data/get-workout-by-id";
-import { IdErrors } from "@/shared/id-validator";
+import { workoutValidator } from "./validators";
 
 export const useWorkoutById = (id: string | undefined) =>
-  useQuery<WorkoutById, IdErrors>(
+  useQuery(
     ["workout-by-id", id],
-    async () => fetcher(`/api/data/get-workout-by-id?id=${id}`),
+    async () => {
+      const res = await (
+        await fetch(`/api/data/get-workout-by-id?id=${id}`)
+      ).json();
+
+      return workoutValidator.parse(res);
+    },
     {
       enabled: !!id
     }

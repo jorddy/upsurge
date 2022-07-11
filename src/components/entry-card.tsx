@@ -1,16 +1,16 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
-import { Entry, Exercise, Set } from "@prisma/client";
 import { useDeleteEntry } from "@/hooks/mutations/use-delete-entry";
 import { HiX } from "react-icons/hi";
+import { EntryType } from "@/hooks/queries/validators";
 
 export default function EntryCard({
   entry,
   page,
   pageId
 }: {
-  entry: Entry & { sets: Set[]; exercise?: Exercise };
+  entry: EntryType;
   page: "workout" | "exercise";
   pageId: string;
 }) {
@@ -38,7 +38,7 @@ export default function EntryCard({
     <article key={entry.id} className='p-4 space-y-2 rounded-md bg-zinc-900'>
       <div className='flex flex-wrap gap-2 items-center justify-between'>
         <p className='text-xl font-semibold'>
-          {new Date(entry.createdAt).toLocaleDateString()}
+          {entry.createdAt.toLocaleDateString()}
         </p>
 
         <div className='flex flex-wrap gap-2'>
@@ -73,7 +73,7 @@ export default function EntryCard({
       )}
 
       <ul>
-        {entry.sets.map(set => (
+        {entry.sets?.map(set => (
           <li key={set.id}>
             {set.weight && `${set.weight}kg - ${set.reps} reps`}
 

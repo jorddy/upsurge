@@ -21,7 +21,7 @@ export default function ExercisePage() {
   const { data: exercise, isLoading } = useExerciseById(query.id as string);
   const { mutate, isLoading: isDeleting } = useDeleteExercise(queryClient);
 
-  const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
+  const [date, setDate] = useState(new Date());
   const filteredData = useDateFilter(date, exercise);
 
   const handleDelete = () => {
@@ -60,10 +60,7 @@ export default function ExercisePage() {
                 {exercise?.name}
               </h1>
 
-              <p>
-                Last Updated:{" "}
-                {new Date(exercise?.updatedAt as Date).toLocaleDateString()}
-              </p>
+              <p>Last Updated: {exercise?.updatedAt.toLocaleDateString()}</p>
             </div>
 
             <div className='flex flex-wrap gap-2'>

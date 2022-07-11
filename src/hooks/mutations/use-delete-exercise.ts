@@ -1,11 +1,11 @@
 import { QueryClient, useMutation } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { DeleteExercise } from "@/server/data/delete-exercise";
-import { IdErrors, IdInput } from "@/shared/id-validator";
+import { mutate } from "@/utils/mutate";
+import { ExerciseType } from "../queries/validators";
+import { IdError, IdInput } from "./validators";
 
 export const useDeleteExercise = (queryClient: QueryClient) =>
-  useMutation<DeleteExercise, IdErrors, IdInput>(
-    data => fetcher("/api/data/delete-exercise", true, data),
+  useMutation<ExerciseType, IdError, IdInput>(
+    data => mutate("/api/data/delete-exercise", data),
     {
       onSuccess: () => queryClient.invalidateQueries(["exercises"])
     }

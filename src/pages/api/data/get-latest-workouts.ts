@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { authorize } from "@/server/authorize";
-import { getLatestWorkouts } from "@/server/data/get-latest-workouts";
+import { authorize } from "@/utils/authorize";
+import { prisma } from "@/utils/db";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,10 +10,23 @@ export default async function handler(
 
   if (session) {
     try {
-      const workouts = await getLatestWorkouts(session.user.id);
+      const workouts = await prisma.workout.findMany({
+        take: 2,
+        where: { userId: session.user.id },
+        orderBy: { updatedAt: "desc" },
+        include: {
+          entries: {
+            include: {
+              _count: { select: { sets: true } },
+              sets: true
+            }
+          }
+        }
+      });
+
       res.status(200).json(workouts);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(400).json(error);
     }
   }
 }

@@ -9,7 +9,6 @@ import { signIn, useSession } from "next-auth/react";
 import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
-import { Entry, Exercise, Set } from "@prisma/client";
 import { HiX } from "react-icons/hi";
 import { useQueryClient } from "react-query";
 import { useDeleteWorkout } from "@/hooks/mutations/use-delete-workout";
@@ -24,11 +23,8 @@ export default function WorkoutPage() {
   const { mutate, isLoading: isDeleting } = useDeleteWorkout(queryClient);
   const { data: total } = useSumWorkout(workout?.id);
 
-  const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
-  const filteredData = useDateFilter(date, workout) as (Entry & {
-    sets: Set[];
-    exercise: Exercise;
-  })[];
+  const [date, setDate] = useState(new Date());
+  const filteredData = useDateFilter(date, workout);
 
   const handleDelete = () => {
     if (workout) {
@@ -63,10 +59,7 @@ export default function WorkoutPage() {
           <section className='flex flex-wrap items-center justify-between gap-2'>
             <div className='space-y-1'>
               <h1 className='text-lg font-bold sm:text-2xl'>{workout?.name}</h1>
-              <p>
-                Last Updated:{" "}
-                {new Date(workout?.updatedAt as Date).toLocaleDateString()}
-              </p>
+              <p>Last Updated: {workout?.updatedAt.toLocaleDateString()}</p>
             </div>
 
             <div className='flex flex-wrap gap-2'>

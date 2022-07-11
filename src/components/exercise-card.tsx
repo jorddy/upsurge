@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Exercises } from "@/server/data/get-exercises";
+import { ExerciseType } from "@/hooks/queries/validators";
 
 export default function ExerciseCard({
   exercise,
   linkOff
 }: {
-  exercise: Exercises[0];
+  exercise: ExerciseType;
   linkOff?: boolean;
 }) {
   return (
@@ -18,7 +18,7 @@ export default function ExerciseCard({
       <div>
         <p>
           <strong className='font-medium'>Entries:</strong>{" "}
-          {exercise.entries.length}
+          {exercise.entries?.length}
         </p>
 
         {exercise.currentWeight && exercise.targetWeight && (

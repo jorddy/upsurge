@@ -4,13 +4,13 @@ import WorkoutCard from "./workout-card";
 import ExerciseCard from "./exercise-card";
 import TabComponent from "./tab";
 import SearchBar from "./search-bar";
+import HistoryTab from "./history-tab";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useWorkouts } from "@/hooks/queries/use-workouts";
 import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { Workouts } from "@/server/data/get-workouts";
-import { Exercises } from "@/server/data/get-exercises";
+import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
 
 export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
@@ -21,11 +21,11 @@ export default function Tabs() {
   const filteredWorkoutData = useSearch(
     workoutQuery,
     workouts.data
-  ) as Workouts;
+  ) as WorkoutType[];
   const filteredExerciseData = useSearch(
     exerciseQuery,
     exercises.data
-  ) as Exercises;
+  ) as ExerciseType[];
 
   if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
@@ -84,7 +84,9 @@ export default function Tabs() {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel>Feature coming soon</Tab.Panel>
+        <Tab.Panel>
+          <HistoryTab />
+        </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );

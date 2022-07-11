@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { authorize } from "@/server/authorize";
-import { ZodError } from "zod";
-import { idValidator } from "@/shared/id-validator";
-import { getWorkoutById } from "@/server/data/get-workout-by-id";
+import { authorize } from "@/utils/authorize";
+import { idValidator } from "@/hooks/mutations/validators";
+import { prisma } from "@/utils/db";
+import { zodError } from "@/utils/zod-error";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,15 +11,19 @@ export default async function handler(
   await authorize(req, res);
 
   try {
-    const input = idValidator.parse(req.query);
-    const workout = await getWorkoutById(input);
+    const { id } = idValidator.parse(req.query);
+
+    const workout = await prisma.workout.findUnique({
+      where: { id },
+      include: {
+        entries: {
+          include: { exercise: true, sets: true }
+        }
+      }
+    });
 
     res.status(200).json(workout);
   } catch (error) {
-    if (error instanceof ZodError) {
-      res.status(500).json(error.flatten());
-    } else {
-      res.status(500).json(error);
-    }
+    zodError(error, res);
   }
 }

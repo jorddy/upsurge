@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { authorize } from "@/server/authorize";
-import { getExercises } from "@/server/data/get-exercises";
+import { authorize } from "@/utils/authorize";
+import { prisma } from "@/utils/db";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,10 +10,19 @@ export default async function handler(
 
   if (session) {
     try {
-      const exercises = await getExercises(session.user.id);
+      const exercises = await prisma.exercise.findMany({
+        where: { userId: session.user.id },
+        orderBy: { updatedAt: "desc" },
+        include: {
+          entries: {
+            include: { sets: true }
+          }
+        }
+      });
+
       res.status(200).json(exercises);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(400).json(error);
     }
   }
 }

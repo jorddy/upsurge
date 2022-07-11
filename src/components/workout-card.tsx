@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Workouts } from "@/server/data/get-workouts";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
+import { WorkoutType } from "@/hooks/queries/validators";
 
-export default function WorkoutCard({ workout }: { workout: Workouts[0] }) {
+export default function WorkoutCard({ workout }: { workout: WorkoutType }) {
   const { data, isLoading } = useSumWorkout(workout.id);
   const totalSets = useTotalSets(workout);
 

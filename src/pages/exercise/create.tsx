@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import Header from "@/components/header";
 import Loader from "@/components/loader";
 import { useRouter } from "next/router";
@@ -7,11 +8,10 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
-import toast from "react-hot-toast";
 import {
   CreateExerciseInput,
   createExerciseValidator
-} from "@/shared/create-exercise-validator";
+} from "@/hooks/mutations/validators";
 
 export default function CreateExercisePage() {
   const { push, query } = useRouter();

@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { Workouts } from "@/server/data/get-workouts";
+import { WorkoutType } from "./queries/validators";
 
-export const useTotalSets = (workout: Workouts[0]) => {
+export const useTotalSets = (workout: WorkoutType) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setTotal(workout.entries.reduce((a, entry) => entry._count.sets + a, 0));
+    if (workout.entries) {
+      setTotal(
+        workout.entries.reduce((current, entry) => {
+          if (entry._count) {
+            return entry._count?.sets + current;
+          }
+
+          return current;
+        }, 0)
+      );
+    }
   }, [workout]);
 
   return total;

@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import Link from "next/link";
 import SearchBar from "./search-bar";
 import ExerciseCard from "./exercise-card";
@@ -11,12 +12,11 @@ import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
 import { HiX } from "react-icons/hi";
 import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
-import { Exercises } from "@/server/data/get-exercises";
 import {
   CreateEntryInput,
   createEntryValidator
-} from "@/shared/create-entry-validator";
-import toast from "react-hot-toast";
+} from "@/hooks/mutations/validators";
+import { ExerciseType } from "@/hooks/queries/validators";
 
 export default function EntryForm() {
   const { push } = useRouter();
@@ -29,7 +29,7 @@ export default function EntryForm() {
   } | null>(null);
 
   const { data: exercises } = useExercises();
-  const filteredData = useSearch(query, exercises) as Exercises;
+  const filteredData = useSearch(query, exercises) as ExerciseType[];
 
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useCreateEntry(queryClient);
@@ -49,7 +49,7 @@ export default function EntryForm() {
     control
   });
 
-  const handleExerciseType = (exercise: Exercises[0]) => {
+  const handleExerciseType = (exercise: ExerciseType) => {
     if (exercise.currentWeight || exercise.targetWeight) {
       setExerciseType({ name: exercise.name, type: "weight", id: exercise.id });
     }

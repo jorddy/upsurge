@@ -1,15 +1,15 @@
 import { QueryClient, useMutation } from "react-query";
-import { fetcher } from "@/server/fetcher";
-import { DeleteEntry } from "@/server/data/delete-entry";
-import { IdErrors, IdInput } from "@/shared/id-validator";
+import { mutate } from "@/utils/mutate";
+import { EntryType } from "../queries/validators";
+import { IdError, IdInput } from "./validators";
 
 export const useDeleteEntry = (
   queryClient: QueryClient,
   page: "workout" | "exercise",
   id: string
 ) =>
-  useMutation<DeleteEntry, IdErrors, IdInput>(
-    data => fetcher("/api/data/delete-entry", true, data),
+  useMutation<EntryType, IdError, IdInput>(
+    data => mutate("/api/data/delete-entry", data),
     {
       onSuccess: () => {
         if (page === "exercise") {
