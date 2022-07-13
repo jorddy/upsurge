@@ -30,6 +30,8 @@ export const entryValidator = z.object({
     .min(1)
 });
 
+export type EntryValidator = z.infer<typeof entryValidator>;
+
 export const exerciseValidator = z.object({
   name: z.string().min(1, "You must provide a name"),
   currentWeight: z
@@ -54,6 +56,8 @@ export const exerciseValidator = z.object({
     .optional()
 });
 
+export type ExerciseValidator = z.infer<typeof exerciseValidator>;
+
 export const workoutValidator = z.object({
   name: z.string().min(1, "You must provide a name"),
   createdAt: z
@@ -68,3 +72,5 @@ export const workoutValidator = z.object({
     })
     .array()
 });
+
+export type WorkoutValidator = z.infer<typeof workoutValidator>;

@@ -1,21 +1,29 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useQueryClient } from "react-query";
-import { useDeleteEntry } from "@/hooks/mutations/use-delete-entry";
 import { HiX } from "react-icons/hi";
 import { EntryType } from "@/hooks/queries/validators";
+import { trpc } from "@/utils/trpc";
 
 export default function EntryCard({
   entry,
-  page,
-  pageId
+  page
 }: {
   entry: EntryType;
   page: "workout" | "exercise";
-  pageId: string;
 }) {
-  const queryClient = useQueryClient();
-  const { mutate, isLoading } = useDeleteEntry(queryClient, page, pageId);
+  const ctx = trpc.useContext();
+
+  const { mutate, isLoading } = trpc.useMutation(["entry.delete"], {
+    onSuccess: () => {
+      if (page === "exercise") {
+        ctx.invalidateQueries(["exercise.get-by-id"]);
+      }
+
+      if (page === "workout") {
+        ctx.invalidateQueries(["workout.get-by-id"]);
+      }
+    }
+  });
 
   const handleDelete = () => {
     let toastId: string;

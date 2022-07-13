@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useTotalSets } from "@/hooks/use-total-sets";
-import { WorkoutType } from "@/hooks/queries/validators";
+import { InferQueryOutput } from "@/utils/trpc";
 
-export default function WorkoutCard({ workout }: { workout: WorkoutType }) {
+export default function WorkoutCard({
+  workout
+}: {
+  workout: InferQueryOutput<"workout.get-all">[0];
+}) {
   const { data, isLoading } = useSumWorkout(workout.id);
   const totalSets = useTotalSets(workout);
 

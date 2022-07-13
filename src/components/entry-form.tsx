@@ -5,21 +5,16 @@ import ExerciseCard from "./exercise-card";
 import SetForm from "./set-form";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useQueryClient } from "react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
 import { HiX } from "react-icons/hi";
-import { useCreateEntry } from "@/hooks/mutations/use-create-entry";
-import {
-  CreateEntryInput,
-  createEntryValidator
-} from "@/hooks/mutations/validators";
-import { ExerciseType } from "@/hooks/queries/validators";
+import { EntryValidator, entryValidator } from "@/utils/validators";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function EntryForm() {
   const { push } = useRouter();
+  const ctx = trpc.useContext();
 
   const [query, setQuery] = useState("");
   const [exerciseType, setExerciseType] = useState<{
@@ -28,11 +23,15 @@ export default function EntryForm() {
     id: string;
   } | null>(null);
 
-  const { data: exercises } = useExercises();
-  const filteredData = useSearch(query, exercises) as ExerciseType[];
+  const { data: exercises } = trpc.useQuery(["exercise.get-all"]);
+  const filteredData = useSearch(
+    query,
+    exercises
+  ) as InferQueryOutput<"exercise.get-all">;
 
-  const queryClient = useQueryClient();
-  const { mutate, isLoading } = useCreateEntry(queryClient);
+  const { mutate, isLoading } = trpc.useMutation(["entry.create"], {
+    onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
+  });
 
   const {
     register,
@@ -40,8 +39,8 @@ export default function EntryForm() {
     control,
     setValue,
     formState: { errors }
-  } = useForm<CreateEntryInput>({
-    resolver: zodResolver(createEntryValidator)
+  } = useForm<EntryValidator>({
+    resolver: zodResolver(entryValidator)
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -49,7 +48,9 @@ export default function EntryForm() {
     control
   });
 
-  const handleExerciseType = (exercise: ExerciseType) => {
+  const handleExerciseType = (
+    exercise: InferQueryOutput<"exercise.get-all">[0]
+  ) => {
     if (exercise.currentWeight || exercise.targetWeight) {
       setExerciseType({ name: exercise.name, type: "weight", id: exercise.id });
     }
@@ -61,7 +62,7 @@ export default function EntryForm() {
     setValue("exerciseId", exercise.id);
   };
 
-  const onSubmit = async (data: CreateEntryInput) => {
+  const onSubmit = async (data: EntryValidator) => {
     let toastId: string;
     toastId = toast.loading("Creating entry...");
 

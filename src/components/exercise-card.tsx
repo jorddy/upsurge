@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ExerciseType } from "@/hooks/queries/validators";
+import { InferQueryOutput } from "@/utils/trpc";
 
 export default function ExerciseCard({
   exercise,
   linkOff
 }: {
-  exercise: ExerciseType;
+  exercise: InferQueryOutput<"exercise.get-all">[0];
   linkOff?: boolean;
 }) {
   return (
