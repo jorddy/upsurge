@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { withTRPC } from "@trpc/next";
-import { AppRouter } from "@/server";
+import { AppRouter } from "@/server/router";
 import superjson from "superjson";
 import toast, { Toaster } from "react-hot-toast";
 import Head from "next/head";

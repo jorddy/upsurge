@@ -1,9 +1,12 @@
+import { InferQueryOutput } from "@/utils/trpc";
 import { useEffect, useState } from "react";
-import { ExerciseType, WorkoutType } from "./queries/validators";
 
 export const useSearch = (
   query: string,
-  data: WorkoutType[] | ExerciseType[] | undefined
+  data:
+    | InferQueryOutput<"workout.get-all">
+    | InferQueryOutput<"exercise.get-all">
+    | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data);
 
