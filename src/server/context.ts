@@ -14,6 +14,8 @@ export const createContext = async ({
 
 type Context = trpc.inferAsyncReturnType<typeof createContext>;
 
+export const createRouter = trpc.router<Context>;
+
 export const createProtectedRouter = () =>
   trpc.router<Context>().middleware(({ ctx, next }) => {
     if (!ctx.session) {
