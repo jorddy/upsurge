@@ -8,7 +8,6 @@ import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useSearch } from "@/hooks/use-search";
-import { ExerciseType } from "@/hooks/queries/validators";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 import { workoutValidator, WorkoutValidator } from "@/utils/validators";
 
@@ -42,7 +41,9 @@ export default function WorkoutForm() {
     name: "entries"
   });
 
-  const handleExerciseType = (exercise: ExerciseType) => {
+  const handleExerciseType = (
+    exercise: InferQueryOutput<"exercise.get-all">[0]
+  ) => {
     if (exercise.currentWeight || exercise.targetWeight) {
       append({ exerciseId: exercise.id, name: exercise.name, type: "weight" });
     }
