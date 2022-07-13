@@ -16,15 +16,19 @@ export default function WorkoutPage() {
   const { data: session, status } = useSession();
   const ctx = trpc.useContext();
 
-  const { data: workout, isLoading } = trpc.useQuery([
-    "workout.get-by-id",
-    { id: query.id as string }
-  ]);
+  const { data: workout, isLoading } = trpc.useQuery(
+    ["workout.get-by-id", { id: query.id as string }],
+    {
+      enabled: !!query.id
+    }
+  );
 
-  const { data: total } = trpc.useQuery([
-    "workout.sum",
-    { id: workout?.id as string }
-  ]);
+  const { data: total } = trpc.useQuery(
+    ["workout.sum", { id: workout?.id as string }],
+    {
+      enabled: !!workout?.id
+    }
+  );
 
   const { mutate, isLoading: isDeleting } = trpc.useMutation(
     ["workout.delete"],

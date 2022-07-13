@@ -16,10 +16,12 @@ export default function ExercisePage() {
   const { data: session, status } = useSession();
   const ctx = trpc.useContext();
 
-  const { data: exercise, isLoading } = trpc.useQuery([
-    "exercise.get-by-id",
-    { id: query.id as string }
-  ]);
+  const { data: exercise, isLoading } = trpc.useQuery(
+    ["exercise.get-by-id", { id: query.id as string }],
+    {
+      enabled: !!query.id
+    }
+  );
 
   const { mutate, isLoading: isDeleting } = trpc.useMutation(
     ["exercise.delete"],

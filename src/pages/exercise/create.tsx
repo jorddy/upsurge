@@ -12,9 +12,9 @@ import { exerciseValidator, ExerciseValidator } from "@/utils/validators";
 export default function CreateExercisePage() {
   const { push, query } = useRouter();
   const { data: session, status } = useSession();
-  const [option, setOption] = useState<"weight" | "cardio" | null>(null);
-
   const ctx = trpc.useContext();
+
+  const [option, setOption] = useState<"weight" | "cardio" | null>(null);
   const { mutate, isLoading } = trpc.useMutation(["exercise.create"], {
     onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
   });
