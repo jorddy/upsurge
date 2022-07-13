@@ -1,5 +1,5 @@
-import { InferQueryOutput } from "@/utils/trpc";
 import { useEffect, useState } from "react";
+import { InferQueryOutput } from "@/utils/trpc";
 
 export const useSearch = (
   query: string,
