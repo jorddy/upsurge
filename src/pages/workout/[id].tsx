@@ -6,22 +6,35 @@ import EntryCard from "@/components/entry-card";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useWorkoutById } from "@/hooks/queries/use-workout-by-id";
-import { useSumWorkout } from "@/hooks/queries/use-sum-workout";
 import { useDateFilter } from "@/hooks/use-date-filter";
 import { HiX } from "react-icons/hi";
-import { useQueryClient } from "react-query";
-import { useDeleteWorkout } from "@/hooks/mutations/use-delete-workout";
 import toast from "react-hot-toast";
+import { trpc } from "@/utils/trpc";
 
 export default function WorkoutPage() {
   const { query, push } = useRouter();
   const { data: session, status } = useSession();
-  const queryClient = useQueryClient();
+  const ctx = trpc.useContext();
 
-  const { data: workout, isLoading } = useWorkoutById(query.id as string);
-  const { mutate, isLoading: isDeleting } = useDeleteWorkout(queryClient);
-  const { data: total } = useSumWorkout(workout?.id);
+  const { data: workout, isLoading } = trpc.useQuery([
+    "workout.get-by-id",
+    { id: query.id as string }
+  ]);
+
+  const { data: total } = trpc.useQuery([
+    "workout.sum",
+    { id: workout?.id as string }
+  ]);
+
+  const { mutate, isLoading: isDeleting } = trpc.useMutation(
+    ["workout.delete"],
+    {
+      onSuccess: () => {
+        ctx.invalidateQueries(["workout.get-all"]);
+        ctx.invalidateQueries(["workout.get-latest"]);
+      }
+    }
+  );
 
   const [date, setDate] = useState(new Date());
   const filteredData = useDateFilter(date, workout);
@@ -110,12 +123,7 @@ export default function WorkoutPage() {
 
             {workout &&
               filteredData?.map(entry => (
-                <EntryCard
-                  key={entry.id}
-                  entry={entry}
-                  page='workout'
-                  pageId={workout.id}
-                />
+                <EntryCard key={entry.id} entry={entry} page='workout' />
               ))}
           </section>
         </main>

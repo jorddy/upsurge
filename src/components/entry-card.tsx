@@ -1,14 +1,17 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
-import { EntryType } from "@/hooks/queries/validators";
 import { trpc } from "@/utils/trpc";
+import { Entry, Exercise, Set } from "@prisma/client";
 
 export default function EntryCard({
   entry,
   page
 }: {
-  entry: EntryType;
+  entry: Entry & {
+    sets: Set[];
+    exercise?: Exercise;
+  };
   page: "workout" | "exercise";
 }) {
   const ctx = trpc.useContext();

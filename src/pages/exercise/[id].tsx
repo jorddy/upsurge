@@ -7,19 +7,26 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { HiX } from "react-icons/hi";
-import { useQueryClient } from "react-query";
-import { useExerciseById } from "@/hooks/queries/use-exercise-by-id";
 import { useDateFilter } from "@/hooks/use-date-filter";
-import { useDeleteExercise } from "@/hooks/mutations/use-delete-exercise";
+import { trpc } from "@/utils/trpc";
 import toast from "react-hot-toast";
 
 export default function ExercisePage() {
   const { query, push } = useRouter();
   const { data: session, status } = useSession();
-  const queryClient = useQueryClient();
+  const ctx = trpc.useContext();
 
-  const { data: exercise, isLoading } = useExerciseById(query.id as string);
-  const { mutate, isLoading: isDeleting } = useDeleteExercise(queryClient);
+  const { data: exercise, isLoading } = trpc.useQuery([
+    "exercise.get-by-id",
+    { id: query.id as string }
+  ]);
+
+  const { mutate, isLoading: isDeleting } = trpc.useMutation(
+    ["exercise.delete"],
+    {
+      onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
+    }
+  );
 
   const [date, setDate] = useState(new Date());
   const filteredData = useDateFilter(date, exercise);
@@ -125,12 +132,7 @@ export default function ExercisePage() {
 
             {exercise &&
               filteredData?.map(entry => (
-                <EntryCard
-                  key={entry.id}
-                  entry={entry}
-                  page='exercise'
-                  pageId={exercise.id}
-                />
+                <EntryCard key={entry.id} entry={entry} page='exercise' />
               ))}
           </section>
         </main>

@@ -83,7 +83,7 @@ export const workoutRouter = createProtectedRouter()
         where: { id: input.id }
       })
   })
-  .mutation("sum", {
+  .query("sum", {
     input: z.object({
       id: z.string()
     }),

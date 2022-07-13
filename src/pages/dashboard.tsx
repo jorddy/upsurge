@@ -4,11 +4,11 @@ import Loader from "@/components/loader";
 import Tabs from "@/components/tabs";
 import WorkoutCard from "@/components/workout-card";
 import { signIn, useSession } from "next-auth/react";
-import { useLatestWorkouts } from "@/hooks/queries/use-latest-workouts";
+import { trpc } from "@/utils/trpc";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const { data, isLoading } = useLatestWorkouts();
+  const { data, isLoading } = trpc.useQuery(["workout.get-latest"]);
 
   if (status === "loading") return <Loader />;
   if (status === "unauthenticated") signIn();
