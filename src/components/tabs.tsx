@@ -7,25 +7,24 @@ import SearchBar from "./search-bar";
 import HistoryTab from "./history-tab";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import { useWorkouts } from "@/hooks/queries/use-workouts";
-import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { ExerciseType, WorkoutType } from "@/hooks/queries/validators";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function Tabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
-  const workouts = useWorkouts();
-  const exercises = useExercises();
+
+  const workouts = trpc.useQuery(["workout.get-all"]);
+  const exercises = trpc.useQuery(["exercise.get-all"]);
 
   const filteredWorkoutData = useSearch(
     workoutQuery,
     workouts.data
-  ) as WorkoutType[];
+  ) as InferQueryOutput<"workout.get-all">;
   const filteredExerciseData = useSearch(
     exerciseQuery,
     exercises.data
-  ) as ExerciseType[];
+  ) as InferQueryOutput<"exercise.get-all">;
 
   if (workouts.isLoading || exercises.isLoading) return <Loader />;
 

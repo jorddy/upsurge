@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import Loader from "./loader";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -46,9 +46,13 @@ export default function Header({ app }: { app?: boolean }) {
       </nav>
 
       {session && session.user?.image && (
-        <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
+        <button
+          className='relative w-10 h-10'
+          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+        >
           <Image
-            className='w-10 h-10 rounded-full object-contain'
+            className='rounded-full object-contain'
+            layout='fill'
             src={session.user?.image as string}
             alt={session.user?.name as string}
           />

@@ -5,7 +5,7 @@ import {
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { CreateWorkoutInput } from "@/hooks/mutations/validators";
+import { WorkoutValidator } from "@/utils/validators";
 
 const Set = ({
   cardio,
@@ -17,7 +17,7 @@ const Set = ({
   cardio?: boolean;
   entryIndex: number;
   setIndex: number;
-  register: UseFormRegister<CreateWorkoutInput>;
+  register: UseFormRegister<WorkoutValidator>;
   remove: UseFieldArrayRemove;
 }) => {
   return (
@@ -81,8 +81,8 @@ export default function WorkoutSetForm({
 }: {
   cardio?: boolean;
   index: number;
-  control: Control<CreateWorkoutInput>;
-  register: UseFormRegister<CreateWorkoutInput>;
+  control: Control<WorkoutValidator>;
+  register: UseFormRegister<WorkoutValidator>;
 }) {
   const { fields, append, remove } = useFieldArray({
     control,

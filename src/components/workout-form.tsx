@@ -7,22 +7,21 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
-import { useExercises } from "@/hooks/queries/use-exercises";
 import { useSearch } from "@/hooks/use-search";
-import { useCreateWorkout } from "@/hooks/mutations/use-create-workout";
-import {
-  CreateWorkoutInput,
-  createWorkoutValidator
-} from "@/hooks/mutations/validators";
-import { ExerciseType } from "@/hooks/queries/validators";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { workoutValidator, WorkoutValidator } from "@/utils/validators";
 
 export default function WorkoutForm() {
   const { push } = useRouter();
-  const queryClient = useQueryClient();
+  const ctx = trpc.useContext();
 
-  const { data } = useExercises();
-  const { mutate, isLoading } = useCreateWorkout(queryClient);
+  const { data } = trpc.useQuery(["exercise.get-all"]);
+  const { mutate, isLoading } = trpc.useMutation(["workout.create"], {
+    onSuccess: () => {
+      ctx.invalidateQueries(["workout.get-all"]);
+      ctx.invalidateQueries(["workout.get-latest"]);
+    }
+  });
 
   const [query, setQuery] = useState("");
   const filteredData = useSearch(query, data);
@@ -33,8 +32,8 @@ export default function WorkoutForm() {
     control,
     watch,
     formState: { errors }
-  } = useForm<CreateWorkoutInput>({
-    resolver: zodResolver(createWorkoutValidator)
+  } = useForm<WorkoutValidator>({
+    resolver: zodResolver(workoutValidator)
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -42,7 +41,9 @@ export default function WorkoutForm() {
     name: "entries"
   });
 
-  const handleExerciseType = (exercise: ExerciseType) => {
+  const handleExerciseType = (
+    exercise: InferQueryOutput<"exercise.get-all">[0]
+  ) => {
     if (exercise.currentWeight || exercise.targetWeight) {
       append({ exerciseId: exercise.id, name: exercise.name, type: "weight" });
     }
@@ -52,7 +53,7 @@ export default function WorkoutForm() {
     }
   };
 
-  const onSubmit = (data: CreateWorkoutInput) => {
+  const onSubmit = (data: WorkoutValidator) => {
     let toastId: string;
     toastId = toast.loading("Creating workout...");
 
@@ -162,7 +163,7 @@ export default function WorkoutForm() {
           >
             <ExerciseCard
               key={exercise.id}
-              exercise={exercise as ExerciseType}
+              exercise={exercise as InferQueryOutput<"exercise.get-all">[0]}
               linkOff
             />
           </button>

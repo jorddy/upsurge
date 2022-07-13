@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { WorkoutType } from "./queries/validators";
+import { InferQueryOutput } from "@/utils/trpc";
 
-export const useTotalSets = (workout: WorkoutType) => {
+export const useTotalSets = (
+  workout: InferQueryOutput<"workout.get-all">[0]
+) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (workout.entries) {
+    if (workout?.entries) {
       setTotal(
         workout.entries.reduce((current, entry) => {
           if (entry._count) {

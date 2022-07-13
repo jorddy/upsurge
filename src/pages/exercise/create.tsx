@@ -5,31 +5,29 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateExercise } from "@/hooks/mutations/use-create-exercise";
-import {
-  CreateExerciseInput,
-  createExerciseValidator
-} from "@/hooks/mutations/validators";
+import { trpc } from "@/utils/trpc";
+import { exerciseValidator, ExerciseValidator } from "@/utils/validators";
 
 export default function CreateExercisePage() {
   const { push, query } = useRouter();
   const { data: session, status } = useSession();
-  const [option, setOption] = useState<"weight" | "cardio" | null>(null);
+  const ctx = trpc.useContext();
 
-  const queryClient = useQueryClient();
-  const { mutate, isLoading } = useCreateExercise(queryClient);
+  const [option, setOption] = useState<"weight" | "cardio" | null>(null);
+  const { mutate, isLoading } = trpc.useMutation(["exercise.create"], {
+    onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<CreateExerciseInput>({
-    resolver: zodResolver(createExerciseValidator)
+  } = useForm<ExerciseValidator>({
+    resolver: zodResolver(exerciseValidator)
   });
 
-  const onSubmit = (data: CreateExerciseInput) => {
+  const onSubmit = (data: ExerciseValidator) => {
     let toastId: string;
     toastId = toast.loading("Creating exercise...");
 

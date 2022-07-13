@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { ExerciseType, WorkoutType } from "./queries/validators";
+import { InferQueryOutput } from "@/utils/trpc";
 
 export const useDateFilter = (
   date: Date,
-  data: WorkoutType | ExerciseType | undefined
+  data:
+    | InferQueryOutput<"workout.get-by-id">
+    | InferQueryOutput<"exercise.get-by-id">
+    | undefined
 ) => {
   const [filteredData, setFilteredData] = useState(data?.entries);
 

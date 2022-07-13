@@ -3,8 +3,8 @@ import {
   UseFieldArrayRemove,
   UseFormRegister
 } from "react-hook-form";
-import { CreateEntryInput } from "@/hooks/mutations/validators";
 import { HiX } from "react-icons/hi";
+import { EntryValidator } from "@/utils/validators";
 
 export default function SetForm({
   cardio,
@@ -15,10 +15,10 @@ export default function SetForm({
 }: {
   cardio?: boolean;
   workoutSet?: boolean;
-  set: FieldArrayWithId<CreateEntryInput, "sets", "id">;
+  set: FieldArrayWithId<EntryValidator, "sets", "id">;
   index: number;
   remove: UseFieldArrayRemove;
-  register: UseFormRegister<CreateEntryInput>;
+  register: UseFormRegister<EntryValidator>;
 }) {
   return (
     <div key={set.id} className='py-4 px-6 bg-zinc-900 rounded-md'>
