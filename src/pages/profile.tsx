@@ -9,8 +9,6 @@ export default function ProfilePage() {
   const { weightUnit, convertWeightToKilos, convertWeightToPounds } =
     useProfileStore();
 
-  console.log(weightUnit);
-
   const handleWeightChange = () => {
     if (weightUnit === "kg") {
       convertWeightToPounds();

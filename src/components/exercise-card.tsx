@@ -29,13 +29,15 @@ export default function ExerciseCard({
           <div>
             <p>
               <strong className='font-medium'>Current Weight:</strong>{" "}
-              {weightUnit === "kg" && `${exercise.currentWeight}kg`}
+              {weightUnit === "kg" && `${exercise.currentWeight} kg`}
               {weightUnit === "lbs" &&
-                `${convertKgToLbs(exercise.currentWeight)}lbs`}
+                `${convertKgToLbs(exercise.currentWeight)} lbs`}
             </p>
             <p>
               <strong className='font-medium'>Target Weight:</strong>{" "}
-              {exercise.targetWeight}kg
+              {weightUnit === "kg" && `${exercise.targetWeight} kg`}
+              {weightUnit === "lbs" &&
+                `${convertKgToLbs(exercise.targetWeight)} lbs`}
             </p>
           </div>
         )}
@@ -44,11 +46,11 @@ export default function ExerciseCard({
           <div>
             <p>
               <strong className='font-medium'>Current Distance:</strong>{" "}
-              {exercise.currentDistance}m
+              {exercise.currentDistance} miles
             </p>
             <p>
               <strong className='font-medium'>Target Distance:</strong>{" "}
-              {exercise.targetDistance}kg
+              {exercise.targetDistance} miles
             </p>
           </div>
         )}

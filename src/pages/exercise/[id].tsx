@@ -10,6 +10,8 @@ import { useSession } from "next-auth/react";
 import { HiX } from "react-icons/hi";
 import { useDateFilter } from "@/utils/use-date-filter";
 import { trpc } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/profile-store";
+import { convertKgToLbs } from "@/utils/kg-to-lbs";
 import toast from "react-hot-toast";
 
 export { authorize as getServerSideProps };
@@ -17,6 +19,7 @@ export { authorize as getServerSideProps };
 export default function ExercisePage() {
   const { query, push } = useRouter();
   const { data: session } = useSession();
+  const { weightUnit } = useProfileStore();
   const ctx = trpc.useContext();
 
   const { data: exercise, isLoading } = trpc.useQuery(
@@ -96,28 +99,40 @@ export default function ExercisePage() {
             {exercise?.targetWeight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Target Weight</h2>
-                <p className='text-xl font-bold'>{exercise.targetWeight}kg</p>
+                <p className='text-xl font-bold'>
+                  {weightUnit === "kg" && `${exercise.targetWeight} kg`}
+                  {weightUnit === "lbs" &&
+                    `${convertKgToLbs(exercise.targetWeight)} lbs`}
+                </p>
               </div>
             )}
 
             {exercise?.currentWeight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
                 <h2>Current Weight</h2>
-                <p className='text-xl font-bold'>{exercise.currentWeight}kg</p>
+                <p className='text-xl font-bold'>
+                  {weightUnit === "kg" && `${exercise.currentWeight} kg`}
+                  {weightUnit === "lbs" &&
+                    `${convertKgToLbs(exercise.currentWeight)} lbs`}
+                </p>
               </div>
             )}
 
             {exercise?.targetDistance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Target Distance</h2>
-                <p className='text-xl font-bold'>{exercise.targetDistance}m</p>
+                <p className='text-xl font-bold'>
+                  {exercise.targetDistance} miles
+                </p>
               </div>
             )}
 
             {exercise?.currentDistance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
                 <h2>Current Distance</h2>
-                <p className='text-xl font-bold'>{exercise.currentDistance}m</p>
+                <p className='text-xl font-bold'>
+                  {exercise.currentDistance} miles
+                </p>
               </div>
             )}
           </section>

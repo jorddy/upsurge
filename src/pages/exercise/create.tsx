@@ -101,7 +101,7 @@ export default function CreateExercisePage() {
             {option === "weight" && (
               <>
                 <div className='field'>
-                  <label htmlFor='current-weight'>Current Weight:</label>
+                  <label htmlFor='current-weight'>Current Weight (kg):</label>
                   <input
                     {...register("currentWeight")}
                     type='number'
@@ -118,7 +118,7 @@ export default function CreateExercisePage() {
                 </div>
 
                 <div className='field'>
-                  <label htmlFor='target-weight'>Target Weight:</label>
+                  <label htmlFor='target-weight'>Target Weight (kg):</label>
                   <input
                     {...register("targetWeight")}
                     className='input'
@@ -138,7 +138,9 @@ export default function CreateExercisePage() {
             {option === "cardio" && (
               <>
                 <div className='field'>
-                  <label htmlFor='current-distance'>Current Distance:</label>
+                  <label htmlFor='current-distance'>
+                    Current Distance (miles):
+                  </label>
                   <input
                     {...register("currentDistance")}
                     className='input'
@@ -154,7 +156,9 @@ export default function CreateExercisePage() {
                 </div>
 
                 <div className='field'>
-                  <label htmlFor='target-distance'>Target Distance:</label>
+                  <label htmlFor='target-distance'>
+                    Target Distance (miles):
+                  </label>
                   <input
                     {...register("targetDistance")}
                     className='input'

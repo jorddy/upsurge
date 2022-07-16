@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { useTotalSets } from "@/utils/use-total-sets";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/profile-store";
+import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 export default function WorkoutCard({
   workout
 }: {
   workout: InferQueryOutput<"workout.get-all">[0];
 }) {
+  const { weightUnit } = useProfileStore();
+
   const { data, isLoading } = trpc.useQuery([
     "workout.sum",
     { id: workout.id }
@@ -32,7 +36,9 @@ export default function WorkoutCard({
           {data?._sum?.weight && (
             <p>
               <strong className='font-medium'>Total Weight Lifted:</strong>{" "}
-              {data?._sum.weight}kg
+              {weightUnit === "kg" && `${data?._sum.weight} kg`}
+              {weightUnit === "lbs" &&
+                `${convertKgToLbs(data?._sum.weight)} lbs`}
             </p>
           )}
 

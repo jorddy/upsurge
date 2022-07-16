@@ -3,6 +3,8 @@ import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
 import { trpc } from "@/utils/trpc";
 import { Entry, Exercise, Set } from "@prisma/client";
+import { useProfileStore } from "@/utils/profile-store";
+import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 export default function EntryCard({
   entry,
@@ -15,6 +17,7 @@ export default function EntryCard({
   page: "workout" | "exercise";
 }) {
   const ctx = trpc.useContext();
+  const { weightUnit } = useProfileStore();
 
   const { mutate, isLoading } = trpc.useMutation(["entry.delete"], {
     onSuccess: () => {
@@ -89,7 +92,13 @@ export default function EntryCard({
       <ul>
         {entry.sets?.map(set => (
           <li key={set.id}>
-            {set.weight && `${set.weight}kg - ${set.reps} reps`}
+            {set.weight && (
+              <>
+                {weightUnit === "kg" && `${set.weight} kg - ${set.reps} reps`}
+                {weightUnit === "lbs" &&
+                  `${convertKgToLbs(set.weight)} kg - ${set.reps} reps`}
+              </>
+            )}
 
             {set.distance &&
               `${set.distance}m ${

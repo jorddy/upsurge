@@ -11,12 +11,15 @@ import { useDateFilter } from "@/utils/use-date-filter";
 import { HiX } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/profile-store";
+import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 export { authorize as getServerSideProps };
 
 export default function WorkoutPage() {
   const { query, push } = useRouter();
   const { data: session } = useSession();
+  const { weightUnit } = useProfileStore();
   const ctx = trpc.useContext();
 
   const { data: workout, isLoading } = trpc.useQuery(
@@ -103,14 +106,18 @@ export default function WorkoutPage() {
             {total?._sum.weight && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Weight Lifted</h2>
-                <p className='text-xl font-bold'>{total._sum.weight}kg</p>
+                <p className='text-xl font-bold'>
+                  {weightUnit === "kg" && `${total._sum.weight} kg`}
+                  {weightUnit === "lbs" &&
+                    `${convertKgToLbs(total._sum.weight)} lbs`}
+                </p>
               </div>
             )}
 
             {total?._sum.distance && (
               <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
                 <h2>Total Distance Travelled</h2>
-                <p className='text-xl font-bold'>{total._sum.distance}m</p>
+                <p className='text-xl font-bold'>{total._sum.distance} miles</p>
               </div>
             )}
           </section>
