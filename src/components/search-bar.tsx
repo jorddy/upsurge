@@ -1,15 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { HiSearch } from "react-icons/hi";
 
-export default function SearchBar({
-  type,
-  query,
-  setQuery
-}: {
+interface Props {
   type: "workout" | "exercise";
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
-}) {
+}
+
+export default function SearchBar({ type, query, setQuery }: Props) {
   const text =
     type === "workout" ? "Search workouts..." : "Search exercises...";
 

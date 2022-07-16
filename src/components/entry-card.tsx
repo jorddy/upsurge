@@ -2,20 +2,19 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
 import { trpc } from "@/utils/trpc";
-import { Entry, Exercise, Set } from "@prisma/client";
+import type { Entry, Exercise, Set } from "@prisma/client";
 import { useProfileStore } from "@/utils/profile-store";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
-export default function EntryCard({
-  entry,
-  page
-}: {
+interface Props {
   entry: Entry & {
     sets: Set[];
     exercise?: Exercise;
   };
   page: "workout" | "exercise";
-}) {
+}
+
+export default function EntryCard({ entry, page }: Props) {
   const ctx = trpc.useContext();
   const { weightUnit } = useProfileStore();
 

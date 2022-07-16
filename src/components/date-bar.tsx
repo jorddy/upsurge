@@ -1,13 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { HiCalendar } from "react-icons/hi";
 
-export default function DateBar({
-  date,
-  setDate
-}: {
+interface Props {
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
-}) {
+}
+
+export default function DateBar({ date, setDate }: Props) {
   return (
     <div
       className='flex items-center gap-2 bg-zinc-900 border border-zinc-500 px-3 py-2 

@@ -1,5 +1,4 @@
 import Header from "@/components/header";
-import Loader from "@/components/loader";
 import EntryForm from "@/components/entry-form";
 import WorkoutForm from "@/components/workout-form";
 import { authorize } from "@/utils/authorize";

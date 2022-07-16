@@ -1,10 +1,19 @@
-import {
+import type {
   FieldArrayWithId,
   UseFieldArrayRemove,
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { EntryValidator } from "@/utils/validators";
+import { type EntryValidator } from "@/utils/validators";
+
+interface Props {
+  cardio?: boolean;
+  workoutSet?: boolean;
+  set: FieldArrayWithId<EntryValidator, "sets", "id">;
+  index: number;
+  remove: UseFieldArrayRemove;
+  register: UseFormRegister<EntryValidator>;
+}
 
 export default function SetForm({
   cardio,
@@ -12,14 +21,7 @@ export default function SetForm({
   index,
   remove,
   register
-}: {
-  cardio?: boolean;
-  workoutSet?: boolean;
-  set: FieldArrayWithId<EntryValidator, "sets", "id">;
-  index: number;
-  remove: UseFieldArrayRemove;
-  register: UseFormRegister<EntryValidator>;
-}) {
+}: Props) {
   return (
     <div
       key={set.id}

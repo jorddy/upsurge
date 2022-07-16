@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { InferQueryOutput } from "@/utils/trpc";
+import type { InferQueryOutput } from "@/utils/trpc";
 import { useProfileStore } from "@/utils/profile-store";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
-export default function ExerciseCard({
-  exercise,
-  linkOff
-}: {
+interface Props {
   exercise: InferQueryOutput<"exercise.get-all">[0];
   linkOff?: boolean;
-}) {
+}
+
+export default function ExerciseCard({ exercise, linkOff }: Props) {
   const { weightUnit } = useProfileStore();
 
   return (

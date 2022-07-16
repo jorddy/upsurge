@@ -12,7 +12,11 @@ import {
   HiX
 } from "react-icons/hi";
 
-export default function Header({ app }: { app?: boolean }) {
+interface Props {
+  app?: boolean;
+}
+
+export default function Header({ app }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const { data: session, status } = useSession();

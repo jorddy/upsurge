@@ -8,8 +8,8 @@ import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useSearch } from "@/utils/use-search";
-import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { workoutValidator, WorkoutValidator } from "@/utils/validators";
+import { type InferQueryOutput, trpc } from "@/utils/trpc";
+import { workoutValidator, type WorkoutValidator } from "@/utils/validators";
 
 export default function WorkoutForm() {
   const { push } = useRouter();

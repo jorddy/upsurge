@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react";
-import { Fragment, PropsWithChildren } from "react";
+import { Fragment, type PropsWithChildren } from "react";
 
 export default function TabComponent({ children }: PropsWithChildren<{}>) {
   return (

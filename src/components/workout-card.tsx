@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { useTotalSets } from "@/utils/use-total-sets";
-import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { type InferQueryOutput, trpc } from "@/utils/trpc";
 import { useProfileStore } from "@/utils/profile-store";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
-export default function WorkoutCard({
-  workout
-}: {
+interface Props {
   workout: InferQueryOutput<"workout.get-all">[0];
-}) {
+}
+
+export default function WorkoutCard({ workout }: Props) {
   const { weightUnit } = useProfileStore();
 
   const { data, isLoading } = trpc.useQuery([

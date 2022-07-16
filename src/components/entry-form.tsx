@@ -9,8 +9,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearch } from "@/utils/use-search";
 import { HiX } from "react-icons/hi";
-import { EntryValidator, entryValidator } from "@/utils/validators";
-import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { type EntryValidator, entryValidator } from "@/utils/validators";
+import { type InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function EntryForm() {
   const { push } = useRouter();

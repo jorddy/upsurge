@@ -1,16 +1,17 @@
+import type { PropsWithChildren } from "react";
 import { Switch } from "@headlessui/react";
 
-interface Props {
+interface Props extends PropsWithChildren {
   label: string;
   checked: boolean;
   onChange: () => void;
 }
 
-export default function Toggle({ label, checked, onChange }: Props) {
+export default function Toggle({ children, checked, onChange }: Props) {
   return (
     <Switch.Group>
       <div className='flex items-center'>
-        <Switch.Label className='pr-4'>{label}</Switch.Label>
+        <Switch.Label className='pr-4'>{children}</Switch.Label>
         <Switch
           checked={checked}
           onChange={onChange}

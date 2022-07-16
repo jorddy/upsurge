@@ -1,25 +1,21 @@
 import {
-  Control,
+  type Control,
   useFieldArray,
-  UseFieldArrayRemove,
-  UseFormRegister
+  type UseFieldArrayRemove,
+  type UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { WorkoutValidator } from "@/utils/validators";
+import { type WorkoutValidator } from "@/utils/validators";
 
-const Set = ({
-  cardio,
-  entryIndex,
-  setIndex,
-  register,
-  remove
-}: {
+interface SetProps {
   cardio?: boolean;
   entryIndex: number;
   setIndex: number;
   register: UseFormRegister<WorkoutValidator>;
   remove: UseFieldArrayRemove;
-}) => {
+}
+
+const Set = ({ cardio, entryIndex, setIndex, register, remove }: SetProps) => {
   return (
     <div className='py-4 px-6 bg-zinc-800 border border-zinc-500 rounded-md'>
       <div className='flex flex-wrap gap-6 items-center'>
@@ -73,17 +69,19 @@ const Set = ({
   );
 };
 
+interface WorkoutSetFormProps {
+  cardio?: boolean;
+  index: number;
+  control: Control<WorkoutValidator>;
+  register: UseFormRegister<WorkoutValidator>;
+}
+
 export default function WorkoutSetForm({
   cardio,
   index,
   control,
   register
-}: {
-  cardio?: boolean;
-  index: number;
-  control: Control<WorkoutValidator>;
-  register: UseFormRegister<WorkoutValidator>;
-}) {
+}: WorkoutSetFormProps) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: `entries.${index}.sets`

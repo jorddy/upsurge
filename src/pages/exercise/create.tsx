@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/utils/trpc";
-import { exerciseValidator, ExerciseValidator } from "@/utils/validators";
+import { exerciseValidator, type ExerciseValidator } from "@/utils/validators";
 
 export { authorize as getServerSideProps };
 
