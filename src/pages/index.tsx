@@ -23,7 +23,12 @@ export default function Home() {
             is the app that gets out of your way and lets you focus on what
             really matters.
           </p>
-          <button className='button mx-auto' onClick={() => signIn()}>
+          <button
+            className='button mx-auto'
+            onClick={() =>
+              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+            }
+          >
             Get Started Now
           </button>
         </section>
@@ -94,9 +99,11 @@ export default function Home() {
           </h2>
           <button
             className='button mt-6 block mx-auto'
-            onClick={() => signIn()}
+            onClick={() =>
+              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+            }
           >
-            Get Started Today
+            Get Started Now
           </button>
         </section>
       </main>

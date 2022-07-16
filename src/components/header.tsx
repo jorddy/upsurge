@@ -23,7 +23,7 @@ export default function Header({ app }: { app?: boolean }) {
         <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
-            {!app ? "Upsurge" : "Beta v1.0"}
+            {!app ? "Upsurge" : "Alpha"}
           </p>
         </Link>
 
@@ -84,7 +84,7 @@ export default function Header({ app }: { app?: boolean }) {
           </li>
           <li>
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
               className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
               <HiLogout className='w-6 h-6' />
@@ -98,7 +98,12 @@ export default function Header({ app }: { app?: boolean }) {
 
       {status === "unauthenticated" && (
         <>
-          <button className='button hidden md:inline' onClick={() => signIn()}>
+          <button
+            className='button hidden md:inline'
+            onClick={() =>
+              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+            }
+          >
             Get Started Now
           </button>
 
@@ -139,7 +144,13 @@ export default function Header({ app }: { app?: boolean }) {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={() => signIn()}>Sign In</button>
+                  <button
+                    onClick={() =>
+                      signIn("", { redirect: true, callbackUrl: "/dashboard" })
+                    }
+                  >
+                    Sign In
+                  </button>
                 </li>
               </ul>
             </nav>
