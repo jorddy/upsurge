@@ -105,7 +105,7 @@ export default function WorkoutForm() {
         <h2 className='text-md font-semibold'>Add exercises</h2>
 
         {fields.length === 0 && (
-          <p className='p-4 bg-zinc-900 rounded-md'>
+          <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
             No exercises currently selected.
           </p>
         )}

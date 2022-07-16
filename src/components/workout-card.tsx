@@ -17,7 +17,7 @@ export default function WorkoutCard({
   return (
     <Link
       href={`/workout/${workout.id}`}
-      className='block p-4 space-y-2 bg-zinc-900 rounded-md'
+      className='block p-4 space-y-2 bg-zinc-900 border border-zinc-500 rounded-md'
     >
       <h2 className='text-lg font-bold'>{workout.name}</h2>
 

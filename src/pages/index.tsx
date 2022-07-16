@@ -33,7 +33,7 @@ export default function Home() {
           </button>
         </section>
 
-        <section className='py-8 max-w-3xl mx-auto sm:py-16'>
+        <section id='features' className='py-8 max-w-3xl mx-auto sm:py-16'>
           <h2 className='text-center text-2xl font-semibold md:text-4xl'>
             The workout logger that gets out of your way.
           </h2>
@@ -44,7 +44,7 @@ export default function Home() {
 
           <div className='mt-20 grid grid-cols-1 gap-16 sm:grid-cols-2'>
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
+              <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiPencilAlt className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Powerful Logging Capablities</h3>
@@ -56,7 +56,7 @@ export default function Home() {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
+              <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiBookOpen className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Your Personal Diary</h3>
@@ -68,7 +68,7 @@ export default function Home() {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
+              <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiLockClosed className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Private, Secure & No Ads</h3>
@@ -80,7 +80,7 @@ export default function Home() {
             </div>
 
             <div className='space-y-4 text-center'>
-              <div className='p-2 max-w-fit mx-auto bg-zinc-900 rounded-md'>
+              <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiChartBar className='w-8 h-8' />
               </div>
               <h3 className='font-bold'>Analytical Reporting</h3>

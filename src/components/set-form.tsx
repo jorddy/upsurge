@@ -21,7 +21,10 @@ export default function SetForm({
   register: UseFormRegister<EntryValidator>;
 }) {
   return (
-    <div key={set.id} className='py-4 px-6 bg-zinc-900 rounded-md'>
+    <div
+      key={set.id}
+      className='py-4 px-6 bg-zinc-900 rounded-md border border-zinc-500'
+    >
       <div className='flex flex-wrap gap-6 items-center'>
         <div className='self-start flex gap-2 sm:flex-col'>
           <p>Set</p>

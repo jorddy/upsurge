@@ -37,19 +37,21 @@ export default function Tabs() {
       </Tab.List>
 
       <Tab.Panels>
-        <Tab.Panel className='space-y-4'>
+        <Tab.Panel className='space-y-6'>
           <SearchBar
             type='workout'
             query={workoutQuery}
             setQuery={setWorkoutQuery}
           />
 
-          <Link className='button-create' href='/entry/create?option=workout'>
+          <Link className='link' href='/entry/create?option=workout'>
             + Create workout
           </Link>
 
           {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>No workouts found.</p>
+            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
+              No workouts found.
+            </p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -60,19 +62,21 @@ export default function Tabs() {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel className='space-y-4'>
+        <Tab.Panel className='space-y-6'>
           <SearchBar
             type='exercise'
             query={exerciseQuery}
             setQuery={setExerciseQuery}
           />
 
-          <Link className='button-create' href='/exercise/create'>
+          <Link className='link' href='/exercise/create'>
             + Create exercise
           </Link>
 
           {filteredExerciseData && filteredExerciseData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>No exercises found.</p>
+            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
+              No exercises found.
+            </p>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>

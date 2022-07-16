@@ -11,7 +11,7 @@ export default function ExerciseCard({
   return (
     <Link
       href={linkOff ? "" : `exercise/${exercise.id}`}
-      className={`block p-4 space-y-2 bg-zinc-900 rounded-md`}
+      className={`block p-4 space-y-2 bg-zinc-900 rounded-md border border-zinc-500`}
     >
       <h2 className='text-lg font-bold'>{exercise.name}</h2>
 

@@ -46,7 +46,10 @@ export default function EntryCard({
   };
 
   return (
-    <article key={entry.id} className='p-4 space-y-2 rounded-md bg-zinc-900'>
+    <article
+      key={entry.id}
+      className='p-4 space-y-2 rounded-md bg-zinc-900 border border-zinc-500'
+    >
       <div className='flex flex-wrap gap-2 items-center justify-between'>
         <p className='text-xl font-semibold'>
           {entry.createdAt.toLocaleDateString()}

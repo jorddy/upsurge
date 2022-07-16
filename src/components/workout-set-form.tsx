@@ -21,7 +21,7 @@ const Set = ({
   remove: UseFieldArrayRemove;
 }) => {
   return (
-    <div className='py-4 px-6 bg-zinc-800 rounded-md'>
+    <div className='py-4 px-6 bg-zinc-800 border border-zinc-500 rounded-md'>
       <div className='flex flex-wrap gap-6 items-center'>
         <div className='self-start flex gap-2 sm:flex-col'>
           <p>Set</p>

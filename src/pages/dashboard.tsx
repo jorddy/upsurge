@@ -38,7 +38,7 @@ export default function Dashboard() {
 
           <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {data?.length === 0 && (
-              <p className='p-4 bg-zinc-900 rounded-md'>
+              <p className='p-4 bg-zinc-900 rounded-md border border-zinc-500'>
                 No recent workouts found.
               </p>
             )}

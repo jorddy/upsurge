@@ -8,8 +8,10 @@ export default function ProfilePage() {
     <>
       <Header app />
 
-      <main className='container mx-auto p-4 grid place-content-center min-h-screen'>
-        <h1>Feature coming soon!</h1>
+      <main className='container mx-auto p-4'>
+        <section className='p-4 bg-zinc-900 border border-zinc-500'>
+          <h1>Your settings</h1>
+        </section>
       </main>
     </>
   );

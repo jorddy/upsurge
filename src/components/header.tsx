@@ -35,12 +35,12 @@ export default function Header({ app }: { app?: boolean }) {
             >
               Home
             </Link>
-            <Link
-              href='/features'
+            <a
+              href='#features'
               className='hidden hover:opacity-80 hover:underline md:inline'
             >
               Features
-            </Link>
+            </a>
           </>
         )}
       </nav>
@@ -61,7 +61,7 @@ export default function Header({ app }: { app?: boolean }) {
 
       {isOptionsOpen && (
         <ul
-          className='absolute top-16 right-4 bg-zinc-900 border border-gray-400 
+          className='absolute top-16 right-4 bg-zinc-900 border border-zinc-500 
           rounded-md shadow-md overflow-hidden'
         >
           <li>
