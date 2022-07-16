@@ -7,7 +7,7 @@ import SearchBar from "./search-bar";
 import HistoryTab from "./history-tab";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import { useSearch } from "@/hooks/use-search";
+import { useSearch } from "@/utils/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function Tabs() {

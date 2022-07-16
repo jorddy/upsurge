@@ -7,7 +7,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useSearch } from "@/hooks/use-search";
+import { useSearch } from "@/utils/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 import { workoutValidator, WorkoutValidator } from "@/utils/validators";
 

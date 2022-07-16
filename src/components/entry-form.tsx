@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearch } from "@/hooks/use-search";
+import { useSearch } from "@/utils/use-search";
 import { HiX } from "react-icons/hi";
 import { EntryValidator, entryValidator } from "@/utils/validators";
 import { InferQueryOutput, trpc } from "@/utils/trpc";

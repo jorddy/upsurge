@@ -2,13 +2,16 @@ import Header from "@/components/header";
 import Loader from "@/components/loader";
 import EntryForm from "@/components/entry-form";
 import WorkoutForm from "@/components/workout-form";
-import { signIn, useSession } from "next-auth/react";
+import { authorize } from "@/utils/authorize";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+export { authorize as getServerSideProps };
+
 export default function CreateEntryPage() {
   const { query } = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const [option, setOption] = useState<"workout" | "exercise" | null>(
     query.option === "workout"
@@ -17,9 +20,6 @@ export default function CreateEntryPage() {
       ? "exercise"
       : null
   );
-
-  if (status === "loading") return <Loader />;
-  if (status === "unauthenticated") signIn();
 
   if (session) {
     return (

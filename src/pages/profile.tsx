@@ -1,14 +1,9 @@
 import Header from "@/components/header";
-import Loader from "@/components/loader";
-import { signIn, useSession } from "next-auth/react";
+import { authorize } from "@/utils/authorize";
+
+export { authorize as getServerSideProps };
 
 export default function ProfilePage() {
-  const { status } = useSession();
-
-  if (status === "loading") return <Loader />;
-  if (status === "unauthenticated") signIn();
-  if (status === "authenticated") return <Loader />;
-
   return (
     <>
       <Header app />

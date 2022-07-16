@@ -1,17 +1,19 @@
 import toast from "react-hot-toast";
 import Header from "@/components/header";
-import Loader from "@/components/loader";
+import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/utils/trpc";
 import { exerciseValidator, ExerciseValidator } from "@/utils/validators";
 
+export { authorize as getServerSideProps };
+
 export default function CreateExercisePage() {
   const { push, query } = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const ctx = trpc.useContext();
 
   const [option, setOption] = useState<"weight" | "cardio" | null>(null);
@@ -45,9 +47,6 @@ export default function CreateExercisePage() {
       }
     });
   };
-
-  if (status === "loading") return <Loader />;
-  if (status === "unauthenticated") signIn();
 
   if (session) {
     return (

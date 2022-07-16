@@ -3,17 +3,20 @@ import Loader from "@/components/loader";
 import Header from "@/components/header";
 import DateBar from "@/components/date-bar";
 import EntryCard from "@/components/entry-card";
+import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { useDateFilter } from "@/hooks/use-date-filter";
+import { useSession } from "next-auth/react";
+import { useDateFilter } from "@/utils/use-date-filter";
 import { HiX } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
 
+export { authorize as getServerSideProps };
+
 export default function WorkoutPage() {
   const { query, push } = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const ctx = trpc.useContext();
 
   const { data: workout, isLoading } = trpc.useQuery(
@@ -63,9 +66,7 @@ export default function WorkoutPage() {
     }
   };
 
-  if (status === "loading") return <Loader />;
-  if (status === "unauthenticated") signIn();
-  if (status === "authenticated" && isLoading) return <Loader />;
+  if (isLoading) return <Loader />;
 
   if (session) {
     return (

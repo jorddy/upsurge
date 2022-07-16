@@ -1,4 +1,7 @@
 import Header from "@/components/header";
+import { authorize } from "@/utils/authorize";
+
+export { authorize as getServerSideProps };
 
 export default function EditEntryPage() {
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useTotalSets } from "@/hooks/use-total-sets";
+import { useTotalSets } from "@/utils/use-total-sets";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function WorkoutCard({
