@@ -2,7 +2,6 @@ import type { PropsWithChildren } from "react";
 import { Switch } from "@headlessui/react";
 
 interface Props extends PropsWithChildren {
-  label: string;
   checked: boolean;
   onChange: () => void;
 }
@@ -16,8 +15,9 @@ export default function Toggle({ children, checked, onChange }: Props) {
           checked={checked}
           onChange={onChange}
           className={`${
-            checked ? "bg-blue-600" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+            checked ? "bg-orange-600" : "bg-gray-200"
+          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors 
+          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
           <span
             className={`${

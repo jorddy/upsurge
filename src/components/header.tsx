@@ -4,11 +4,11 @@ import Loader from "./loader";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
+  HiCog,
   HiLightningBolt,
   HiLogout,
   HiMenu,
   HiOutlineLightningBolt,
-  HiUser,
   HiX
 } from "react-icons/hi";
 
@@ -79,11 +79,11 @@ export default function Header({ app }: Props) {
           </li>
           <li>
             <Link
-              href='/profile'
+              href='/settings'
               className='flex items-center gap-2 p-4 hover:bg-zinc-700'
             >
-              <HiUser className='w-6 h-6' />
-              <p>Profile</p>
+              <HiCog className='w-6 h-6' />
+              <p>Settings</p>
             </Link>
           </li>
           <li>
