@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import type { AppRouter } from "@/server/router";
+import { AppRouter } from "@/server/router";
 import { SessionProvider } from "next-auth/react";
 import { QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";

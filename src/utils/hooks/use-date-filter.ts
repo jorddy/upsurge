@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { InferQueryOutput } from "@/utils/trpc";
+import { InferQueryOutput } from "@/utils/trpc";
 
 export const useDateFilter = (
   date: Date,

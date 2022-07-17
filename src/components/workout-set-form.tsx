@@ -1,11 +1,11 @@
 import {
-  type Control,
+  Control,
   useFieldArray,
-  type UseFieldArrayRemove,
-  type UseFormRegister
+  UseFieldArrayRemove,
+  UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { type WorkoutValidator } from "@/utils/validators";
+import { WorkoutValidator } from "@/utils/validators";
 
 interface SetProps {
   cardio?: boolean;

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useTotalSets } from "@/utils/use-total-sets";
-import { type InferQueryOutput, trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/profile-store";
+import { useTotalSets } from "@/utils/hooks/use-total-sets";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 interface Props {

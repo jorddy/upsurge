@@ -7,10 +7,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearch } from "@/utils/use-search";
+import { useSearch } from "@/utils/hooks/use-search";
 import { HiX } from "react-icons/hi";
-import { type EntryValidator, entryValidator } from "@/utils/validators";
-import { type InferQueryOutput, trpc } from "@/utils/trpc";
+import { EntryValidator, entryValidator } from "@/utils/validators";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function EntryForm() {
   const { push } = useRouter();
@@ -29,9 +29,12 @@ export default function EntryForm() {
     exercises
   ) as InferQueryOutput<"exercise.get-all">;
 
-  const { mutate, isLoading } = trpc.useMutation(["entry.create"], {
-    onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
-  });
+  const { mutate: createEntry, isLoading } = trpc.useMutation(
+    ["entry.create"],
+    {
+      onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
+    }
+  );
 
   const {
     register,
@@ -63,10 +66,8 @@ export default function EntryForm() {
   };
 
   const onSubmit = async (data: EntryValidator) => {
-    let toastId: string;
-    toastId = toast.loading("Creating entry...");
-
-    mutate(data, {
+    const toastId = toast.loading("Creating entry...");
+    createEntry(data, {
       onError: error => {
         toast.error(`Something went wrong: ${error}`, { id: toastId });
       },

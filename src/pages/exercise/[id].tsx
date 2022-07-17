@@ -7,9 +7,9 @@ import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
-import { useDateFilter } from "@/utils/use-date-filter";
+import { useDateFilter } from "@/utils/hooks/use-date-filter";
 import { trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/profile-store";
+import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 import toast from "react-hot-toast";
 
@@ -31,7 +31,7 @@ const Exercise = ({ exerciseId }: Props) => {
     }
   );
 
-  const { mutate, isLoading: isDeleting } = trpc.useMutation(
+  const { mutate: deleteExercise, isLoading: isDeleting } = trpc.useMutation(
     ["exercise.delete"],
     {
       onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
@@ -43,10 +43,8 @@ const Exercise = ({ exerciseId }: Props) => {
 
   const handleDelete = () => {
     if (exercise) {
-      let toastId: string;
-      toastId = toast.loading("Deleting exercise...");
-
-      mutate(
+      const toastId = toast.loading("Deleting exercise...");
+      deleteExercise(
         { id: exercise.id },
         {
           onError: error => {

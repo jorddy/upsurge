@@ -1,10 +1,10 @@
-import type {
+import {
   FieldArrayWithId,
   UseFieldArrayRemove,
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { type EntryValidator } from "@/utils/validators";
+import { EntryValidator } from "@/utils/validators";
 
 interface Props {
   cardio?: boolean;

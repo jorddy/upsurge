@@ -76,9 +76,33 @@ export const workoutValidator = z.object({
 export type WorkoutValidator = z.infer<typeof workoutValidator>;
 
 export const profileValidator = z.object({
-  name: z.string().optional(),
-  email: z.string().email().optional(),
-  image: z.string().optional()
+  name: z
+    .string()
+    .optional()
+    .transform(data => {
+      if (data?.length === 0) {
+        return undefined;
+      }
+      return data;
+    }),
+  email: z
+    .string()
+    .optional()
+    .transform(data => {
+      if (data?.length === 0) {
+        return undefined;
+      }
+      return data;
+    }),
+  image: z
+    .string()
+    .optional()
+    .transform(data => {
+      if (data?.length === 0) {
+        return undefined;
+      }
+      return data;
+    })
 });
 
 export type ProfileValidator = z.infer<typeof profileValidator>;

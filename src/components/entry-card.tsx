@@ -1,8 +1,8 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
-import { type InferQueryOutput, trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/profile-store";
+import { InferQueryOutput, trpc } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 interface Props {
@@ -14,27 +14,28 @@ export default function EntryCard({ entry, page }: Props) {
   const ctx = trpc.useContext();
   const { weightUnit } = useProfileStore();
 
-  const { mutate, isLoading } = trpc.useMutation(["entry.delete"], {
-    onSuccess: () => {
-      if (page === "exercise") {
-        ctx.invalidateQueries(["exercise.get-by-id"]);
-      }
+  const { mutate: deleteEntry, isLoading } = trpc.useMutation(
+    ["entry.delete"],
+    {
+      onSuccess: () => {
+        if (page === "exercise") {
+          ctx.invalidateQueries(["exercise.get-by-id"]);
+        }
 
-      if (page === "workout") {
-        ctx.invalidateQueries(["workout.get-by-id"]);
+        if (page === "workout") {
+          ctx.invalidateQueries(["workout.get-by-id"]);
+        }
       }
     }
-  });
+  );
 
   if (!entry) {
     return null;
   }
 
   const handleDelete = () => {
-    let toastId: string;
-    toastId = toast.loading("Deleting entry...");
-
-    mutate(
+    const toastId = toast.loading("Deleting entry...");
+    deleteEntry(
       { id: entry.id },
       {
         onError: error => {

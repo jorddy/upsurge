@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/utils/trpc";
-import { exerciseValidator, type ExerciseValidator } from "@/utils/validators";
+import { exerciseValidator, ExerciseValidator } from "@/utils/validators";
 
 export { authorize as getServerSideProps };
 
@@ -15,9 +15,12 @@ export default function CreateExercisePage() {
   const ctx = trpc.useContext();
 
   const [option, setOption] = useState<"weight" | "cardio" | null>(null);
-  const { mutate, isLoading } = trpc.useMutation(["exercise.create"], {
-    onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
-  });
+  const { mutate: createExercise, isLoading } = trpc.useMutation(
+    ["exercise.create"],
+    {
+      onSuccess: () => ctx.invalidateQueries(["exercise.get-all"])
+    }
+  );
 
   const {
     register,
@@ -28,10 +31,8 @@ export default function CreateExercisePage() {
   });
 
   const onSubmit = (data: ExerciseValidator) => {
-    let toastId: string;
-    toastId = toast.loading("Creating exercise...");
-
-    mutate(data, {
+    const toastId = toast.loading("Creating exercise...");
+    createExercise(data, {
       onError: error => {
         toast.error(`Something went wrong: ${error}`, { id: toastId });
       },

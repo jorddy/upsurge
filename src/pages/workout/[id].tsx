@@ -6,11 +6,11 @@ import EntryCard from "@/components/entry-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDateFilter } from "@/utils/use-date-filter";
+import { useDateFilter } from "@/utils/hooks/use-date-filter";
 import { HiX } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/profile-store";
+import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 export { authorize as getServerSideProps };
@@ -38,7 +38,7 @@ const Workout = ({ workoutId }: Props) => {
     }
   );
 
-  const { mutate, isLoading: isDeleting } = trpc.useMutation(
+  const { mutate: deleteWorkout, isLoading: isDeleting } = trpc.useMutation(
     ["workout.delete"],
     {
       onSuccess: () => {
@@ -53,10 +53,8 @@ const Workout = ({ workoutId }: Props) => {
 
   const handleDelete = () => {
     if (workout) {
-      let toastId: string;
-      toastId = toast.loading("Deleting workout...");
-
-      mutate(
+      const toastId = toast.loading("Deleting workout...");
+      deleteWorkout(
         { id: workout.id },
         {
           onError: error => {

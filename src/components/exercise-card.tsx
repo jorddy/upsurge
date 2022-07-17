@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { InferQueryOutput } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/profile-store";
+import { InferQueryOutput } from "@/utils/trpc";
+import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 interface Props {
