@@ -26,14 +26,13 @@ export default function OptionsMenu() {
           <p>Settings</p>
         </Link>
       </li>
-      <li>
-        <button
-          onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-          className='flex items-center gap-2 p-4 hover:bg-zinc-700'
-        >
-          <HiLogout className='w-6 h-6' />
-          <p>Sign Out</p>
-        </button>
+      <li
+        role='button'
+        onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+        className='flex items-center gap-2 p-4 cursor-pointer hover:bg-zinc-700'
+      >
+        <HiLogout className='w-6 h-6' />
+        <p>Sign Out</p>
       </li>
     </ul>
   );
