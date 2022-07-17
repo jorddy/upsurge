@@ -4,7 +4,6 @@ import { authorize } from "@/utils/authorize";
 export { authorize as getServerSideProps };
 
 const EditExerciseForm = () => {
-  const;
   return null;
 };
 
