@@ -74,3 +74,11 @@ export const workoutValidator = z.object({
 });
 
 export type WorkoutValidator = z.infer<typeof workoutValidator>;
+
+export const profileValidator = z.object({
+  name: z.string().optional(),
+  email: z.string().email().optional(),
+  image: z.string().optional()
+});
+
+export type ProfileValidator = z.infer<typeof profileValidator>;

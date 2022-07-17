@@ -95,12 +95,12 @@ export default function EntryCard({ entry, page }: Props) {
               <>
                 {weightUnit === "kg" && `${set.weight} kg - ${set.reps} reps`}
                 {weightUnit === "lbs" &&
-                  `${convertKgToLbs(set.weight)} kg - ${set.reps} reps`}
+                  `${convertKgToLbs(set.weight)} lbs - ${set.reps} reps`}
               </>
             )}
 
             {set.distance &&
-              `${set.distance}m ${
+              `${set.distance} miles ${
                 set.elevation ? `- ${set.elevation} ft` : ""
               }`}
           </li>
