@@ -2,11 +2,19 @@ import { z } from "zod";
 
 export const updateWorkoutValidator = z.object({
   workoutId: z.string(),
-  name: z.string().optional(),
+  name: z
+    .string()
+    .transform(data => {
+      if (data.length === 0) {
+        return undefined;
+      }
+      return data;
+    })
+    .optional(),
   createdAt: z
     .string()
     .transform(data => {
-      if (data.length) {
+      if (data.length === 0) {
         return undefined;
       }
       return new Date(data);

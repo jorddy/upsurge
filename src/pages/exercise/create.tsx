@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import Header from "@/components/common/header";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/utils/trpc";
@@ -28,10 +28,38 @@ export default function CreateExercisePage() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    watch,
+    setValue
   } = useForm<ExerciseValidator>({
     resolver: zodResolver(exerciseValidator)
   });
+
+  // Variables for watching each option
+  const currentWeight = watch("currentWeight");
+  const targetWeight = watch("targetWeight");
+  const currentDistance = watch("currentDistance");
+  const targetDistance = watch("targetDistance");
+
+  // Deletes values from weight if distance is inputed
+  // PREVENTS BOTH VALUES FROM BEING PUT IN THE DATABASE
+  useEffect(() => {
+    console.log("reran weight");
+    if (currentWeight || targetWeight) {
+      setValue("currentDistance", undefined);
+      setValue("targetDistance", undefined);
+    }
+  }, [currentWeight, targetWeight, setValue]);
+
+  // Deletes values from weight if distance is inputed
+  // PREVENTS BOTH VALUES FROM BEING PUT IN THE DATABASE
+  useEffect(() => {
+    console.log("reran distance");
+    if (currentDistance || targetDistance) {
+      setValue("currentWeight", undefined);
+      setValue("targetWeight", undefined);
+    }
+  }, [currentDistance, targetDistance, setValue]);
 
   const onSubmit = (data: ExerciseValidator) => {
     const toastId = toast.loading("Creating exercise...");
