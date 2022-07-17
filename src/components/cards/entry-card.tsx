@@ -61,7 +61,7 @@ export default function EntryCard({ entry, page }: Props) {
         </p>
 
         <div className='flex flex-wrap gap-2'>
-          <Link className='button-edit' href={`/entry/${entry.id}`}>
+          <Link className='button-edit' href={`/entry/${entry.id}/edit`}>
             Edit
           </Link>
 
