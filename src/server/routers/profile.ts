@@ -1,5 +1,5 @@
 import { createProtectedRouter } from "../context";
-import { profileValidator } from "@/utils/validators";
+import { profileValidator } from "@/utils/validators/profile";
 
 export const profileRouter = createProtectedRouter().mutation("update", {
   input: profileValidator,

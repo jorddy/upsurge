@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useSearch } from "@/utils/hooks/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { workoutValidator, WorkoutValidator } from "@/utils/validators";
+import { workoutValidator, WorkoutValidator } from "@/utils/validators/workout";
 
 export default function WorkoutForm() {
   const { push } = useRouter();

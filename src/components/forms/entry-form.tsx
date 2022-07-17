@@ -9,7 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearch } from "@/utils/hooks/use-search";
 import { HiX } from "react-icons/hi";
-import { EntryValidator, entryValidator } from "@/utils/validators";
+import { EntryValidator, entryValidator } from "@/utils/validators/entry";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function EntryForm() {

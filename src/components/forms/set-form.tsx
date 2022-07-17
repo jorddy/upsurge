@@ -4,7 +4,7 @@ import {
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { EntryValidator } from "@/utils/validators";
+import { EntryValidator } from "@/utils/validators/entry";
 
 interface Props {
   cardio?: boolean;

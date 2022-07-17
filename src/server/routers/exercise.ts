@@ -1,6 +1,6 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { exerciseValidator } from "@/utils/validators";
+import { exerciseValidator } from "@/utils/validators/exercise";
 
 export const exerciseRouter = createProtectedRouter()
   .query("get-all", {

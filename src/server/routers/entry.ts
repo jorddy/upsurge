@@ -1,6 +1,6 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { entryValidator } from "@/utils/validators";
+import { entryValidator } from "@/utils/validators/entry";
 
 export const entryRouter = createProtectedRouter()
   .query("get-by-id", {

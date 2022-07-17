@@ -4,7 +4,7 @@ import { authorize } from "@/utils/authorize";
 import { useProfileStore } from "@/utils/stores";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { profileValidator, ProfileValidator } from "@/utils/validators";
+import { profileValidator, ProfileValidator } from "@/utils/validators/profile";
 import { trpc } from "@/utils/trpc";
 import toast from "react-hot-toast";
 

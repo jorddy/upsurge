@@ -5,7 +5,7 @@ import {
   UseFormRegister
 } from "react-hook-form";
 import { HiX } from "react-icons/hi";
-import { WorkoutValidator } from "@/utils/validators";
+import { WorkoutValidator } from "@/utils/validators/workout";
 
 interface SetProps {
   cardio?: boolean;
