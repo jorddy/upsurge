@@ -1,6 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
 import { entryValidator } from "@/utils/validators/entry";
+import { updateEntryValidator } from "@/utils/validators/update-entry";
 
 export const entryRouter = createProtectedRouter()
   .query("get-by-id", {
@@ -43,5 +44,17 @@ export const entryRouter = createProtectedRouter()
     resolve: ({ input, ctx }) =>
       ctx.prisma.entry.delete({
         where: { id: input.id }
+      })
+  })
+  .mutation("update", {
+    input: updateEntryValidator,
+    resolve: ({ input, ctx }) =>
+      ctx.prisma.entry.update({
+        where: { id: input.entryId },
+        data: {
+          createdAt: input.createdAt,
+          notes: input.notes,
+          sets: { updateMany: input.sets }
+        }
       })
   });

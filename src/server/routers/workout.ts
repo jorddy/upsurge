@@ -98,10 +98,10 @@ export const workoutRouter = createProtectedRouter()
     input: updateWorkoutValidator,
     resolve: ({ input, ctx }) =>
       ctx.prisma.workout.update({
+        where: { id: input.workoutId },
         data: {
           name: input.name,
           createdAt: input.createdAt
-        },
-        where: { id: input.workoutId }
+        }
       })
   });

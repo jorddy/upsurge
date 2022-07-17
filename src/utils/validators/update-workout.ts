@@ -11,6 +11,7 @@ export const updateWorkoutValidator = z.object({
       }
       return new Date(data);
     })
+    .or(z.date())
     .optional()
 });
 

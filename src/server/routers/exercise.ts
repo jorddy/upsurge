@@ -53,13 +53,13 @@ export const exerciseRouter = createProtectedRouter()
     input: updateExerciseValidator,
     resolve: ({ input, ctx }) =>
       ctx.prisma.exercise.update({
+        where: { id: input.exerciseId },
         data: {
           name: input.name,
           currentWeight: input.currentWeight,
           targetWeight: input.targetWeight,
           currentDistance: input.currentDistance,
           targetDistance: input.targetDistance
-        },
-        where: { id: input.exerciseId }
+        }
       })
   });
