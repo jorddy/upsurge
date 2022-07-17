@@ -25,8 +25,12 @@
     hover:bg-red-700 disabled:opacity-60;
   }
 
+  .button-edit {
+    @apply bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600;
+  }
+
   .button-create {
-    @apply flex items-center gap-2 px-3 py-2 w-fit bg-orange-600 rounded-sm transition 
+    @apply flex items-center gap-2 px-3 py-2 w-fit bg-orange-600 font-semibold rounded-md transition 
     hover:bg-orange-700;
   }
 
