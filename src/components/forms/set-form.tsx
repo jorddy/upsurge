@@ -6,22 +6,27 @@ import {
 import { HiX } from "react-icons/hi";
 import { EntryValidator } from "@/utils/validators";
 
-export default function SetForm({
-  cardio,
-  set,
-  index,
-  remove,
-  register
-}: {
+interface Props {
   cardio?: boolean;
   workoutSet?: boolean;
   set: FieldArrayWithId<EntryValidator, "sets", "id">;
   index: number;
   remove: UseFieldArrayRemove;
   register: UseFormRegister<EntryValidator>;
-}) {
+}
+
+export default function SetForm({
+  cardio,
+  set,
+  index,
+  remove,
+  register
+}: Props) {
   return (
-    <div key={set.id} className='py-4 px-6 bg-zinc-900 rounded-md'>
+    <div
+      key={set.id}
+      className='py-4 px-6 bg-zinc-900 rounded-md border border-zinc-500'
+    >
       <div className='flex flex-wrap gap-6 items-center'>
         <div className='self-start flex gap-2 sm:flex-col'>
           <p>Set</p>

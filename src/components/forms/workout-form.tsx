@@ -1,13 +1,13 @@
 import toast from "react-hot-toast";
-import SearchBar from "./search-bar";
-import ExerciseCard from "./exercise-card";
+import SearchBar from "../fields/search-bar";
+import ExerciseCard from "../cards/exercise-card";
 import WorkoutSetForm from "./workout-set-form";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useSearch } from "@/hooks/use-search";
+import { useSearch } from "@/utils/hooks/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 import { workoutValidator, WorkoutValidator } from "@/utils/validators";
 
@@ -16,12 +16,16 @@ export default function WorkoutForm() {
   const ctx = trpc.useContext();
 
   const { data } = trpc.useQuery(["exercise.get-all"]);
-  const { mutate, isLoading } = trpc.useMutation(["workout.create"], {
-    onSuccess: () => {
-      ctx.invalidateQueries(["workout.get-all"]);
-      ctx.invalidateQueries(["workout.get-latest"]);
+
+  const { mutate: createWorkout, isLoading } = trpc.useMutation(
+    ["workout.create"],
+    {
+      onSuccess: () => {
+        ctx.invalidateQueries(["workout.get-all"]);
+        ctx.invalidateQueries(["workout.get-latest"]);
+      }
     }
-  });
+  );
 
   const [query, setQuery] = useState("");
   const filteredData = useSearch(query, data);
@@ -54,10 +58,8 @@ export default function WorkoutForm() {
   };
 
   const onSubmit = (data: WorkoutValidator) => {
-    let toastId: string;
-    toastId = toast.loading("Creating workout...");
-
-    mutate(data, {
+    const toastId = toast.loading("Creating workout...");
+    createWorkout(data, {
       onError: error => {
         toast.error(`Something went wrong: ${error}`, { id: toastId });
       },
@@ -105,7 +107,7 @@ export default function WorkoutForm() {
         <h2 className='text-md font-semibold'>Add exercises</h2>
 
         {fields.length === 0 && (
-          <p className='p-4 bg-zinc-900 rounded-md'>
+          <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
             No exercises currently selected.
           </p>
         )}

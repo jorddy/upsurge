@@ -1,13 +1,15 @@
 import superjson from "superjson";
 import { createRouter } from "./context";
-import { workoutRouter } from "./routers/workout-router";
-import { exerciseRouter } from "./routers/exercise-router";
-import { entryRouter } from "./routers/entry-router";
+import { workoutRouter } from "./routers/workout";
+import { exerciseRouter } from "./routers/exercise";
+import { entryRouter } from "./routers/entry";
+import { profileRouter } from "./routers/profile";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("workout.", workoutRouter)
   .merge("exercise.", exerciseRouter)
-  .merge("entry.", entryRouter);
+  .merge("entry.", entryRouter)
+  .merge("profile.", profileRouter);
 
 export type AppRouter = typeof appRouter;

@@ -16,7 +16,7 @@
 
 @layer components {
   .button {
-    @apply w-full px-6 py-4 rounded-md bg-orange-600 font-semibold transition 
+    @apply w-full px-4 py-3 rounded-md bg-orange-600 font-semibold transition 
     hover:scale-95 disabled:opacity-60 sm:w-fit;
   }
 
@@ -30,6 +30,10 @@
     hover:bg-orange-700;
   }
 
+  .link {
+    @apply inline-block font-semibold border-b-2 hover:opacity-60;
+  }
+
   .field {
     @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
   }
@@ -40,10 +44,6 @@
 
   .input-small {
     @apply bg-zinc-700 px-3 py-2 truncate w-full sm:max-w-[6rem];
-  }
-
-  .link {
-    @apply font-semibold hover:text-orange-500;
   }
 
   .scrollbar-hide {

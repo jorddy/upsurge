@@ -1,10 +1,10 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { AppRouter } from "@/server/router";
 import { SessionProvider } from "next-auth/react";
 import { QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { withTRPC } from "@trpc/next";
-import { AppRouter } from "@/server/router";
 import superjson from "superjson";
 import toast, { Toaster } from "react-hot-toast";
 import Head from "next/head";
