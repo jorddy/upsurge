@@ -1,12 +1,16 @@
 import type { PropsWithChildren } from "react";
 import { Switch } from "@headlessui/react";
 
-interface Props extends PropsWithChildren {
+interface Props {
   checked: boolean;
   onChange: () => void;
 }
 
-export default function Toggle({ children, checked, onChange }: Props) {
+export default function Toggle({
+  children,
+  checked,
+  onChange
+}: PropsWithChildren<Props>) {
   return (
     <Switch.Group>
       <div className='flex items-center'>

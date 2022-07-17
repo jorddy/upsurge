@@ -69,7 +69,7 @@ const Set = ({ cardio, entryIndex, setIndex, register, remove }: SetProps) => {
   );
 };
 
-interface WorkoutSetFormProps {
+interface Props {
   cardio?: boolean;
   index: number;
   control: Control<WorkoutValidator>;
@@ -81,7 +81,7 @@ export default function WorkoutSetForm({
   index,
   control,
   register
-}: WorkoutSetFormProps) {
+}: Props) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: `entries.${index}.sets`

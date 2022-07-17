@@ -1,16 +1,12 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
-import { trpc } from "@/utils/trpc";
-import type { Entry, Exercise, Set } from "@prisma/client";
+import { type InferQueryOutput, trpc } from "@/utils/trpc";
 import { useProfileStore } from "@/utils/profile-store";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 interface Props {
-  entry: Entry & {
-    sets: Set[];
-    exercise?: Exercise;
-  };
+  entry: InferQueryOutput<"entry.get-by-id">;
   page: "workout" | "exercise";
 }
 
@@ -29,6 +25,10 @@ export default function EntryCard({ entry, page }: Props) {
       }
     }
   });
+
+  if (!entry) {
+    return null;
+  }
 
   const handleDelete = () => {
     let toastId: string;
