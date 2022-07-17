@@ -19,7 +19,9 @@ const ProfileForm = () => {
     resolver: zodResolver(profileValidator)
   });
 
-  const { mutate: updateProfile } = trpc.useMutation(["profile.update"]);
+  const { mutate: updateProfile, isLoading } = trpc.useMutation([
+    "profile.update"
+  ]);
 
   const onSubmit = (data: ProfileValidator) => {
     const toastId = toast.loading("Updating profile...");
@@ -75,7 +77,7 @@ const ProfileForm = () => {
         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
       </div>
 
-      <button type='submit' className='button'>
+      <button type='submit' disabled={isLoading} className='button-create'>
         Update
       </button>
     </form>
