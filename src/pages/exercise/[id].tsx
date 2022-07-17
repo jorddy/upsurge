@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Loader from "@/components/loader";
-import Header from "@/components/header";
-import DateBar from "@/components/date-bar";
-import EntryCard from "@/components/entry-card";
+import Loader from "@/components/common/loader";
+import Header from "@/components/common/header";
+import DateBar from "@/components/fields/date-bar";
+import EntryCard from "@/components/cards/entry-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";

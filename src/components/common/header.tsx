@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Loader from "./loader";
 import UserImage from "./user-image";
-import OptionsMenu from "./options-menu";
+import OptionsMenu from "../menus/options-menu";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { HiMenu, HiOutlineLightningBolt, HiX } from "react-icons/hi";
-import MobileMenu from "./mobile-menu";
+import MobileMenu from "../menus/mobile-menu";
 
 interface Props {
   app?: boolean;

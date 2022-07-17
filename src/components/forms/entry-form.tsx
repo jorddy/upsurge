@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import Link from "next/link";
-import SearchBar from "./search-bar";
-import ExerciseCard from "./exercise-card";
+import SearchBar from "../fields/search-bar";
+import ExerciseCard from "../cards/exercise-card";
 import SetForm from "./set-form";
 import { useRouter } from "next/router";
 import { useState } from "react";

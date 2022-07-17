@@ -1,5 +1,5 @@
-import Header from "@/components/header";
-import Toggle from "@/components/toggle";
+import Header from "@/components/common/header";
+import Toggle from "@/components/fields/toggle";
 import { authorize } from "@/utils/authorize";
 import { useProfileStore } from "@/utils/stores";
 import { useForm } from "react-hook-form";

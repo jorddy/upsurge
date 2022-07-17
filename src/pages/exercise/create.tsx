@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import Header from "@/components/header";
+import Header from "@/components/common/header";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";

@@ -1,16 +1,16 @@
 import Link from "next/link";
-import Loader from "./loader";
-import WorkoutCard from "./workout-card";
-import ExerciseCard from "./exercise-card";
+import Loader from "../common/loader";
+import WorkoutCard from "../cards/workout-card";
+import ExerciseCard from "../cards/exercise-card";
 import TabComponent from "./tab";
-import SearchBar from "./search-bar";
+import SearchBar from "../fields/search-bar";
 import HistoryTab from "./history-tab";
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useSearch } from "@/utils/hooks/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
-export default function Tabs() {
+export default function DashboardTabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
 

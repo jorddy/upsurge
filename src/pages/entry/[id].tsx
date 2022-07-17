@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/common/header";
 import { authorize } from "@/utils/authorize";
 
 export { authorize as getServerSideProps };

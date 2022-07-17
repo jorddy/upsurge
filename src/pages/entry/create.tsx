@@ -1,6 +1,6 @@
-import Header from "@/components/header";
-import EntryForm from "@/components/entry-form";
-import WorkoutForm from "@/components/workout-form";
+import Header from "@/components/common/header";
+import EntryForm from "@/components/forms/entry-form";
+import WorkoutForm from "@/components/forms/workout-form";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";

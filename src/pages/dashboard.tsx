@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Header from "@/components/header";
-import Loader from "@/components/loader";
-import Tabs from "@/components/tabs";
-import WorkoutCard from "@/components/workout-card";
+import Header from "@/components/common/header";
+import Loader from "@/components/common/loader";
+import DashboardTabs from "@/components/tabs/dashboard-tabs";
+import WorkoutCard from "@/components/cards/workout-card";
 import { authorize } from "@/utils/authorize";
 import { useSession } from "next-auth/react";
 import { trpc } from "@/utils/trpc";
@@ -49,7 +49,7 @@ export default function Dashboard() {
 
         <h2 className='text-lg font-bold sm:text-xl'>Explore</h2>
 
-        <Tabs />
+        <DashboardTabs />
       </main>
     </>
   );

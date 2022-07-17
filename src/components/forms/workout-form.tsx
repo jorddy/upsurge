@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
-import SearchBar from "./search-bar";
-import ExerciseCard from "./exercise-card";
+import SearchBar from "../fields/search-bar";
+import ExerciseCard from "../cards/exercise-card";
 import WorkoutSetForm from "./workout-set-form";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
