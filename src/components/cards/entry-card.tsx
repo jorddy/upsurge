@@ -6,7 +6,9 @@ import { useProfileStore } from "@/utils/stores";
 import { convertKgToLbs } from "@/utils/kg-to-lbs";
 
 interface Props {
-  entry: InferQueryOutput<"entry.get-by-id">;
+  entry:
+    | InferQueryOutput<"entry.get-by-id">
+    | InferQueryOutput<"entry.get-by-id-with-exercise">;
   page: "workout" | "exercise";
 }
 
@@ -77,9 +79,14 @@ export default function EntryCard({ entry, page }: Props) {
         </div>
       </div>
 
-      {entry?.exercise && (
+      {(entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
+        ?.exercise && (
         <p className='truncate'>
-          <strong>Exercise:</strong> {entry.exercise.name}
+          <strong>Exercise:</strong>{" "}
+          {
+            (entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
+              ?.exercise.name
+          }
         </p>
       )}
 
