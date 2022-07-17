@@ -83,10 +83,7 @@ const Workout = ({ workoutId }: Props) => {
           </div>
 
           <div className='flex flex-wrap gap-2'>
-            <Link
-              className='bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600'
-              href={`/workout/${workout?.id}/edit`}
-            >
+            <Link className='button-edit' href={`/workout/${workout?.id}/edit`}>
               Edit
             </Link>
 

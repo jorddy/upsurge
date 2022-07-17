@@ -53,7 +53,7 @@ export default function EntryCard({ entry, page }: Props) {
   return (
     <article
       key={entry.id}
-      className='p-4 space-y-2 rounded-md bg-zinc-900 border border-zinc-500'
+      className='px-5 py-4 space-y-2 rounded-md bg-zinc-900 border border-zinc-500'
     >
       <div className='flex flex-wrap gap-2 items-center justify-between'>
         <p className='text-xl font-semibold'>
@@ -61,10 +61,7 @@ export default function EntryCard({ entry, page }: Props) {
         </p>
 
         <div className='flex flex-wrap gap-2'>
-          <Link
-            className='bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600'
-            href={`/entry/${entry.id}`}
-          >
+          <Link className='button-edit' href={`/entry/${entry.id}`}>
             Edit
           </Link>
 
