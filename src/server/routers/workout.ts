@@ -1,6 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
 import { workoutValidator } from "@/utils/validators/workout";
+import { updateWorkoutValidator } from "@/utils/validators/update-workout";
 
 export const workoutRouter = createProtectedRouter()
   .query("get-all", {
@@ -48,6 +49,16 @@ export const workoutRouter = createProtectedRouter()
         }
       })
   })
+  .query("sum", {
+    input: z.object({
+      id: z.string()
+    }),
+    resolve: ({ input, ctx }) =>
+      ctx.prisma.set.aggregate({
+        _sum: { weight: true, distance: true },
+        where: { entry: { workoutId: input.id } }
+      })
+  })
   .mutation("create", {
     input: workoutValidator,
     resolve: ({ input, ctx }) =>
@@ -83,13 +94,14 @@ export const workoutRouter = createProtectedRouter()
         where: { id: input.id }
       })
   })
-  .query("sum", {
-    input: z.object({
-      id: z.string()
-    }),
+  .mutation("update", {
+    input: updateWorkoutValidator,
     resolve: ({ input, ctx }) =>
-      ctx.prisma.set.aggregate({
-        _sum: { weight: true, distance: true },
-        where: { entry: { workoutId: input.id } }
+      ctx.prisma.workout.update({
+        data: {
+          name: input.name,
+          createdAt: input.createdAt
+        },
+        where: { id: input.workoutId }
       })
   });

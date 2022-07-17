@@ -5,7 +5,7 @@ export const updateExerciseValidator = z.object({
   name: z
     .string()
     .transform(data => {
-      if (data?.length === 0) {
+      if (data.length === 0) {
         return undefined;
       }
       return data;
@@ -14,7 +14,7 @@ export const updateExerciseValidator = z.object({
   currentWeight: z
     .string()
     .transform(data => {
-      if (data?.length === 0) {
+      if (data.length === 0) {
         return undefined;
       }
       return Number(data);
@@ -24,7 +24,7 @@ export const updateExerciseValidator = z.object({
   targetWeight: z
     .string()
     .transform(data => {
-      if (data?.length === 0) {
+      if (data.length === 0) {
         return undefined;
       }
       return Number(data);
@@ -34,7 +34,7 @@ export const updateExerciseValidator = z.object({
   currentDistance: z
     .string()
     .transform(data => {
-      if (data?.length === 0) {
+      if (data.length === 0) {
         return undefined;
       }
       return Number(data);
@@ -44,7 +44,7 @@ export const updateExerciseValidator = z.object({
   targetDistance: z
     .string()
     .transform(data => {
-      if (data?.length === 0) {
+      if (data.length === 0) {
         return undefined;
       }
       return Number(data);
