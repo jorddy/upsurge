@@ -3,8 +3,8 @@ import Loader from "./loader";
 import UserImage from "./user-image";
 import OptionsMenu from "../menus/options-menu";
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { HiMenu, HiOutlineLightningBolt, HiX } from "react-icons/hi";
+import { useSession } from "next-auth/react";
+import { HiOutlineLightningBolt } from "react-icons/hi";
 import MobileMenu from "../menus/mobile-menu";
 
 interface Props {
@@ -44,42 +44,22 @@ export default function Header({ app }: Props) {
         )}
       </nav>
 
+      {status === "loading" && <Loader inline />}
+
       <UserImage
         isOptionsOpen={isOptionsOpen}
         setIsOptionsOpen={setIsOptionsOpen}
+        setIsMenuOpen={setIsMenuOpen}
       />
 
       {isOptionsOpen && <OptionsMenu />}
 
-      {status === "loading" && <Loader inline />}
-
-      {status === "unauthenticated" && (
-        <>
-          <button
-            className='button hidden md:inline'
-            onClick={() =>
-              signIn("", { redirect: true, callbackUrl: "/dashboard" })
-            }
-          >
-            Get Started Now
-          </button>
-
-          <button
-            className='md:hidden'
-            onClick={() => setIsMenuOpen(true)}
-            aria-label='Open navigation menu'
-          >
-            <HiMenu className='w-8 h-8 cursor-pointer hover:opacity-80' />
-          </button>
-
-          {isMenuOpen && (
-            <MobileMenu
-              app={app}
-              isMenuOpen={isMenuOpen}
-              setIsMenuOpen={setIsMenuOpen}
-            />
-          )}
-        </>
+      {isMenuOpen && (
+        <MobileMenu
+          app={app}
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+        />
       )}
     </header>
   );
