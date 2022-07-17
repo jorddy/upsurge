@@ -16,12 +16,11 @@ export default function Home() {
       <main className='text-center container mx-auto p-4 sm:text-left'>
         <section className='py-8 space-y-6 max-w-3xl mx-auto sm:text-center sm:py-16'>
           <h1 className='text-3xl font-bold md:text-6xl'>
-            The simpler way to log your gym workouts.
+            The simpler way to log your workouts.
           </h1>
           <p className='text-xl text-gray-300'>
-            No ads, automation, and the ability to share with friends. Upsurge
-            is the app that gets out of your way and lets you focus on what
-            really matters.
+            No ads and the ability to share with friends. Upsurge is the app
+            that gets out of your way and lets you focus on what really matters.
           </p>
           <button
             className='button mx-auto'
@@ -29,7 +28,7 @@ export default function Home() {
               signIn("", { redirect: true, callbackUrl: "/dashboard" })
             }
           >
-            Get Started Now
+            Get Started
           </button>
         </section>
 
@@ -47,7 +46,7 @@ export default function Home() {
               <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiPencilAlt className='w-8 h-8' />
               </div>
-              <h3 className='font-bold'>Powerful Logging Capablities</h3>
+              <h3 className='font-bold'>Flexible Ways To Log</h3>
               <p className='text-gray-300'>
                 Structure your workouts however you wish, are you aiming to
                 progress, or just wanting a way to consistently stick to your
@@ -59,7 +58,7 @@ export default function Home() {
               <div className='p-3 max-w-fit mx-auto bg-zinc-900 border border-zinc-500 rounded-md'>
                 <HiBookOpen className='w-8 h-8' />
               </div>
-              <h3 className='font-bold'>Your Personal Diary</h3>
+              <h3 className='font-bold'>Your Workout Diary</h3>
               <p className='text-gray-300'>
                 Improve your workouts through custom notes, figured out where
                 you went wrong or things you can do better - you can record them

@@ -40,17 +40,19 @@ const ProfileForm = () => {
       className='p-6 space-y-6 bg-zinc-900 border border-zinc-500'
     >
       <div className='field'>
-        <label htmlFor='name'>Change Name:</label>
+        <label htmlFor='name'>Change name:</label>
         <input
           {...register("name")}
           type='text'
           id='name'
           className='input bg-zinc-700'
         />
+
+        {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
       </div>
 
       <div className='field'>
-        <label htmlFor='email'>Change Email:</label>
+        <label htmlFor='email'>Change email:</label>
         <input
           {...register("email")}
           type='email'
@@ -62,13 +64,15 @@ const ProfileForm = () => {
       </div>
 
       <div className='field'>
-        <label htmlFor='image'>Change Image:</label>
+        <label htmlFor='image'>Change image:</label>
         <input
           {...register("image")}
           type='text'
           id='image'
           className='input bg-zinc-700'
         />
+
+        {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
       </div>
 
       <button type='submit' className='button'>
@@ -98,19 +102,19 @@ export default function ProfilePage() {
 
       <main className='container mx-auto p-4 space-y-8'>
         <section>
-          <h1 className='pb-4 text-2xl font-bold'>App Settings</h1>
+          <h1 className='pb-4 text-2xl font-bold'>App settings</h1>
           <div className='p-6 bg-zinc-900 border border-zinc-500'>
             <Toggle
               checked={weightUnit === "lbs"}
               onChange={handleWeightChange}
             >
-              Switch Weight Unit To Pounds (lbs)
+              Switch weight unit to pounds (lbs)
             </Toggle>
           </div>
         </section>
 
         <section>
-          <h2 className='pb-4 text-2xl font-bold'>Update Profile</h2>
+          <h2 className='pb-4 text-2xl font-bold'>Update profile</h2>
           <ProfileForm />
         </section>
       </main>
