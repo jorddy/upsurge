@@ -15,35 +15,41 @@ const MyApp = ({
 }: AppProps) => {
   return (
     <SessionProvider session={session}>
+      <Head>
+        <title>Upsurge - The Simple Way To Log Workouts</title>
+        <meta
+          name='description'
+          content='Upsurge is the best way to log your gym workouts'
+        />
+      </Head>
       <div
         className='min-h-screen bg-zinc-800 text-white 
           [background-image:url("/Background.png")] bg-cover bg-fixed'
       >
-        <Head>
-          <title>Upsurge - The Simple Way To Log Workouts</title>
-          <meta
-            name='description'
-            content='Upsurge is the best way to log your gym workouts'
-          />
-        </Head>
         <Component {...pageProps} />
       </div>
-      <Toaster position='top-right' />
       <ReactQueryDevtools />
+      <Toaster position='top-right' />
     </SessionProvider>
   );
 };
 
+const baseUrl = () => {
+  if (typeof window !== "undefined") {
+    return "";
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+};
+
 export default withTRPC<AppRouter>({
   config() {
-    const url = process.env.NEXT_PUBLIC_URL
-      ? `https://${process.env.NEXT_PUBLIC_URL}/api/trpc`
-      : process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
-      : "http://localhost:3000/api/trpc";
-
     return {
-      url,
+      url: `${baseUrl()}/api/trpc`,
       transformer: superjson,
       queryClientConfig: {
         queryCache: new QueryCache({

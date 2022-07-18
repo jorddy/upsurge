@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Header from "@/components/common/header";
 import Loader from "@/components/common/loader";
-import DashboardTabs from "@/components/tabs/dashboard-tabs";
 import WorkoutCard from "@/components/cards/workout-card";
+import DashboardTabs from "@/components/tabs/dashboard-tabs";
 import { authorize } from "@/utils/authorize";
 import { useSession } from "next-auth/react";
 import { trpc } from "@/utils/trpc";
