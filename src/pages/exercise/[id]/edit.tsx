@@ -81,6 +81,24 @@ const EditEntryForm = ({ entryId }: Props) => {
           )}
         </div>
 
+        <div className='field'>
+          <label htmlFor='notes'>Update notes:</label>
+
+          <p className='text-sm text-gray-300'>
+            <strong>Current:</strong> {entry?.notes}
+          </p>
+
+          <textarea
+            {...register("notes")}
+            id='date-done'
+            className='input min-h-[2rem]'
+          />
+
+          {errors.notes && (
+            <p className='text-red-500'>{errors.notes.message}</p>
+          )}
+        </div>
+
         {/* <button type='submit' disabled={isUpdating} className='button-create'>
           Update
         </button> */}
