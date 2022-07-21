@@ -25,7 +25,7 @@ export default function Home() {
           <button
             className='button mx-auto'
             onClick={() =>
-              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
             }
           >
             Get Started
@@ -99,7 +99,7 @@ export default function Home() {
           <button
             className='button mt-6 block mx-auto'
             onClick={() =>
-              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
             }
           >
             Get Started Now

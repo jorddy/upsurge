@@ -65,7 +65,7 @@ const UserImage = ({
         <button
           className='button hidden md:inline'
           onClick={() =>
-            signIn("", { redirect: true, callbackUrl: "/dashboard" })
+            signIn("google", { redirect: true, callbackUrl: "/dashboard" })
           }
         >
           Get Started Now
@@ -159,7 +159,7 @@ const MobileMenu = ({ app, isMenuOpen, setIsMenuOpen }: MobileMenuProps) => {
         <li>
           <button
             onClick={() =>
-              signIn("", { redirect: true, callbackUrl: "/dashboard" })
+              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
             }
           >
             Sign In
