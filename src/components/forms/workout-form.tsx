@@ -142,7 +142,7 @@ export default function WorkoutForm() {
     {
       onSuccess: () => {
         ctx.invalidateQueries(["workout.get-all"]);
-        ctx.invalidateQueries(["workout.get-latest"]);
+        ctx.invalidateQueries(["workout.get-recent"]);
       }
     }
   );
