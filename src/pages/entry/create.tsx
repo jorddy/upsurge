@@ -1,4 +1,4 @@
-import Header from "@/components/ui/header";
+import AppLayout from "@/components/layouts/app-layout";
 import EntryForm from "@/components/forms/entry-form";
 import WorkoutForm from "@/components/forms/workout-form";
 import { authorize } from "@/utils/authorize";
@@ -19,51 +19,47 @@ export default function CreateEntryPage() {
   );
 
   return (
-    <>
-      <Header app />
+    <AppLayout>
+      <div className='space-y-2'>
+        <h1 className='text-xl font-semibold'>Log a new entry</h1>
+        <p>
+          Here you can log a collection of entries you have done through a
+          workout or a one-off exercise.
+        </p>
+      </div>
 
-      <main className='container mx-auto p-4 space-y-6'>
-        <div className='space-y-2'>
-          <h1 className='text-xl font-semibold'>Log a new entry</h1>
-          <p>
-            Here you can log a collection of entries you have done through a
-            workout or a one-off exercise.
-          </p>
+      <fieldset className='space-y-2'>
+        <legend className='font-semibold'>What would you like to log?</legend>
+
+        <div className='flex gap-4'>
+          <label htmlFor='workout'>
+            <input
+              className='mr-2'
+              type='radio'
+              id='workout'
+              value='workout'
+              checked={option === "workout"}
+              onChange={e => setOption(e.target.value as "workout")}
+            />
+            Workout
+          </label>
+
+          <label htmlFor='exercise'>
+            <input
+              className='mr-2'
+              type='radio'
+              id='exercise'
+              value='exercise'
+              checked={option === "exercise"}
+              onChange={e => setOption(e.target.value as "exercise")}
+            />
+            Exercise
+          </label>
         </div>
+      </fieldset>
 
-        <fieldset className='space-y-2'>
-          <legend className='font-semibold'>What would you like to log?</legend>
-
-          <div className='flex gap-4'>
-            <label htmlFor='workout'>
-              <input
-                className='mr-2'
-                type='radio'
-                id='workout'
-                value='workout'
-                checked={option === "workout"}
-                onChange={e => setOption(e.target.value as "workout")}
-              />
-              Workout
-            </label>
-
-            <label htmlFor='exercise'>
-              <input
-                className='mr-2'
-                type='radio'
-                id='exercise'
-                value='exercise'
-                checked={option === "exercise"}
-                onChange={e => setOption(e.target.value as "exercise")}
-              />
-              Exercise
-            </label>
-          </div>
-        </fieldset>
-
-        {option === "workout" && <WorkoutForm />}
-        {option === "exercise" && <EntryForm />}
-      </main>
-    </>
+      {option === "workout" && <WorkoutForm />}
+      {option === "exercise" && <EntryForm />}
+    </AppLayout>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Loader from "@/components/ui/loader";
-import Header from "@/components/ui/header";
+import AppLayout from "@/components/layouts/app-layout";
 import DateBar from "@/components/ui/date-bar";
 import EntryCard from "@/components/cards/entry-card";
 import EmptyCard from "@/components/cards/empty-card";
@@ -73,66 +73,62 @@ const Workout = ({ workoutId }: Props) => {
 
   return (
     <>
-      <Header app />
+      <section className='flex flex-wrap items-center justify-between gap-2'>
+        <div className='space-y-1'>
+          <h1 className='text-lg font-bold sm:text-2xl'>{workout?.name}</h1>
+          <p>Last Updated: {workout?.updatedAt.toLocaleDateString()}</p>
+        </div>
 
-      <main className='container mx-auto p-4 space-y-6'>
-        <section className='flex flex-wrap items-center justify-between gap-2'>
-          <div className='space-y-1'>
-            <h1 className='text-lg font-bold sm:text-2xl'>{workout?.name}</h1>
-            <p>Last Updated: {workout?.updatedAt.toLocaleDateString()}</p>
+        <div className='flex flex-wrap gap-2'>
+          <Link className='button-edit' href={`/workout/${workout?.id}/edit`}>
+            Edit
+          </Link>
+
+          <button
+            className='button-remove'
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            <HiX className='h-5 w-5' />
+            <p>Delete</p>
+          </button>
+        </div>
+      </section>
+
+      <section className='flex flex-col gap-4 sm:flex-row'>
+        {total?._sum.weight && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
+            <h2>Total Weight Lifted</h2>
+            <p className='text-xl font-bold'>
+              {weightUnit === "kg" && `${total._sum.weight} kg`}
+              {weightUnit === "lbs" &&
+                `${convertKilosToPounds(total._sum.weight)} lbs`}
+            </p>
           </div>
+        )}
 
-          <div className='flex flex-wrap gap-2'>
-            <Link className='button-edit' href={`/workout/${workout?.id}/edit`}>
-              Edit
-            </Link>
-
-            <button
-              className='button-remove'
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              <HiX className='h-5 w-5' />
-              <p>Delete</p>
-            </button>
+        {total?._sum.distance && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
+            <h2>Total Distance Travelled</h2>
+            <p className='text-xl font-bold'>{total._sum.distance} miles</p>
           </div>
-        </section>
+        )}
+      </section>
 
-        <section className='flex flex-col gap-4 sm:flex-row'>
-          {total?._sum.weight && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
-              <h2>Total Weight Lifted</h2>
-              <p className='text-xl font-bold'>
-                {weightUnit === "kg" && `${total._sum.weight} kg`}
-                {weightUnit === "lbs" &&
-                  `${convertKilosToPounds(total._sum.weight)} lbs`}
-              </p>
-            </div>
-          )}
+      <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
 
-          {total?._sum.distance && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
-              <h2>Total Distance Travelled</h2>
-              <p className='text-xl font-bold'>{total._sum.distance} miles</p>
-            </div>
-          )}
-        </section>
+      <DateBar date={date} setDate={setDate} />
 
-        <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
+      <section className='space-y-4'>
+        {filteredData && filteredData?.entries.length <= 0 && (
+          <EmptyCard>No entries found with this date</EmptyCard>
+        )}
 
-        <DateBar date={date} setDate={setDate} />
-
-        <section className='space-y-4'>
-          {filteredData && filteredData?.entries.length <= 0 && (
-            <EmptyCard>No entries found with this date</EmptyCard>
-          )}
-
-          {workout &&
-            filteredData?.map(entry => (
-              <EntryCard key={entry.id} entry={entry} page='workout' />
-            ))}
-        </section>
-      </main>
+        {workout &&
+          filteredData?.map(entry => (
+            <EntryCard key={entry.id} entry={entry} page='workout' />
+          ))}
+      </section>
     </>
   );
 };
@@ -144,5 +140,9 @@ export default function WorkoutPage() {
     return null;
   }
 
-  return <Workout workoutId={query.id} />;
+  return (
+    <AppLayout>
+      <Workout workoutId={query.id} />
+    </AppLayout>
+  );
 }

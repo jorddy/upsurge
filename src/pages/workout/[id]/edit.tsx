@@ -1,4 +1,4 @@
-import Header from "@/components/ui/header";
+import AppLayout from "@/components/layouts/app-layout";
 import Loader from "@/components/ui/loader";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
@@ -116,12 +116,8 @@ export default function EditWorkoutPage() {
   }
 
   return (
-    <>
-      <Header app />
-
-      <main className='container mx-auto p-4 space-y-6'>
-        <EditWorkoutForm workoutId={query.id} />
-      </main>
-    </>
+    <AppLayout>
+      <EditWorkoutForm workoutId={query.id} />
+    </AppLayout>
   );
 }

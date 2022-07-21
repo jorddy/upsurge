@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Header from "@/components/ui/header";
+import AppLayout from "@/components/layouts/app-layout";
 import Loader from "@/components/ui/loader";
 import WorkoutCard from "@/components/cards/workout-card";
 import SearchBar from "@/components/ui/search-bar";
@@ -133,39 +133,33 @@ export default function Dashboard() {
   if (isLoading || isLoadingWorkouts || isLoadingExercises) return <Loader />;
 
   return (
-    <>
-      <Header app />
+    <AppLayout>
+      <section className='flex flex-wrap justify-between items-center gap-4'>
+        <div className='space-y-1'>
+          <h1 className='text-lg font-bold sm:text-2xl'>
+            Welcome back, {session?.user.name}
+          </h1>
+          <p className='mb-4'>Your recent workout summary</p>
+        </div>
 
-      <main className='container mx-auto p-4 space-y-6'>
-        <section className='flex flex-wrap justify-between items-center gap-4'>
-          <div className='space-y-1'>
-            <h1 className='text-lg font-bold sm:text-2xl'>
-              Welcome back, {session?.user.name}
-            </h1>
-            <p className='mb-4'>Your recent workout summary</p>
-          </div>
+        <Link className='button-create' href='/entry/create'>
+          + Log entry
+        </Link>
+      </section>
 
-          <Link className='button-create' href='/entry/create'>
-            + Log entry
-          </Link>
-        </section>
+      <h2 className='text-lg font-bold sm:text-xl'>Recent</h2>
 
-        <h2 className='text-lg font-bold sm:text-xl'>Recent</h2>
+      <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
+        {data?.length === 0 && <EmptyCard>No recent workouts found</EmptyCard>}
 
-        <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
-          {data?.length === 0 && (
-            <EmptyCard>No recent workouts found</EmptyCard>
-          )}
+        {data?.map(workout => (
+          <WorkoutCard key={workout.id} workout={workout} />
+        ))}
+      </section>
 
-          {data?.map(workout => (
-            <WorkoutCard key={workout.id} workout={workout} />
-          ))}
-        </section>
+      <h2 className='text-lg font-bold sm:text-xl'>Explore</h2>
 
-        <h2 className='text-lg font-bold sm:text-xl'>Explore</h2>
-
-        <Tabs />
-      </main>
-    </>
+      <Tabs />
+    </AppLayout>
   );
 }

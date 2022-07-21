@@ -16,10 +16,10 @@ const MyApp = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Upsurge - The Simple Way To Log Workouts</title>
+        <title>Upsurge - The Simpler Way To Log Workouts</title>
         <meta
           name='description'
-          content='Upsurge is the best way to log your gym workouts'
+          content='Upsurge is the best way to log your gym workouts. Quick, easy and no ads'
         />
       </Head>
       <div
