@@ -1,27 +1,26 @@
 import Link from "next/link";
-import Loader from "@/components/common/loader";
-import Header from "@/components/common/header";
-import DateBar from "@/components/fields/date-bar";
+import Loader from "@/components/ui/loader";
+import Header from "@/components/ui/header";
+import DateBar from "@/components/ui/date-bar";
 import EntryCard from "@/components/cards/entry-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDateFilter } from "@/utils/hooks/use-date-filter";
+import { useDateFilter } from "@/utils/use-date-filter";
 import { HiX } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 
 export { authorize as getServerSideProps };
 
-interface Props {
+type Props = {
   workoutId: string;
-}
+};
 
 const Workout = ({ workoutId }: Props) => {
   const { push } = useRouter();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
   const ctx = trpc.useContext();
 
   const { data: workout, isLoading } = trpc.useQuery(
@@ -105,7 +104,7 @@ const Workout = ({ workoutId }: Props) => {
               <p className='text-xl font-bold'>
                 {weightUnit === "kg" && `${total._sum.weight} kg`}
                 {weightUnit === "lbs" &&
-                  `${convertKgToLbs(total._sum.weight)} lbs`}
+                  `${convertKilosToPounds(total._sum.weight)} lbs`}
               </p>
             </div>
           )}
@@ -124,7 +123,7 @@ const Workout = ({ workoutId }: Props) => {
 
         <section className='space-y-4'>
           {filteredData && filteredData?.entries.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
+            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
               No entries found with this date.
             </p>
           )}

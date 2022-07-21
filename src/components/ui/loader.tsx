@@ -1,6 +1,6 @@
-interface Props {
+type Props = {
   inline?: boolean;
-}
+};
 
 export default function Loader({ inline }: Props) {
   return (

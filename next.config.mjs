@@ -1,7 +1,11 @@
+import { env } from "./src/server/env.mjs";
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   experimental: {
     newNextLinkBehavior: true
   }
 };
+
+export default nextConfig;

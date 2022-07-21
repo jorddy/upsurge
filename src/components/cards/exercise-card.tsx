@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { InferQueryOutput } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 
-interface Props {
+type Props = {
   exercise: InferQueryOutput<"exercise.get-all">[0];
   linkOff?: boolean;
-}
+};
 
 export default function ExerciseCard({ exercise, linkOff }: Props) {
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
 
   return (
     <Link
@@ -30,13 +29,13 @@ export default function ExerciseCard({ exercise, linkOff }: Props) {
               <strong className='font-medium'>Current Weight:</strong>{" "}
               {weightUnit === "kg" && `${exercise.currentWeight} kg`}
               {weightUnit === "lbs" &&
-                `${convertKgToLbs(exercise.currentWeight)} lbs`}
+                `${convertKilosToPounds(exercise.currentWeight)} lbs`}
             </p>
             <p>
               <strong className='font-medium'>Target Weight:</strong>{" "}
               {weightUnit === "kg" && `${exercise.targetWeight} kg`}
               {weightUnit === "lbs" &&
-                `${convertKgToLbs(exercise.targetWeight)} lbs`}
+                `${convertKilosToPounds(exercise.targetWeight)} lbs`}
             </p>
           </div>
         )}

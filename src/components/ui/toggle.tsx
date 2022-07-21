@@ -1,10 +1,10 @@
 import { PropsWithChildren } from "react";
 import { Switch } from "@headlessui/react";
 
-interface Props {
+type Props = {
   checked: boolean;
   onChange: () => void;
-}
+};
 
 export default function Toggle({
   children,

@@ -1,15 +1,34 @@
 import Link from "next/link";
-import { useTotalSets } from "@/utils/hooks/use-total-sets";
+import { useEffect, useState } from "react";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 
-interface Props {
+const useTotalSets = (workout: InferQueryOutput<"workout.get-all">[0]) => {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (workout?.entries) {
+      setTotal(
+        workout.entries.reduce((current, entry) => {
+          if (entry._count) {
+            return entry._count?.sets + current;
+          }
+
+          return current;
+        }, 0)
+      );
+    }
+  }, [workout]);
+
+  return total;
+};
+
+type Props = {
   workout: InferQueryOutput<"workout.get-all">[0];
-}
+};
 
 export default function WorkoutCard({ workout }: Props) {
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
 
   const { data, isLoading } = trpc.useQuery([
     "workout.sum",
@@ -38,7 +57,7 @@ export default function WorkoutCard({ workout }: Props) {
               <strong className='font-medium'>Total Weight Lifted:</strong>{" "}
               {weightUnit === "kg" && `${data?._sum.weight} kg`}
               {weightUnit === "lbs" &&
-                `${convertKgToLbs(data?._sum.weight)} lbs`}
+                `${convertKilosToPounds(data?._sum.weight)} lbs`}
             </p>
           )}
 

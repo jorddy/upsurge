@@ -1,4 +1,4 @@
-import Header from "@/components/common/header";
+import Header from "@/components/ui/header";
 import EntryForm from "@/components/forms/entry-form";
 import WorkoutForm from "@/components/forms/workout-form";
 import { authorize } from "@/utils/authorize";

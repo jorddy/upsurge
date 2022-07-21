@@ -1,7 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { entryValidator } from "@/utils/validators/entry";
-import { updateEntryValidator } from "@/utils/validators/update-entry";
+import { entryValidator } from "@/server/shared/entry";
+import { updateEntryValidator } from "@/server/shared/update-entry";
 
 export const entryRouter = createProtectedRouter()
   .query("get-by-id", {

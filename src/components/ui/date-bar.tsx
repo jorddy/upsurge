@@ -1,10 +1,10 @@
 import type { Dispatch, SetStateAction } from "react";
 import { HiCalendar } from "react-icons/hi";
 
-interface Props {
+type Props = {
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
-}
+};
 
 export default function DateBar({ date, setDate }: Props) {
   return (

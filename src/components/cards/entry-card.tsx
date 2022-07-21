@@ -2,19 +2,18 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 
-interface Props {
+type Props = {
   entry:
     | InferQueryOutput<"entry.get-by-id">
     | InferQueryOutput<"entry.get-by-id-with-exercise">;
   page: "workout" | "exercise";
-}
+};
 
 export default function EntryCard({ entry, page }: Props) {
   const ctx = trpc.useContext();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
 
   const { mutate: deleteEntry, isLoading } = trpc.useMutation(
     ["entry.delete"],
@@ -100,7 +99,7 @@ export default function EntryCard({ entry, page }: Props) {
               <>
                 {weightUnit === "kg" && `${set.weight} kg - ${set.reps} reps`}
                 {weightUnit === "lbs" &&
-                  `${convertKgToLbs(set.weight)} lbs - ${set.reps} reps`}
+                  `${convertKilosToPounds(set.weight)} lbs - ${set.reps} reps`}
               </>
             )}
 

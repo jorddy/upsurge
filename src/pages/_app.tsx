@@ -34,7 +34,7 @@ const MyApp = ({
   );
 };
 
-const baseUrl = () => {
+const getBaseUrl = () => {
   if (typeof window !== "undefined") {
     return "";
   }
@@ -43,13 +43,13 @@ const baseUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  return `http://localhost:${process.env.PORT ?? 3000}`;
+  return "http://localhost:3000";
 };
 
 export default withTRPC<AppRouter>({
   config() {
     return {
-      url: `${baseUrl()}/api/trpc`,
+      url: `${getBaseUrl()}/api/trpc`,
       transformer: superjson,
       queryClientConfig: {
         queryCache: new QueryCache({

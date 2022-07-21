@@ -1,15 +1,12 @@
 import toast from "react-hot-toast";
-import Header from "@/components/common/header";
+import Header from "@/components/ui/header";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/utils/trpc";
-import {
-  exerciseValidator,
-  ExerciseValidator
-} from "@/utils/validators/exercise";
+import { exerciseValidator, ExerciseValidator } from "@/server/shared/exercise";
 
 export { authorize as getServerSideProps };
 

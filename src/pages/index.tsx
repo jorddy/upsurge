@@ -1,5 +1,5 @@
-import Header from "@/components/common/header";
-import Footer from "@/components/common/footer";
+import Header from "@/components/ui/header";
+import Footer from "@/components/ui/footer";
 import { signIn } from "next-auth/react";
 import {
   HiBookOpen,

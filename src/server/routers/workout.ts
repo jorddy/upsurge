@@ -1,7 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { workoutValidator } from "@/utils/validators/workout";
-import { updateWorkoutValidator } from "@/utils/validators/update-workout";
+import { workoutValidator } from "@/server/shared/workout";
+import { updateWorkoutValidator } from "@/server/shared/update-workout";
 
 export const workoutRouter = createProtectedRouter()
   .query("get-all", {

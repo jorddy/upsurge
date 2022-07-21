@@ -1,10 +1,10 @@
-import Header from "@/components/common/header";
-import Toggle from "@/components/fields/toggle";
+import Header from "@/components/ui/header";
+import Toggle from "@/components/ui/toggle";
 import { authorize } from "@/utils/authorize";
-import { useProfileStore } from "@/utils/stores";
+import { useProfileStore } from "@/utils/profile";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { profileValidator, ProfileValidator } from "@/utils/validators/profile";
+import { profileValidator, ProfileValidator } from "@/server/shared/profile";
 import { trpc } from "@/utils/trpc";
 import toast from "react-hot-toast";
 
@@ -85,16 +85,16 @@ const ProfileForm = () => {
 };
 
 export default function ProfilePage() {
-  const { weightUnit, convertWeightToKilos, convertWeightToPounds } =
+  const { weightUnit, changeWeightToKilos, changeWeightToPounds } =
     useProfileStore();
 
   const handleWeightChange = () => {
     if (weightUnit === "kg") {
-      convertWeightToPounds();
+      changeWeightToPounds();
     }
 
     if (weightUnit === "lbs") {
-      convertWeightToKilos();
+      changeWeightToKilos();
     }
   };
 

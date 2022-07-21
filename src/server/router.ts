@@ -1,5 +1,5 @@
-import superjson from "superjson";
 import { createRouter } from "./context";
+import superjson from "superjson";
 import { workoutRouter } from "./routers/workout";
 import { exerciseRouter } from "./routers/exercise";
 import { entryRouter } from "./routers/entry";

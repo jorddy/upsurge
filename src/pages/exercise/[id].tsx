@@ -1,27 +1,26 @@
 import Link from "next/link";
-import Loader from "@/components/common/loader";
-import Header from "@/components/common/header";
-import DateBar from "@/components/fields/date-bar";
+import Loader from "@/components/ui/loader";
+import Header from "@/components/ui/header";
+import DateBar from "@/components/ui/date-bar";
 import EntryCard from "@/components/cards/entry-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
-import { useDateFilter } from "@/utils/hooks/use-date-filter";
+import { useDateFilter } from "@/utils/use-date-filter";
 import { trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 import toast from "react-hot-toast";
 
 export { authorize as getServerSideProps };
 
-interface Props {
+type Props = {
   exerciseId: string;
-}
+};
 
 const Exercise = ({ exerciseId }: Props) => {
   const { push } = useRouter();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
   const ctx = trpc.useContext();
 
   const { data: exercise, isLoading } = trpc.useQuery(
@@ -99,7 +98,7 @@ const Exercise = ({ exerciseId }: Props) => {
               <p className='text-xl font-bold'>
                 {weightUnit === "kg" && `${exercise.targetWeight} kg`}
                 {weightUnit === "lbs" &&
-                  `${convertKgToLbs(exercise.targetWeight)} lbs`}
+                  `${convertKilosToPounds(exercise.targetWeight)} lbs`}
               </p>
             </div>
           )}
@@ -110,7 +109,7 @@ const Exercise = ({ exerciseId }: Props) => {
               <p className='text-xl font-bold'>
                 {weightUnit === "kg" && `${exercise.currentWeight} kg`}
                 {weightUnit === "lbs" &&
-                  `${convertKgToLbs(exercise.currentWeight)} lbs`}
+                  `${convertKilosToPounds(exercise.currentWeight)} lbs`}
               </p>
             </div>
           )}
@@ -140,7 +139,7 @@ const Exercise = ({ exerciseId }: Props) => {
 
         <section className='space-y-4'>
           {filteredData && filteredData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
+            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
               No entries found with this date.
             </p>
           )}

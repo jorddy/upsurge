@@ -2,60 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  html {
-    @apply scroll-smooth;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      @apply scroll-auto;
-    }
-  }
+.button {
+  @apply w-full px-4 py-3 rounded-md bg-orange-600 font-semibold transition 
+    hover:scale-95 disabled:opacity-60 sm:w-fit;
 }
 
-@layer components {
-  .button {
-    @apply w-full px-4 py-3 rounded-md bg-orange-600 font-semibold transition 
-    hover:scale-95 disabled:opacity-60 sm:w-fit;
-  }
-
-  .button-remove {
-    @apply self-end flex items-center gap-2 px-3 py-2 bg-red-600 rounded-sm transition 
+.button-remove {
+  @apply self-end flex items-center gap-2 px-3 py-2 bg-red-600 rounded-sm transition 
     hover:bg-red-700 disabled:opacity-60;
-  }
+}
 
-  .button-edit {
-    @apply bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600;
-  }
+.button-edit {
+  @apply bg-zinc-700 px-3 py-2 rounded-sm hover:bg-zinc-600;
+}
 
-  .button-create {
-    @apply flex items-center gap-2 px-3 py-2 w-fit bg-orange-600 font-semibold rounded-md transition 
+.button-create {
+  @apply flex items-center gap-2 px-3 py-2 w-fit bg-orange-600 font-semibold rounded-md transition 
     hover:bg-orange-700;
-  }
+}
 
-  .link {
-    @apply inline-block font-semibold border-b-2 hover:opacity-60;
-  }
+.link {
+  @apply inline-block font-semibold border-b-2 hover:opacity-60;
+}
 
-  .field {
-    @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
-  }
+.field {
+  @apply max-w-full flex flex-col gap-2 sm:max-w-sm;
+}
 
-  .input {
-    @apply bg-zinc-900 px-3 py-2 truncate;
-  }
+.input {
+  @apply bg-zinc-900 px-3 py-2 truncate;
+}
 
-  .input-small {
-    @apply bg-zinc-700 px-3 py-2 truncate w-full sm:max-w-[6rem];
-  }
+.input-small {
+  @apply bg-zinc-700 px-3 py-2 truncate w-full sm:max-w-[6rem];
+}
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.animate-scale {
+  animation: scale 150ms linear;
+}
+
+@keyframes scale {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

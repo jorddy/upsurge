@@ -1,28 +1,26 @@
-import Header from "@/components/common/header";
-import Loader from "@/components/common/loader";
+import Header from "@/components/ui/header";
+import Loader from "@/components/ui/loader";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
-import { useProfileStore } from "@/utils/stores";
+import { useProfileStore } from "@/utils/profile";
 import { trpc } from "@/utils/trpc";
-import toast from "react-hot-toast";
 import {
   updateEntryValidator,
   UpdateEntryValidator
-} from "@/utils/validators/update-entry";
+} from "@/server/shared/update-entry";
 
 export { authorize as getServerSideProps };
 
-interface Props {
+type Props = {
   entryId: string;
-}
+};
 
 const EditEntryForm = ({ entryId }: Props) => {
   const { push } = useRouter();
   const ctx = trpc.useContext();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
 
   const { data: entry, isLoading } = trpc.useQuery([
     "entry.get-by-id",

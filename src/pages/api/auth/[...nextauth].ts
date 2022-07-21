@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { User } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/server/db";
+import { env } from "@/server/env.mjs";
 
 declare module "next-auth" {
   interface Session {
@@ -13,8 +14,8 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!
+      clientId: env.GOOGLE_ID,
+      clientSecret: env.GOOGLE_SECRET
     })
   ],
   adapter: PrismaAdapter(prisma),
