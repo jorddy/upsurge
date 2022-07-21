@@ -41,7 +41,6 @@ export default function CreateExercisePage() {
   // Deletes values from weight if distance is inputed
   // PREVENTS BOTH VALUES FROM BEING PUT IN THE DATABASE
   useEffect(() => {
-    console.log("reran weight");
     if (currentWeight || targetWeight) {
       setValue("currentDistance", undefined);
       setValue("targetDistance", undefined);
@@ -51,7 +50,6 @@ export default function CreateExercisePage() {
   // Deletes values from weight if distance is inputed
   // PREVENTS BOTH VALUES FROM BEING PUT IN THE DATABASE
   useEffect(() => {
-    console.log("reran distance");
     if (currentDistance || targetDistance) {
       setValue("currentWeight", undefined);
       setValue("targetWeight", undefined);

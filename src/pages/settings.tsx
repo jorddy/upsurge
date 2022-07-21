@@ -47,7 +47,7 @@ const ProfileForm = () => {
           {...register("name")}
           type='text'
           id='name'
-          className='input bg-zinc-700'
+          className='input !bg-zinc-700'
         />
 
         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
@@ -59,7 +59,7 @@ const ProfileForm = () => {
           {...register("email")}
           type='email'
           id='email'
-          className='input bg-zinc-700'
+          className='input !bg-zinc-700'
         />
 
         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
@@ -71,7 +71,7 @@ const ProfileForm = () => {
           {...register("image")}
           type='text'
           id='image'
-          className='input bg-zinc-700'
+          className='input !bg-zinc-700'
         />
 
         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}

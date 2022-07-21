@@ -61,7 +61,7 @@ const EditWorkoutForm = ({ workoutId }: Props) => {
 
   return (
     <>
-      <h1 className='text-xl font-bold'>Edit {workout?.name} details</h1>
+      <h1 className='text-xl font-bold'>Edit {workout?.name}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
         <div className='field'>

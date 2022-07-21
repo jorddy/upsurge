@@ -18,19 +18,17 @@ const Tabs = () => {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
 
-  const workouts = trpc.useQuery(["workout.get-all"]);
-  const exercises = trpc.useQuery(["exercise.get-all"]);
+  const { data: workouts } = trpc.useQuery(["workout.get-all"]);
+  const { data: exercises } = trpc.useQuery(["exercise.get-all"]);
 
   const filteredWorkoutData = useSearch(
     workoutQuery,
-    workouts.data
+    workouts
   ) as InferQueryOutput<"workout.get-all">;
   const filteredExerciseData = useSearch(
     exerciseQuery,
-    exercises.data
+    exercises
   ) as InferQueryOutput<"exercise.get-all">;
-
-  if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
   return (
     <Tab.Group>
@@ -102,8 +100,10 @@ const Tabs = () => {
 export default function Dashboard() {
   const { data: session } = useSession();
   const { data, isLoading } = trpc.useQuery(["workout.get-latest"]);
+  const { isLoading: isLoadingWorkouts } = trpc.useQuery(["workout.get-all"]);
+  const { isLoading: isLoadingExercises } = trpc.useQuery(["exercise.get-all"]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading || isLoadingWorkouts || isLoadingExercises) return <Loader />;
 
   return (
     <>
