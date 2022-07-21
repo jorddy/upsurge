@@ -8,7 +8,7 @@ type Props = {
   entry:
     | InferQueryOutput<"entry.get-by-id">
     | InferQueryOutput<"entry.get-by-id-with-exercise">;
-  page: "workout" | "exercise";
+  page?: "workout" | "exercise";
 };
 
 export default function EntryCard({ entry, page }: Props) {

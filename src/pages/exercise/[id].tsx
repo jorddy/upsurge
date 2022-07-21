@@ -3,6 +3,7 @@ import Loader from "@/components/ui/loader";
 import Header from "@/components/ui/header";
 import DateBar from "@/components/ui/date-bar";
 import EntryCard from "@/components/cards/entry-card";
+import EmptyCard from "@/components/cards/empty-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -139,9 +140,7 @@ const Exercise = ({ exerciseId }: Props) => {
 
         <section className='space-y-4'>
           {filteredData && filteredData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
-              No entries found with this date.
-            </p>
+            <EmptyCard>No entries found with this date</EmptyCard>
           )}
 
           {exercise &&

@@ -5,11 +5,14 @@ import WorkoutCard from "@/components/cards/workout-card";
 import SearchBar from "@/components/ui/search-bar";
 import ExerciseCard from "@/components/cards/exercise-card";
 import TabComponent from "@/components/ui/tab";
+import EntryCard from "@/components/cards/entry-card";
+import DateBar from "@/components/ui/date-bar";
+import EmptyCard from "@/components/cards/empty-card";
 import { authorize } from "@/utils/authorize";
 import { Tab } from "@headlessui/react";
 import { useSession } from "next-auth/react";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearch } from "@/utils/use-search";
 
 export { authorize as getServerSideProps };
@@ -17,9 +20,19 @@ export { authorize as getServerSideProps };
 const Tabs = () => {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
+  const [date, setDate] = useState(new Date());
 
   const { data: workouts } = trpc.useQuery(["workout.get-all"]);
   const { data: exercises } = trpc.useQuery(["exercise.get-all"]);
+  const {
+    data: entries,
+    isLoading,
+    refetch
+  } = trpc.useQuery(["entry.get-all-by-date", { date }]);
+
+  useEffect(() => {
+    refetch();
+  }, [date, refetch]);
 
   const filteredWorkoutData = useSearch(
     workoutQuery,
@@ -51,9 +64,7 @@ const Tabs = () => {
           </Link>
 
           {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
-              No workouts found.
-            </p>
+            <EmptyCard>No workouts found</EmptyCard>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -76,9 +87,7 @@ const Tabs = () => {
           </Link>
 
           {filteredExerciseData && filteredExerciseData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
-              No exercises found.
-            </p>
+            <EmptyCard>No exercises found</EmptyCard>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -89,8 +98,26 @@ const Tabs = () => {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel>
-          <p>Coming soon</p>
+        <Tab.Panel className='space-y-6'>
+          <div className='space-y-2'>
+            <h3 className='text-xl font-bold'>View your workout history</h3>
+            <p className='text-gray-300'>Select a date from the field below</p>
+          </div>
+
+          <DateBar date={date} setDate={setDate} />
+
+          {isLoading && <Loader />}
+
+          {entries && entries.length <= 0 && (
+            <EmptyCard>No entries found</EmptyCard>
+          )}
+
+          {entries?.map(entry => (
+            <EntryCard
+              key={entry.id}
+              entry={entry as InferQueryOutput<"entry.get-by-id-with-exercise">}
+            />
+          ))}
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
@@ -99,7 +126,7 @@ const Tabs = () => {
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  const { data, isLoading } = trpc.useQuery(["workout.get-latest"]);
+  const { data, isLoading } = trpc.useQuery(["workout.get-recent"]);
   const { isLoading: isLoadingWorkouts } = trpc.useQuery(["workout.get-all"]);
   const { isLoading: isLoadingExercises } = trpc.useQuery(["exercise.get-all"]);
 
@@ -127,9 +154,7 @@ export default function Dashboard() {
 
         <section className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
           {data?.length === 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md border border-zinc-500'>
-              No recent workouts found.
-            </p>
+            <EmptyCard>No recent workouts found</EmptyCard>
           )}
 
           {data?.map(workout => (

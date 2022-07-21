@@ -24,6 +24,16 @@ export const entryRouter = createProtectedRouter()
         include: { exercise: true, sets: true }
       })
   })
+  .query("get-all-by-date", {
+    input: z.object({
+      date: z.date()
+    }),
+    resolve: ({ input, ctx }) =>
+      ctx.prisma.entry.findMany({
+        where: { createdAt: input.date },
+        include: { exercise: true, sets: true }
+      })
+  })
   .mutation("create", {
     input: entryValidator,
     resolve: ({ input, ctx }) =>

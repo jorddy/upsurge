@@ -33,7 +33,7 @@ export const workoutRouter = createProtectedRouter()
         }
       })
   })
-  .query("get-latest", {
+  .query("get-recent", {
     resolve: ({ ctx }) =>
       ctx.prisma.workout.findMany({
         take: 2,
