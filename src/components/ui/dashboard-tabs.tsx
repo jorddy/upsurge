@@ -117,9 +117,9 @@ export default function DashboardTabs() {
 
           <DateBar date={date} setDate={setDate} />
 
-          {isLoading && <Loader />}
+          {isLoading && <Loader inline />}
 
-          {entries && entries.length <= 0 && (
+          {entries && entries.length === 0 && (
             <EmptyCard>No entries found</EmptyCard>
           )}
 

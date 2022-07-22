@@ -8,8 +8,11 @@ import {
   HiLogout,
   HiOutlineLightningBolt,
   HiX,
-  HiMenu
+  HiMenu,
+  HiStatusOnline,
+  HiStatusOffline
 } from "react-icons/hi";
+import { useOnlineStore } from "@/utils/online";
 
 type UserImageProps = {
   isOptionsOpen: boolean;
@@ -23,16 +26,30 @@ const UserImage = ({
   setIsMenuOpen
 }: UserImageProps) => {
   const { data: session, status } = useSession();
+  const { onlineStatus } = useOnlineStore();
+
+  console.log(onlineStatus);
 
   if (session && session.user?.image && session.user.name) {
     return (
-      <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
-        <img
-          className='w-10 h-10 rounded-full object-cover'
-          src={session.user?.image}
-          alt={session.user?.name}
-        />
-      </button>
+      <>
+        <button
+          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+          className='flex items-center gap-4'
+        >
+          {onlineStatus && (
+            <HiStatusOnline className='w-6 h-6 text-green-400' />
+          )}
+          {!onlineStatus && (
+            <HiStatusOffline className='text-red-400 w-6 h-6' />
+          )}
+          <img
+            className='w-10 h-10 rounded-full object-cover'
+            src={session.user?.image}
+            alt={session.user?.name}
+          />
+        </button>
+      </>
     );
   }
 

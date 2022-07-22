@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { withTRPC } from "@trpc/next";
+import { useOnlineStatus } from "@/utils/online";
 import superjson from "superjson";
 import toast, { Toaster } from "react-hot-toast";
 import Head from "next/head";
@@ -13,6 +14,8 @@ const MyApp = ({
   Component,
   pageProps: { session, ...pageProps }
 }: AppProps) => {
+  useOnlineStatus();
+
   return (
     <SessionProvider session={session}>
       <Head>
@@ -21,10 +24,11 @@ const MyApp = ({
           name='description'
           content='Upsurge is the easier way to log your workouts. Quick, easy and no ads'
         />
+        <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
       </Head>
       <div
         className='min-h-screen bg-zinc-800 text-white 
-          [background-image:url("/Background.png")] bg-cover bg-fixed'
+          [background-image:url("/background.png")] bg-cover bg-fixed'
       >
         <Component {...pageProps} />
       </div>
