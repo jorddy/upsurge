@@ -10,6 +10,33 @@ import superjson from "superjson";
 import toast, { Toaster } from "react-hot-toast";
 import Head from "next/head";
 
+const SEO = () => {
+  const title = "Upsurge - Log workouts simple";
+  const description =
+    "Upsurge is the easier way to log your workouts. Quick, easy and no ads";
+  const url = "https://upsurge.vercel.app";
+
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta name='description' content={description} />
+      <meta name='msapplication-TileColor' content='#ea580c' />
+      <meta name='msapplication-tap-highlight' content='no' />
+      <meta name='theme-color' content='#1c1917' />
+      <link rel='shortcut icon' href='/favicon.ico' />
+      <link rel='apple-touch-icon' href='/icon-192x192.png' />
+      <link rel='manifest' href='/manifest.json' />
+      <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#ea580c' />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content={title} />
+      <meta property='og:description' content={description} />
+      <meta property='og:site_name' content='Upsurge' />
+      <meta property='og:url' content={url} />
+      <meta property='og:image' content={`${url}/icon-192x192.png`} />
+    </Head>
+  );
+};
+
 const MyApp = ({
   Component,
   pageProps: { session, ...pageProps }
@@ -18,14 +45,7 @@ const MyApp = ({
 
   return (
     <SessionProvider session={session}>
-      <Head>
-        <title>Upsurge - Log workouts simpler</title>
-        <meta
-          name='description'
-          content='Upsurge is the easier way to log your workouts. Quick, easy and no ads'
-        />
-        <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
-      </Head>
+      <SEO />
       <div
         className='min-h-screen bg-zinc-800 text-white 
           [background-image:url("/background.png")] bg-cover bg-fixed'
