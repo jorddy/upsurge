@@ -1,10 +1,10 @@
 import { PropsWithChildren } from "react";
 import { Switch } from "@headlessui/react";
 
-interface Props {
+type Props = {
   checked: boolean;
   onChange: () => void;
-}
+};
 
 export default function Toggle({
   children,
@@ -21,7 +21,7 @@ export default function Toggle({
           className={`${
             checked ? "bg-orange-600" : "bg-gray-200"
           } relative inline-flex h-6 w-11 items-center rounded-full transition-colors 
-          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+          focus:outline-none focus:ring-2 focus:ring-offset-2`}
         >
           <span
             className={`${

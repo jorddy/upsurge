@@ -1,9 +1,8 @@
 import { GetServerSideProps } from "next";
-import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getUpsurgeAuth } from "@/server/auth";
 
-export const authorize: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
+export const authorize: GetServerSideProps = async ctx => {
+  const session = await getUpsurgeAuth(ctx);
 
   if (!session) {
     return {

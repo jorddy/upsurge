@@ -1,32 +1,43 @@
 import Link from "next/link";
-import Loader from "../common/loader";
+import EmptyCard from "../cards/empty-card";
 import WorkoutCard from "../cards/workout-card";
-import ExerciseCard from "../cards/exercise-card";
-import TabComponent from "./tab";
-import SearchBar from "../fields/search-bar";
-import HistoryTab from "./history-tab";
-import { useState } from "react";
+import Loader from "./loader";
+import SearchBar from "@/components/ui/search-bar";
+import ExerciseCard from "@/components/cards/exercise-card";
+import TabComponent from "@/components/ui/tab";
+import EntryCard from "@/components/cards/entry-card";
+import DateBar from "@/components/ui/date-bar";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
-import { useSearch } from "@/utils/hooks/use-search";
+import { useSearch } from "@/utils/use-search";
+import { motion } from "framer-motion";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
 export default function DashboardTabs() {
   const [workoutQuery, setWorkoutQuery] = useState("");
   const [exerciseQuery, setExerciseQuery] = useState("");
+  const [date, setDate] = useState(new Date());
 
-  const workouts = trpc.useQuery(["workout.get-all"]);
-  const exercises = trpc.useQuery(["exercise.get-all"]);
+  const { data: workouts } = trpc.useQuery(["workout.get-all"]);
+  const { data: exercises } = trpc.useQuery(["exercise.get-all"]);
+  const {
+    data: entries,
+    isLoading,
+    refetch
+  } = trpc.useQuery(["entry.get-all-by-date", { date }]);
+
+  useEffect(() => {
+    refetch();
+  }, [date, refetch]);
 
   const filteredWorkoutData = useSearch(
     workoutQuery,
-    workouts.data
+    workouts
   ) as InferQueryOutput<"workout.get-all">;
   const filteredExerciseData = useSearch(
     exerciseQuery,
-    exercises.data
+    exercises
   ) as InferQueryOutput<"exercise.get-all">;
-
-  if (workouts.isLoading || exercises.isLoading) return <Loader />;
 
   return (
     <Tab.Group>
@@ -37,7 +48,13 @@ export default function DashboardTabs() {
       </Tab.List>
 
       <Tab.Panels>
-        <Tab.Panel className='space-y-6'>
+        <Tab.Panel
+          className='space-y-6'
+          as={motion.div}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <SearchBar
             type='workout'
             query={workoutQuery}
@@ -49,9 +66,7 @@ export default function DashboardTabs() {
           </Link>
 
           {filteredWorkoutData && filteredWorkoutData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
-              No workouts found.
-            </p>
+            <EmptyCard>No workouts found</EmptyCard>
           )}
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
@@ -62,23 +77,24 @@ export default function DashboardTabs() {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel className='space-y-6'>
+        <Tab.Panel
+          className='space-y-6'
+          as={motion.div}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <SearchBar
             type='exercise'
             query={exerciseQuery}
             setQuery={setExerciseQuery}
           />
-
           <Link className='link' href='/exercise/create'>
             + Create exercise
           </Link>
-
           {filteredExerciseData && filteredExerciseData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 border border-zinc-500 rounded-md'>
-              No exercises found.
-            </p>
+            <EmptyCard>No exercises found</EmptyCard>
           )}
-
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
             {filteredExerciseData &&
               filteredExerciseData?.map(exercise => (
@@ -87,8 +103,29 @@ export default function DashboardTabs() {
           </div>
         </Tab.Panel>
 
-        <Tab.Panel>
-          <HistoryTab />
+        <Tab.Panel
+          className='space-y-6'
+          as={motion.div}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className='space-y-2'>
+            <h3 className='text-xl font-bold'>View your workout history</h3>
+            <p className='text-gray-300'>Select a date from the field below</p>
+          </div>
+
+          <DateBar date={date} setDate={setDate} />
+
+          {isLoading && <Loader inline />}
+
+          {entries && entries.length === 0 && (
+            <EmptyCard>No entries found</EmptyCard>
+          )}
+
+          {entries?.map(entry => (
+            <EntryCard key={entry.id} entry={entry} />
+          ))}
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

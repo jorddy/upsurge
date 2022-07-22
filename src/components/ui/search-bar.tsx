@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import { HiSearch } from "react-icons/hi";
 
-interface Props {
+type Props = {
   type: "workout" | "exercise";
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
-}
+};
 
 export default function SearchBar({ type, query, setQuery }: Props) {
   const text =

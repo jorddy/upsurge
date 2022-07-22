@@ -1,6 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { exerciseValidator } from "@/utils/validators";
+import { exerciseValidator } from "@/server/shared/exercise";
+import { updateExerciseValidator } from "@/server/shared/update-exercise";
 
 export const exerciseRouter = createProtectedRouter()
   .query("get-all", {
@@ -24,7 +25,7 @@ export const exerciseRouter = createProtectedRouter()
         where: { id: input.id },
         include: {
           entries: {
-            include: { sets: true }
+            include: { exercise: true, sets: true }
           }
         }
       })
@@ -46,5 +47,19 @@ export const exerciseRouter = createProtectedRouter()
     resolve: ({ input, ctx }) =>
       ctx.prisma.exercise.delete({
         where: { id: input.id }
+      })
+  })
+  .mutation("update", {
+    input: updateExerciseValidator,
+    resolve: ({ input, ctx }) =>
+      ctx.prisma.exercise.update({
+        where: { id: input.exerciseId },
+        data: {
+          name: input.name,
+          currentWeight: input.currentWeight,
+          targetWeight: input.targetWeight,
+          currentDistance: input.currentDistance,
+          targetDistance: input.targetDistance
+        }
       })
   });

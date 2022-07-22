@@ -1,20 +1,18 @@
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { HiX } from "react-icons/hi";
+import { LazyMotion, m, domAnimation } from "framer-motion";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 
-interface Props {
-  entry:
-    | InferQueryOutput<"entry.get-by-id">
-    | InferQueryOutput<"entry.get-by-id-with-exercise">;
-  page: "workout" | "exercise";
-}
+type Props = {
+  entry: InferQueryOutput<"entry.get-by-id">;
+  page?: "workout" | "exercise";
+};
 
 export default function EntryCard({ entry, page }: Props) {
   const ctx = trpc.useContext();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
 
   const { mutate: deleteEntry, isLoading } = trpc.useMutation(
     ["entry.delete"],
@@ -51,66 +49,72 @@ export default function EntryCard({ entry, page }: Props) {
   };
 
   return (
-    <article
-      key={entry.id}
-      className='px-5 py-4 space-y-2 rounded-md bg-zinc-900 border border-zinc-500'
-    >
-      <div className='flex flex-wrap gap-2 items-center justify-between'>
-        <p className='text-xl font-semibold'>
-          {entry.createdAt.toLocaleDateString()}
-        </p>
+    <LazyMotion features={domAnimation}>
+      <m.article
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className='px-5 py-4 space-y-2 rounded-md bg-zinc-900 border border-zinc-500'
+      >
+        <div className='flex flex-wrap gap-2 items-center justify-between'>
+          <p className='text-xl font-semibold'>
+            {entry.createdAt.toLocaleDateString()}
+          </p>
 
-        <div className='flex flex-wrap gap-2'>
-          <Link className='button-edit' href={`/entry/${entry.id}`}>
-            Edit
-          </Link>
-
-          <button
-            className='button-remove'
-            onClick={handleDelete}
-            disabled={isLoading}
-          >
-            <HiX className='h-5 w-5' />
-            <p>Delete</p>
-          </button>
-        </div>
-      </div>
-
-      {(entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
-        ?.exercise && (
-        <p className='truncate'>
-          <strong>Exercise:</strong>{" "}
-          {
-            (entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
-              ?.exercise.name
-          }
-        </p>
-      )}
-
-      {entry?.notes && (
-        <p className='line-clamp-3'>
-          <strong>Notes:</strong> {entry.notes}
-        </p>
-      )}
-
-      <ul>
-        {entry.sets?.map(set => (
-          <li key={set.id}>
-            {set.weight && (
-              <>
-                {weightUnit === "kg" && `${set.weight} kg - ${set.reps} reps`}
-                {weightUnit === "lbs" &&
-                  `${convertKgToLbs(set.weight)} lbs - ${set.reps} reps`}
-              </>
-            )}
-
-            {set.distance &&
-              `${set.distance} miles ${
-                set.elevation ? `- ${set.elevation} ft` : ""
+          <div className='flex flex-wrap gap-2'>
+            <Link
+              className='button-edit'
+              href={`/entry/${entry.id}/edit?page=${
+                page === "workout" ? "workout" : "exercise"
               }`}
-          </li>
-        ))}
-      </ul>
-    </article>
+            >
+              Edit
+            </Link>
+
+            <button
+              className='button-remove'
+              onClick={handleDelete}
+              disabled={isLoading}
+            >
+              <HiX className='h-5 w-5' />
+              <p>Delete</p>
+            </button>
+          </div>
+        </div>
+
+        {entry?.exercise && (
+          <p className='truncate'>
+            <strong>Exercise:</strong> {entry?.exercise.name}
+          </p>
+        )}
+
+        {entry?.notes && (
+          <p className='line-clamp-3'>
+            <strong>Notes:</strong> {entry.notes}
+          </p>
+        )}
+
+        <ul>
+          {entry.sets?.map(set => (
+            <li key={set.id}>
+              {set.weight && (
+                <>
+                  {weightUnit === "kg" && `${set.weight} kg - ${set.reps} reps`}
+                  {weightUnit === "lbs" &&
+                    `${convertKilosToPounds(set.weight)} lbs - ${
+                      set.reps
+                    } reps`}
+                </>
+              )}
+
+              {set.distance &&
+                `${set.distance} miles ${
+                  set.elevation ? `- ${set.elevation} ft` : ""
+                }`}
+            </li>
+          ))}
+        </ul>
+      </m.article>
+    </LazyMotion>
   );
 }

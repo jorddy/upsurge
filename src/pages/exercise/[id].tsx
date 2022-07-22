@@ -1,27 +1,27 @@
 import Link from "next/link";
-import Loader from "@/components/common/loader";
-import Header from "@/components/common/header";
-import DateBar from "@/components/fields/date-bar";
+import Loader from "@/components/ui/loader";
+import AppLayout from "@/components/layouts/app-layout";
+import DateBar from "@/components/ui/date-bar";
 import EntryCard from "@/components/cards/entry-card";
+import EmptyCard from "@/components/cards/empty-card";
 import { authorize } from "@/utils/authorize";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
-import { useDateFilter } from "@/utils/hooks/use-date-filter";
+import { useDateFilter } from "@/utils/use-date-filter";
 import { trpc } from "@/utils/trpc";
-import { useProfileStore } from "@/utils/stores";
-import { convertKgToLbs } from "@/utils/kg-to-lbs";
+import { useProfileStore } from "@/utils/profile";
 import toast from "react-hot-toast";
 
 export { authorize as getServerSideProps };
 
-interface Props {
+type Props = {
   exerciseId: string;
-}
+};
 
 const Exercise = ({ exerciseId }: Props) => {
   const { push } = useRouter();
-  const { weightUnit } = useProfileStore();
+  const { weightUnit, convertKilosToPounds } = useProfileStore();
   const ctx = trpc.useContext();
 
   const { data: exercise, isLoading } = trpc.useQuery(
@@ -63,94 +63,83 @@ const Exercise = ({ exerciseId }: Props) => {
 
   return (
     <>
-      <Header app />
+      <section className='flex flex-wrap items-center justify-between gap-2'>
+        <div className='space-y-1'>
+          <h1 className='text-lg font-bold sm:text-2xl'>{exercise?.name}</h1>
 
-      <main className='container mx-auto p-4 space-y-6'>
-        <section className='flex flex-wrap items-center justify-between gap-2'>
-          <div className='space-y-1'>
-            <h1 className='text-lg font-bold sm:text-2xl'>{exercise?.name}</h1>
+          <p>Last Updated: {exercise?.updatedAt.toLocaleDateString()}</p>
+        </div>
 
-            <p>Last Updated: {exercise?.updatedAt.toLocaleDateString()}</p>
-          </div>
+        <div className='flex flex-wrap gap-2'>
+          <Link className='button-edit' href={`/exercise/${exercise?.id}/edit`}>
+            Edit
+          </Link>
 
-          <div className='flex flex-wrap gap-2'>
-            <Link
-              className='button-edit'
-              href={`/exercise/${exercise?.id}/edit`}
-            >
-              Edit
-            </Link>
+          <button
+            className='button-remove'
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            <HiX className='h-5 w-5' />
+            <p>Delete</p>
+          </button>
+        </div>
+      </section>
 
-            <button
-              className='button-remove'
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              <HiX className='h-5 w-5' />
-              <p>Delete</p>
-            </button>
-          </div>
-        </section>
-
-        <section className='flex flex-col gap-4 sm:flex-row'>
-          {exercise?.targetWeight && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
-              <h2>Target Weight</h2>
-              <p className='text-xl font-bold'>
-                {weightUnit === "kg" && `${exercise.targetWeight} kg`}
-                {weightUnit === "lbs" &&
-                  `${convertKgToLbs(exercise.targetWeight)} lbs`}
-              </p>
-            </div>
-          )}
-
-          {exercise?.currentWeight && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
-              <h2>Current Weight</h2>
-              <p className='text-xl font-bold'>
-                {weightUnit === "kg" && `${exercise.currentWeight} kg`}
-                {weightUnit === "lbs" &&
-                  `${convertKgToLbs(exercise.currentWeight)} lbs`}
-              </p>
-            </div>
-          )}
-
-          {exercise?.targetDistance && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
-              <h2>Target Distance</h2>
-              <p className='text-xl font-bold'>
-                {exercise.targetDistance} miles
-              </p>
-            </div>
-          )}
-
-          {exercise?.currentDistance && (
-            <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
-              <h2>Current Distance</h2>
-              <p className='text-xl font-bold'>
-                {exercise.currentDistance} miles
-              </p>
-            </div>
-          )}
-        </section>
-
-        <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
-
-        <DateBar date={date} setDate={setDate} />
-
-        <section className='space-y-4'>
-          {filteredData && filteredData?.length <= 0 && (
-            <p className='p-4 bg-zinc-900 rounded-md'>
-              No entries found with this date.
+      <section className='flex flex-col gap-4 sm:flex-row'>
+        {exercise?.targetWeight && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
+            <h2>Target Weight</h2>
+            <p className='text-xl font-bold'>
+              {weightUnit === "kg" && `${exercise.targetWeight} kg`}
+              {weightUnit === "lbs" &&
+                `${convertKilosToPounds(exercise.targetWeight)} lbs`}
             </p>
-          )}
+          </div>
+        )}
 
-          {exercise &&
-            filteredData?.map(entry => (
-              <EntryCard key={entry.id} entry={entry} page='exercise' />
-            ))}
-        </section>
-      </main>
+        {exercise?.currentWeight && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
+            <h2>Current Weight</h2>
+            <p className='text-xl font-bold'>
+              {weightUnit === "kg" && `${exercise.currentWeight} kg`}
+              {weightUnit === "lbs" &&
+                `${convertKilosToPounds(exercise.currentWeight)} lbs`}
+            </p>
+          </div>
+        )}
+
+        {exercise?.targetDistance && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-orange-600 sm:flex-initial'>
+            <h2>Target Distance</h2>
+            <p className='text-xl font-bold'>{exercise.targetDistance} miles</p>
+          </div>
+        )}
+
+        {exercise?.currentDistance && (
+          <div className='flex-1 px-4 py-3 rounded-md bg-zinc-900 sm:flex-initial'>
+            <h2>Current Distance</h2>
+            <p className='text-xl font-bold'>
+              {exercise.currentDistance} miles
+            </p>
+          </div>
+        )}
+      </section>
+
+      <h2 className='text-lg font-bold sm:text-xl'>Entries</h2>
+
+      <DateBar date={date} setDate={setDate} />
+
+      <section className='space-y-4'>
+        {filteredData && filteredData.length === 0 && (
+          <EmptyCard>No entries found with this date</EmptyCard>
+        )}
+
+        {exercise &&
+          filteredData?.map(entry => (
+            <EntryCard key={entry.id} entry={entry} page='exercise' />
+          ))}
+      </section>
     </>
   );
 };
@@ -159,8 +148,16 @@ export default function ExercisePage() {
   const { query } = useRouter();
 
   if (!query.id || typeof query.id !== "string") {
-    return null;
+    return (
+      <h1 className='text-center text-2xl font-bold'>
+        Error: Wrong query param
+      </h1>
+    );
   }
 
-  return <Exercise exerciseId={query.id} />;
+  return (
+    <AppLayout>
+      <Exercise exerciseId={query.id} />
+    </AppLayout>
+  );
 }

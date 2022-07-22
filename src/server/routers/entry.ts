@@ -1,6 +1,7 @@
 import { createProtectedRouter } from "../context";
 import { z } from "zod";
-import { entryValidator } from "@/utils/validators";
+import { entryValidator } from "@/server/shared/entry";
+import { updateEntryValidator } from "@/server/shared/update-entry";
 
 export const entryRouter = createProtectedRouter()
   .query("get-by-id", {
@@ -10,16 +11,16 @@ export const entryRouter = createProtectedRouter()
     resolve: ({ input, ctx }) =>
       ctx.prisma.entry.findUnique({
         where: { id: input.id },
-        include: { sets: true }
+        include: { exercise: true, sets: true }
       })
   })
-  .query("get-by-id-with-exercise", {
+  .query("get-all-by-date", {
     input: z.object({
-      id: z.string()
+      date: z.date()
     }),
     resolve: ({ input, ctx }) =>
-      ctx.prisma.entry.findUnique({
-        where: { id: input.id },
+      ctx.prisma.entry.findMany({
+        where: { createdAt: input.date },
         include: { exercise: true, sets: true }
       })
   })
@@ -43,5 +44,17 @@ export const entryRouter = createProtectedRouter()
     resolve: ({ input, ctx }) =>
       ctx.prisma.entry.delete({
         where: { id: input.id }
+      })
+  })
+  .mutation("update", {
+    input: updateEntryValidator,
+    resolve: ({ input, ctx }) =>
+      ctx.prisma.entry.update({
+        where: { id: input.entryId },
+        data: {
+          createdAt: input.createdAt,
+          notes: input.notes,
+          sets: { updateMany: input.sets }
+        }
       })
   });

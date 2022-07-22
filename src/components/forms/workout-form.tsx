@@ -1,15 +1,135 @@
 import toast from "react-hot-toast";
-import SearchBar from "../fields/search-bar";
+import SearchBar from "../ui/search-bar";
 import ExerciseCard from "../cards/exercise-card";
-import WorkoutSetForm from "./workout-set-form";
 import { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import {
+  useFieldArray,
+  useForm,
+  Control,
+  UseFieldArrayRemove,
+  UseFormRegister
+} from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useSearch } from "@/utils/hooks/use-search";
+import { useSearch } from "@/utils/use-search";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
-import { workoutValidator, WorkoutValidator } from "@/utils/validators";
+import { workoutValidator, WorkoutValidator } from "@/server/shared/workout";
+
+type SetProps = {
+  cardio?: boolean;
+  entryIndex: number;
+  setIndex: number;
+  register: UseFormRegister<WorkoutValidator>;
+  remove: UseFieldArrayRemove;
+};
+
+const Set = ({ cardio, entryIndex, setIndex, register, remove }: SetProps) => {
+  return (
+    <div className='py-4 px-6 bg-zinc-800 border border-zinc-500 rounded-md'>
+      <div className='flex flex-wrap gap-6 items-center'>
+        <div className='self-start flex gap-2 sm:flex-col'>
+          <p>Set</p>
+          <p>{setIndex + 1}</p>
+        </div>
+
+        <div className='field'>
+          <label htmlFor={cardio ? "distance" : "reps"}>
+            {cardio ? "Distance (miles)" : "Reps"}
+          </label>
+
+          <input
+            {...register(
+              cardio
+                ? `entries.${entryIndex}.sets.${setIndex}.distance`
+                : `entries.${entryIndex}.sets.${setIndex}.reps`
+            )}
+            className='input-small'
+            type='number'
+            id={cardio ? "distance" : "reps"}
+            step={cardio ? "0.01" : "0"}
+          />
+        </div>
+
+        <div className='field'>
+          <label htmlFor={cardio ? "elevation" : "weight"}>
+            {cardio ? "Elevation (ft)" : "Weight (kg)"}
+          </label>
+
+          <input
+            {...register(
+              cardio
+                ? `entries.${entryIndex}.sets.${setIndex}.elevation`
+                : `entries.${entryIndex}.sets.${setIndex}.weight`
+            )}
+            className='input-small'
+            type='number'
+            id={cardio ? "distance" : "reps"}
+            step='0.01'
+          />
+        </div>
+
+        <button className='button-remove' onClick={() => remove(setIndex)}>
+          <HiX className='h-5 w-5' />
+          <p className='hidden sm:inline'>Remove set</p>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+type WorkoutSetFormProps = {
+  cardio?: boolean;
+  index: number;
+  control: Control<WorkoutValidator>;
+  register: UseFormRegister<WorkoutValidator>;
+};
+
+const WorkoutSetForm = ({
+  cardio,
+  index,
+  control,
+  register
+}: WorkoutSetFormProps) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: `entries.${index}.sets`
+  });
+
+  return (
+    <div className='space-y-6'>
+      <h3 className='font-semibold'>Sets</h3>
+
+      {fields.map((set, setIndex) => (
+        <Set
+          key={set.id}
+          entryIndex={index}
+          setIndex={setIndex}
+          cardio={cardio}
+          register={register}
+          remove={remove}
+        />
+      ))}
+
+      <button
+        className='px-4 py-3 border border-dashed w-full'
+        type='button'
+        onClick={() => append({})}
+      >
+        + Add set
+      </button>
+
+      <div className='field'>
+        <label htmlFor='notes'>Notes</label>
+        <textarea
+          {...register(`entries.${index}.notes`)}
+          className='input-text bg-zinc-700'
+          id='notes'
+        />
+      </div>
+    </div>
+  );
+};
 
 export default function WorkoutForm() {
   const { push } = useRouter();
@@ -22,7 +142,7 @@ export default function WorkoutForm() {
     {
       onSuccess: () => {
         ctx.invalidateQueries(["workout.get-all"]);
-        ctx.invalidateQueries(["workout.get-latest"]);
+        ctx.invalidateQueries(["workout.get-recent"]);
       }
     }
   );
@@ -46,14 +166,22 @@ export default function WorkoutForm() {
   });
 
   const handleExerciseType = (
-    exercise: InferQueryOutput<"exercise.get-all">[0]
+    exercise: InferQueryOutput<"exercise.get-by-id">
   ) => {
-    if (exercise.currentWeight || exercise.targetWeight) {
-      append({ exerciseId: exercise.id, name: exercise.name, type: "weight" });
+    if (exercise!.currentWeight || exercise!.targetWeight) {
+      append({
+        exerciseId: exercise!.id,
+        name: exercise!.name,
+        type: "weight"
+      });
     }
 
-    if (exercise.currentDistance || exercise.targetDistance) {
-      append({ exerciseId: exercise.id, name: exercise.name, type: "cardio" });
+    if (exercise!.currentDistance || exercise!.targetDistance) {
+      append({
+        exerciseId: exercise!.id,
+        name: exercise!.name,
+        type: "cardio"
+      });
     }
   };
 
@@ -161,11 +289,15 @@ export default function WorkoutForm() {
             key={exercise.id}
             className='text-left w-full'
             type='button'
-            onClick={() => handleExerciseType(exercise as any)}
+            onClick={() =>
+              handleExerciseType(
+                exercise as InferQueryOutput<"exercise.get-by-id">
+              )
+            }
           >
             <ExerciseCard
               key={exercise.id}
-              exercise={exercise as InferQueryOutput<"exercise.get-all">[0]}
+              exercise={exercise as InferQueryOutput<"exercise.get-by-id">}
               linkOff
             />
           </button>
