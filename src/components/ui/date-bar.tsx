@@ -18,7 +18,11 @@ export default function DateBar({ date, setDate }: Props) {
         id='date'
         type='date'
         value={date.toLocaleDateString("en-CA")}
-        onChange={e => setDate(e.target.valueAsDate as Date)}
+        onChange={e => {
+          if (e.target.valueAsDate) {
+            setDate(e.target.valueAsDate);
+          }
+        }}
       />
     </div>
   );

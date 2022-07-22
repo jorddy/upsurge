@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 import { useEffect, useState } from "react";
 import { useSearch } from "@/utils/use-search";
+import { motion } from "framer-motion";
 
 export { authorize as getServerSideProps };
 
@@ -113,10 +114,7 @@ const Tabs = () => {
           )}
 
           {entries?.map(entry => (
-            <EntryCard
-              key={entry.id}
-              entry={entry as InferQueryOutput<"entry.get-by-id-with-exercise">}
-            />
+            <EntryCard key={entry.id} entry={entry} />
           ))}
         </Tab.Panel>
       </Tab.Panels>

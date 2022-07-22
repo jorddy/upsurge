@@ -123,7 +123,7 @@ const WorkoutSetForm = ({
         <label htmlFor='notes'>Notes</label>
         <textarea
           {...register(`entries.${index}.notes`)}
-          className='input bg-zinc-700 min-h-[100px]'
+          className='input-text bg-zinc-700'
           id='notes'
         />
       </div>
@@ -166,14 +166,22 @@ export default function WorkoutForm() {
   });
 
   const handleExerciseType = (
-    exercise: InferQueryOutput<"exercise.get-all">[0]
+    exercise: InferQueryOutput<"exercise.get-by-id">
   ) => {
-    if (exercise.currentWeight || exercise.targetWeight) {
-      append({ exerciseId: exercise.id, name: exercise.name, type: "weight" });
+    if (exercise!.currentWeight || exercise!.targetWeight) {
+      append({
+        exerciseId: exercise!.id,
+        name: exercise!.name,
+        type: "weight"
+      });
     }
 
-    if (exercise.currentDistance || exercise.targetDistance) {
-      append({ exerciseId: exercise.id, name: exercise.name, type: "cardio" });
+    if (exercise!.currentDistance || exercise!.targetDistance) {
+      append({
+        exerciseId: exercise!.id,
+        name: exercise!.name,
+        type: "cardio"
+      });
     }
   };
 
@@ -281,11 +289,15 @@ export default function WorkoutForm() {
             key={exercise.id}
             className='text-left w-full'
             type='button'
-            onClick={() => handleExerciseType(exercise as any)}
+            onClick={() =>
+              handleExerciseType(
+                exercise as InferQueryOutput<"exercise.get-by-id">
+              )
+            }
           >
             <ExerciseCard
               key={exercise.id}
-              exercise={exercise as InferQueryOutput<"exercise.get-all">[0]}
+              exercise={exercise as InferQueryOutput<"exercise.get-by-id">}
               linkOff
             />
           </button>

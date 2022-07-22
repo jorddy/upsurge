@@ -63,7 +63,10 @@ const EditExerciseForm = ({ exerciseId }: Props) => {
 
   return (
     <>
-      <h1 className='text-xl font-bold'>Edit {exercise?.name}</h1>
+      <div className='space-y-2'>
+        <h1 className='text-xl font-bold'>Edit {exercise?.name}</h1>
+        <p className='text-gray-300'>Note: All fields are optional</p>
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
         <div className='field'>
@@ -189,7 +192,11 @@ export default function EditExercisePage() {
   const { query } = useRouter();
 
   if (!query.id || typeof query.id !== "string") {
-    return null;
+    return (
+      <h1 className='text-center text-2xl font-bold'>
+        Error: Wrong query param
+      </h1>
+    );
   }
 
   return (

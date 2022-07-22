@@ -31,12 +31,9 @@ const Workout = ({ workoutId }: Props) => {
     }
   );
 
-  const { data: total } = trpc.useQuery(
-    ["workout.sum", { id: workout?.id as string }],
-    {
-      enabled: !!workout?.id
-    }
-  );
+  const { data: total } = trpc.useQuery(["workout.sum", { id: workoutId }], {
+    enabled: !!workout?.id
+  });
 
   const { mutate: deleteWorkout, isLoading: isDeleting } = trpc.useMutation(
     ["workout.delete"],
@@ -137,7 +134,11 @@ export default function WorkoutPage() {
   const { query } = useRouter();
 
   if (!query.id || typeof query.id !== "string") {
-    return null;
+    return (
+      <h1 className='text-center text-2xl font-bold'>
+        Error: Wrong query param
+      </h1>
+    );
   }
 
   return (

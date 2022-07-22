@@ -25,7 +25,7 @@ export const exerciseRouter = createProtectedRouter()
         where: { id: input.id },
         include: {
           entries: {
-            include: { sets: true }
+            include: { exercise: true, sets: true }
           }
         }
       })

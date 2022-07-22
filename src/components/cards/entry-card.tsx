@@ -5,9 +5,7 @@ import { InferQueryOutput, trpc } from "@/utils/trpc";
 import { useProfileStore } from "@/utils/profile";
 
 type Props = {
-  entry:
-    | InferQueryOutput<"entry.get-by-id">
-    | InferQueryOutput<"entry.get-by-id-with-exercise">;
+  entry: InferQueryOutput<"entry.get-by-id">;
   page?: "workout" | "exercise";
 };
 
@@ -60,7 +58,12 @@ export default function EntryCard({ entry, page }: Props) {
         </p>
 
         <div className='flex flex-wrap gap-2'>
-          <Link className='button-edit' href={`/entry/${entry.id}/edit`}>
+          <Link
+            className='button-edit'
+            href={`/entry/${entry.id}/edit?page=${
+              page === "workout" ? "workout" : "exercise"
+            }`}
+          >
             Edit
           </Link>
 
@@ -75,14 +78,9 @@ export default function EntryCard({ entry, page }: Props) {
         </div>
       </div>
 
-      {(entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
-        ?.exercise && (
+      {entry?.exercise && (
         <p className='truncate'>
-          <strong>Exercise:</strong>{" "}
-          {
-            (entry as InferQueryOutput<"entry.get-by-id-with-exercise">)
-              ?.exercise.name
-          }
+          <strong>Exercise:</strong> {entry?.exercise.name}
         </p>
       )}
 

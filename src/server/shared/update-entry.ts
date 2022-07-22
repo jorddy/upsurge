@@ -5,18 +5,27 @@ export const updateEntryValidator = z.object({
   createdAt: z
     .string()
     .transform(data => {
-      if (data.length) {
+      if (data.length === 0) {
         return undefined;
       }
       return new Date(data);
     })
     .or(z.date())
     .optional(),
-  notes: z.string().optional(),
+  notes: z
+    .string()
+    .transform(data => {
+      if (data.length === 0) {
+        return undefined;
+      }
+      return data;
+    })
+    .optional(),
   sets: z
     .object({
       where: z.object({ id: z.string() }),
       data: z.object({
+        id: z.string(),
         reps: z
           .string()
           .transform(data => {
@@ -26,7 +35,7 @@ export const updateEntryValidator = z.object({
             return Number(data);
           })
           .or(z.number())
-          .optional(),
+          .nullish(),
         weight: z
           .string()
           .transform(data => {
@@ -36,7 +45,7 @@ export const updateEntryValidator = z.object({
             return Number(data);
           })
           .or(z.number())
-          .optional(),
+          .nullish(),
         distance: z
           .string()
           .transform(data => {
@@ -46,7 +55,7 @@ export const updateEntryValidator = z.object({
             return Number(data);
           })
           .or(z.number())
-          .optional(),
+          .nullish(),
         elevation: z
           .string()
           .transform(data => {
@@ -56,7 +65,7 @@ export const updateEntryValidator = z.object({
             return Number(data);
           })
           .or(z.number())
-          .optional()
+          .nullish()
       })
     })
     .array()

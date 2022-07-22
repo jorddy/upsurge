@@ -3,12 +3,16 @@ import { InferQueryOutput } from "@/utils/trpc";
 import { useProfileStore } from "@/utils/profile";
 
 type Props = {
-  exercise: InferQueryOutput<"exercise.get-all">[0];
+  exercise: InferQueryOutput<"exercise.get-by-id">;
   linkOff?: boolean;
 };
 
 export default function ExerciseCard({ exercise, linkOff }: Props) {
   const { weightUnit, convertKilosToPounds } = useProfileStore();
+
+  if (!exercise) {
+    return null;
+  }
 
   return (
     <Link

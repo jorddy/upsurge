@@ -148,7 +148,11 @@ export default function ExercisePage() {
   const { query } = useRouter();
 
   if (!query.id || typeof query.id !== "string") {
-    return null;
+    return (
+      <h1 className='text-center text-2xl font-bold'>
+        Error: Wrong query param
+      </h1>
+    );
   }
 
   return (

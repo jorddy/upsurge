@@ -5,10 +5,10 @@ import ExerciseCard from "../cards/exercise-card";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import {
-  useFieldArray,
-  useForm,
   FieldArrayWithId,
+  useFieldArray,
   UseFieldArrayRemove,
+  useForm,
   UseFormRegister
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,7 @@ import { HiX } from "react-icons/hi";
 import { EntryValidator, entryValidator } from "@/server/shared/entry";
 import { InferQueryOutput, trpc } from "@/utils/trpc";
 
-type SetFormProps = {
+type Props = {
   cardio?: boolean;
   workoutSet?: boolean;
   set: FieldArrayWithId<EntryValidator, "sets", "id">;
@@ -26,7 +26,7 @@ type SetFormProps = {
   register: UseFormRegister<EntryValidator>;
 };
 
-const SetForm = ({ cardio, set, index, remove, register }: SetFormProps) => {
+const SetForm = ({ cardio, set, index, remove, register }: Props) => {
   return (
     <div
       key={set.id}
@@ -188,7 +188,7 @@ export default function EntryForm() {
 
             <textarea
               {...register("notes")}
-              className='input min-h-[100px] w-full'
+              className='input-text'
               id='notes'
             />
 
@@ -236,7 +236,7 @@ export default function EntryForm() {
             <label htmlFor='notes'>Notes</label>
             <textarea
               {...register("notes")}
-              className='input min-h-[100px]'
+              className='input-text'
               id='notes'
             />
           </div>
@@ -262,7 +262,11 @@ export default function EntryForm() {
                 type='button'
                 onClick={() => handleExerciseType(exercise)}
               >
-                <ExerciseCard key={exercise.id} exercise={exercise} linkOff />
+                <ExerciseCard
+                  key={exercise.id}
+                  exercise={exercise as InferQueryOutput<"exercise.get-by-id">}
+                  linkOff
+                />
               </button>
             ))}
           </div>

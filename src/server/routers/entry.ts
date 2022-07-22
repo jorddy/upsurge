@@ -11,16 +11,6 @@ export const entryRouter = createProtectedRouter()
     resolve: ({ input, ctx }) =>
       ctx.prisma.entry.findUnique({
         where: { id: input.id },
-        include: { sets: true }
-      })
-  })
-  .query("get-by-id-with-exercise", {
-    input: z.object({
-      id: z.string()
-    }),
-    resolve: ({ input, ctx }) =>
-      ctx.prisma.entry.findUnique({
-        where: { id: input.id },
         include: { exercise: true, sets: true }
       })
   })
