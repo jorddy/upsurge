@@ -188,7 +188,7 @@ export default function EntryForm() {
 
             <textarea
               {...register("notes")}
-              className='input-text'
+              className='input-text bg-zinc-700'
               id='notes'
             />
 
@@ -236,7 +236,7 @@ export default function EntryForm() {
             <label htmlFor='notes'>Notes</label>
             <textarea
               {...register("notes")}
-              className='input-text'
+              className='input-text bg-zinc-700'
               id='notes'
             />
           </div>

@@ -19,5 +19,7 @@ export const useDateFilter = (
     );
   }, [data, date]);
 
+  console.log(filteredData?.entries.length);
+
   return filteredData;
 };

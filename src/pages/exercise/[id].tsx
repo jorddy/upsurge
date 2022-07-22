@@ -131,7 +131,7 @@ const Exercise = ({ exerciseId }: Props) => {
       <DateBar date={date} setDate={setDate} />
 
       <section className='space-y-4'>
-        {filteredData && filteredData?.length <= 0 && (
+        {filteredData && filteredData.length === 0 && (
           <EmptyCard>No entries found with this date</EmptyCard>
         )}
 
