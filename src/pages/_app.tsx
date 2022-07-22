@@ -48,7 +48,7 @@ const MyApp = ({
       <SEO />
       <div
         className='min-h-screen bg-zinc-800 text-white 
-          [background-image:url("/background.png")] bg-cover bg-fixed'
+          [background-image:url("/Background.png")] bg-cover bg-fixed'
       >
         <Component {...pageProps} />
       </div>
