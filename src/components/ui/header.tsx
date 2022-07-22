@@ -28,8 +28,6 @@ const UserImage = ({
   const { data: session, status } = useSession();
   const { onlineStatus } = useOnlineStore();
 
-  console.log(onlineStatus);
-
   if (session && session.user?.image && session.user.name) {
     return (
       <>
