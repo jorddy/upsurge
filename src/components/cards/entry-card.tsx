@@ -89,7 +89,7 @@ export default function EntryCard({ entry, page }: Props) {
         )}
 
         {entry?.notes && (
-          <p className='line-clamp-3'>
+          <p className='line-clamp'>
             <strong>Notes:</strong> {entry.notes}
           </p>
         )}
