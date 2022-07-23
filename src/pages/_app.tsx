@@ -18,7 +18,6 @@ const Meta = () => {
 
   return (
     <Head>
-      <html lang='en' />
       <title>{title}</title>
       <meta name='description' content={description} />
 
@@ -31,7 +30,7 @@ const Meta = () => {
       <meta property='og:image' content={`${url}/icon-192x192.png`} />
 
       {/* PWA Manifest file */}
-      <link rel='manifest' href='/manifest.json' />
+      <link rel='manifest' href='/manifest.webmanifest' />
 
       {/* Microsoft vendor tags */}
       <meta name='msapplication-TileColor' content='#ea580c' />
