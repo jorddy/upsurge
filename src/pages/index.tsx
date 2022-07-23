@@ -1,4 +1,5 @@
 import WebLayout from "@/components/layouts/web-layout";
+import { authorizeHome } from "@/utils/authorize";
 import { signIn } from "next-auth/react";
 import {
   HiBookOpen,
@@ -6,6 +7,8 @@ import {
   HiLockClosed,
   HiPencilAlt
 } from "react-icons/hi";
+
+export { authorizeHome as getServerSideProps };
 
 export default function Home() {
   return (
@@ -18,12 +21,7 @@ export default function Home() {
           No ads and the ability to share with friends. Upsurge is the app that
           gets out of your way and lets you focus on what really matters.
         </p>
-        <button
-          className='button mx-auto'
-          onClick={() =>
-            signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-          }
-        >
+        <button className='button mx-auto' onClick={() => signIn()}>
           Get Started
         </button>
       </section>
@@ -92,13 +90,8 @@ export default function Home() {
         <h2 className='text-center text-2xl font-semibold md:text-4xl'>
           What are you waiting for?
         </h2>
-        <button
-          className='button mt-6 block mx-auto'
-          onClick={() =>
-            signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-          }
-        >
-          Get Started Now
+        <button className='button mt-6 block mx-auto' onClick={() => signIn()}>
+          Get Started
         </button>
       </section>
     </WebLayout>

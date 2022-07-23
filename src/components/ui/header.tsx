@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Loader from "./loader";
 import { Dispatch, SetStateAction, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
@@ -78,13 +77,8 @@ const UserImage = ({
   if (status === "unauthenticated") {
     return (
       <>
-        <button
-          className='button hidden md:inline'
-          onClick={() =>
-            signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-          }
-        >
-          Get Started Now
+        <button className='button hidden md:inline' onClick={() => signIn()}>
+          Get Started
         </button>
 
         <button
@@ -127,7 +121,7 @@ const OptionsMenu = () => {
       </li>
       <li
         role='button'
-        onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+        onClick={() => signOut()}
         className='flex items-center gap-2 p-4 cursor-pointer hover:bg-zinc-700'
       >
         <HiLogout className='w-6 h-6' />
@@ -173,13 +167,7 @@ const MobileMenu = ({ app, isMenuOpen, setIsMenuOpen }: MobileMenuProps) => {
           </Link>
         </li>
         <li>
-          <button
-            onClick={() =>
-              signIn("google", { redirect: true, callbackUrl: "/dashboard" })
-            }
-          >
-            Sign In
-          </button>
+          <button onClick={() => signIn()}>Sign In</button>
         </li>
       </ul>
     </nav>
@@ -194,12 +182,11 @@ type HeaderProps = {
 export default function Header({ app, dashboard }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  const { status } = useSession();
 
   return (
     <header
-      className='container mx-auto p-5 flex justify-between items-center
-      standalone:pt-12 standalone:fixed standalone:bg-zinc-900 standalone:border-b 
+      className='container mx-auto p-5 flex justify-between items-center 
+      standalone:pt-10 standalone:fixed standalone:bg-zinc-900 standalone:border-b 
       standalone:border-zinc-500 standalone:z-50 standalone:w-full'
     >
       <nav className='flex items-center gap-8'>
@@ -230,8 +217,6 @@ export default function Header({ app, dashboard }: HeaderProps) {
           </>
         )}
       </nav>
-
-      {status === "loading" && <Loader inline />}
 
       <UserImage
         isOptionsOpen={isOptionsOpen}
