@@ -151,7 +151,7 @@ export default function Dashboard() {
   if (isLoading || isLoadingWorkouts || isLoadingExercises) return <Loader />;
 
   return (
-    <AppLayout>
+    <AppLayout dashboard={true}>
       <section className='flex flex-wrap justify-between items-center gap-4'>
         <div className='space-y-1'>
           <h1 className='text-lg font-bold sm:text-2xl'>

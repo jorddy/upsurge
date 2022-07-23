@@ -10,7 +10,8 @@ import {
   HiX,
   HiMenu,
   HiStatusOnline,
-  HiStatusOffline
+  HiStatusOffline,
+  HiArrowLeft
 } from "react-icons/hi";
 import { useOnlineStore } from "@/utils/online";
 
@@ -187,18 +188,25 @@ const MobileMenu = ({ app, isMenuOpen, setIsMenuOpen }: MobileMenuProps) => {
 
 type HeaderProps = {
   app?: boolean;
+  dashboard?: boolean;
 };
 
-export default function Header({ app }: HeaderProps) {
+export default function Header({ app, dashboard }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const { status } = useSession();
 
   return (
-    <header className='relative container mx-auto p-4 flex justify-between items-center standalone:pt-12'>
+    <header
+      className='container mx-auto p-4 flex justify-between items-center
+      standalone:pt-12 standalone:fixed standalone:bg-zinc-900 standalone:border-b standalone:border-zinc-500 standalone:z-50'
+    >
       <nav className='flex items-center gap-8'>
         <Link href={app ? "/dashboard" : "/"}>
           <p className='text-2xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80'>
+            {!dashboard && (
+              <HiArrowLeft className='hidden w-6 h-6 standalone:inline' />
+            )}
             <HiOutlineLightningBolt className='w-9 h-9 text-orange-600 rotate-12' />
             {!app && "Upsurge"}
           </p>
