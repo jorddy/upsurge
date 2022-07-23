@@ -12,7 +12,7 @@ export default function AppLayout({
   return (
     <>
       <Header app dashboard={dashboard} />
-      <main className='container mx-auto p-4 space-y-6 standalone:pt-32'>
+      <main className='container mx-auto p-5 space-y-6 standalone:pt-36'>
         {children}
       </main>
     </>

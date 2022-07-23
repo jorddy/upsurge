@@ -198,7 +198,7 @@ export default function Header({ app, dashboard }: HeaderProps) {
 
   return (
     <header
-      className='container mx-auto p-4 flex justify-between items-center
+      className='container mx-auto p-5 flex justify-between items-center
       standalone:pt-12 standalone:fixed standalone:bg-zinc-900 standalone:border-b standalone:border-zinc-500 standalone:z-50'
     >
       <nav className='flex items-center gap-8'>
