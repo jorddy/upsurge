@@ -1,11 +1,20 @@
 import { PropsWithChildren } from "react";
 import Header from "../ui/header";
 
-export default function AppLayout({ children }: PropsWithChildren<{}>) {
+type Props = {
+  dashboard?: boolean;
+};
+
+export default function AppLayout({
+  children,
+  dashboard
+}: PropsWithChildren<Props>) {
   return (
     <>
-      <Header app />
-      <main className='container mx-auto p-4 space-y-6'>{children}</main>
+      <Header app dashboard={dashboard} />
+      <main className='container mx-auto p-5 space-y-6 standalone:pt-36'>
+        {children}
+      </main>
     </>
   );
 }

@@ -15,7 +15,7 @@ export default function WebLayout({ children }: PropsWithChildren<{}>) {
   return (
     <div className='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
-      <main className='text-center container mx-auto p-4 sm:text-left'>
+      <main className='text-center container mx-auto p-5 sm:text-left'>
         {children}
       </main>
       <Footer />
